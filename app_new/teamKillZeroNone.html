@@ -1,0 +1,224 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta content="initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
+<meta content="telephone=no" name="format-detection">
+<title>零灭率</title>
+<link href="css/frozen.css" rel="stylesheet" type="text/css">
+<link href="css/main.css" rel="stylesheet" type="text/css">
+<link rel="stylesheet" href="css/team.css" />
+<link rel="stylesheet" href="css/data-decision.css" />
+<style>
+.tdspan {width:100px!important;}
+#sales_loudou_toggle {padding-top:0;}
+</style>
+</head>
+<body>
+<section>
+	<div class="ui-container" style="background: #F8F8F8;">
+		<div class="chart-panel  hide" style="height: 10px;">
+			<div class="show-btn toggle-btn">
+				<span class="ui-icon-arrow ligth-green"></span>
+			</div>
+		</div>
+    <div>
+				<div class="ui-loading-wrap text-center" id="loading" style="display:block">
+					<i class="ui-loading" style="position: absolute;left: 50%;margin-left: -10px"></i>
+					<p style="margin-top: 30px; padding-top:50px;">数据加载中</p>
+				</div>
+		    <div id="biao" class="table-container fo_fix" style="display:none">
+	        <div class="ui-whitespace inner-container">
+	            <div id="headertable-wrap" class="table-header">
+	                <div class="table-fixed">
+	                    <table style="max-width:120px; width:120px;">
+	                        <tr><th class="table-title">未灭零业务员</th></tr>
+	                    </table>
+	                </div>
+	                <table id="headertable" class="table-head">
+	                	<thead>
+					<tr>
+            <th  style="max-width:120px;"  class="table-title">未灭零业务员</th>
+            <th >未灭零连续月数</th>
+            <th >本年历史单数</th>
+					</tr>
+					</thead>
+	                </table>
+	            </div>
+	            <table id="lefttable" class="table-col">
+	            <tbody></tbody>
+	            </table>
+	            <div id="bodytable-wrap" class="table-body">
+	                <h3 id="table-tip" class="tb-tip" style="display:none;"></h3>
+	                <table id="bodytable" class="table-content">
+	                	<tbody></tbody>
+	                </table>
+	            </div>
+	        </div>
+	    </div>
+		</div>
+	</div>
+</section>
+<input style="position:fixed;top:0;right:0;height:2px;opacity:0;" type="month" id="smonth" value="" />
+<script type="text/javascript" src="js/lib/fastclick.min.js" ></script>
+<script type="text/javascript" src="js/lib/jquery.min.js" ></script>
+<script type="text/javascript" src="js/lib/highcharts.js" ></script>
+<script type="text/javascript" src="js/lib/highcharts-more.js" ></script>
+<script src="js/lib/dingtalk.min.js"></script>
+<script src="js/lib/ddbanner.js"></script>
+<script src="js/lib/apiList.js"></script>
+<script src="js/login.js"></script>
+<script src="js/config.js"></script>
+<script src="js/common.js"></script>
+<script type="text/javascript" src="js/team.js" ></script>
+<script>
+$(document).ready(function() {
+	FastClick.attach(document.body);
+	setTableTitle(team.user.position);
+	scrollTable();
+	var level=getUrlParam('level') || '';
+	var orgid=getUrlParam('orgid') || '';
+	var issub=getUrlParam('issub') || '';
+  var dataType=getUrlParam('type') || '';
+	var periods=getUrlParam('periods') || '';
+	var sales=getUrlParam('sales') || '';
+	if(!level){
+		getNoneRateByPeriods(periods,sales);
+	}else{
+		getKillZeroRateByDpt(level,orgid,issub,sales);
+	}
+	dd.ready(function(){
+		var defaultValue = new Date().getFullYear() + '-' + (new Date().getMonth()+1);
+		dd.biz.navigation.setTitle({
+			title: '灭零率'
+		});
+		dd.biz.navigation.setRight({
+			show: false,
+			control: false,
+			text: '',
+			onSuccess : function(result) {},
+			onFail : function(err) {
+				console.log(err);
+			}
+		});
+	});
+
+	$('#sales_loudou_toggle').on('click', 'button', function(){
+		var $this = $(this), type = $this.data('chart-type');
+		$this.siblings().attr('disabled', null);
+		$this.attr('disabled', 'disabled');
+		if(loudouStatData){
+			if(type=='customers'){
+				setLoudouChart(loudouStatData.countData, '月', "", 0, 'customers');
+			}else{
+				setLoudouChart(loudouStatData.chartData, '月', "", 0, 'money');
+			}
+		}
+	});
+
+	$("#smonth").off('input').on('input',function(res){
+		var month = $("#smonth").val();
+		getKillZeroRateByDpt(level,orgid,issub,month);
+	});
+});
+
+var killZeroStatData = null; //漏斗统计数据
+
+function getNoneRateByPeriods(periods,sales){
+	team.postData.periods = periods;
+	team.postData.sales = sales;
+	$.ajax({
+		type:"post",
+		url:oms_config.apiUrl+oms_apiList.getNoneRateByPeriods,
+		async:true,
+		data:team.postData,
+		dataType:'json',
+		success:function(rs){
+			if(rs.res == 1){
+				killZeroStatData = rs.data;
+				renderKillZeroData(killZeroStatData);
+			}else{
+				console.log(JSON.stringify(rs));
+			}
+		},
+		error:function(e){
+			console.log(JSON.stringify(e));
+		}
+	});
+}
+
+function getKillZeroRateByDpt(level,orgid,issub,sales){
+	team.postData.orgid = orgid;
+  team.postData.level = level;
+	team.postData.sales = sales;
+	$.ajax({
+		type:"post",
+		url:oms_config.apiUrl+oms_apiList.getNoneKillZeroUsersByDpt,
+		async:true,
+		data:team.postData,
+		dataType:'json',
+		success:function(rs){
+			if(rs.res == 1){
+				killZeroStatData = rs.data;
+				renderKillZeroData(killZeroStatData);
+			}else{
+				console.log(JSON.stringify(rs));
+			}
+		},
+		error:function(e){
+			console.log(JSON.stringify(e));
+		}
+	});
+}
+
+function renderKillZeroData(data){
+	setTableTitle('2');
+  var tableData=data;
+  var tableColumn="";
+  var lefttable = '<tr><td style="max-width:120px;" class="fix-column"><span class="ui-nowrap tdspan">汇总</span></td></tr>';
+	var max_none_num = 0, total_contract_year = 0;
+  for(var i in tableData){
+		if(parseInt(max_none_num) < parseInt(tableData[i].none_num)){
+				max_none_num = tableData[i].none_num;
+		}
+		total_contract_year = parseInt(total_contract_year)+parseInt(tableData[i].contract_year);
+    var trClass='odd';
+    if(i%2==0){
+      trClass='even';
+    }
+    var dept=tableData[i].name;
+    var issub = 1;
+		var contract_year = tableData[i].contract_year;
+
+		if(typeof tableData[i].contract_year != 'undefined'){
+				if(tableData[i].contract_year > 0){
+					contract_year = '<a href="teamKillZeroList.html?uid='+tableData[i].id+'&act_type=1">' + tableData[i].contract_year + '</a>'
+				}
+		}else{
+				contract_year = '--'
+		}
+		dept='<a href="profile.html?id='+tableData[i].id+'&do=0" >'+dept+'</a>';
+
+    lefttable += '<tr><td style="max-width:120px;" class="fix-column"><span class="ui-nowrap tdspan">'+dept+'</span></td></tr>';
+    tableColumn += '<tr class="' + trClass + '" >\
+                    <td style="max-width:120px;min-width:120px;" class="fix-column" ><span class="ui-nowrap tdspan">' + dept + '</span></td>\
+                    <td class="text-center">' + (tableData[i].none_num?tableData[i].none_num:'--')+ '</td>\
+                    <td class="text-center">' + contract_year + '</td>\
+                </tr>';
+
+  }
+	tableColumn = '<tr class="' + trClass + '" >\
+									<td style="max-width:120px;min-width:120px;" class="fix-column" ><span class="ui-nowrap tdspan"></span></td>\
+									<td class="text-center">' + max_none_num +'</td>\
+									<td class="text-center">' + total_contract_year + '</td>\
+							</tr>'+tableColumn;
+  $("#lefttable tbody").html(lefttable);
+  $("#bodytable tbody").html(tableColumn);
+  scrollTable();
+	$("#loading").hide();
+	$("#biao").show();
+}
+
+</script>
+</body>
+</html>

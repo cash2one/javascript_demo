@@ -1,0 +1,188 @@
+var oms_config = {
+  'baseUrl': 'https://ptest.hecom.cn/crm-goldtimemobile/app_new/',
+  'apiUrl': 'https://ptest.hecom.cn/crm-dingzhu/',
+  'corpId': 'ding2f10fa61cf6ffbea',
+  'versionUrl': 'https://ptest.hecom.cn/crm-dingzhumobile/app/version.txt',
+  'loginUrl': 'https://ptest.hecom.cn/crmlogin/mobile/login.html',
+  'loginChangeUrl': 'https://ptest.hecom.cn/crmlogin/mobile/change.html'
+
+  // 'baseUrl':'https://dingtalk.hecom.cn/oms/dist/0.3.1/',
+  // 'apiUrl':'https://oms.hecom.cn/',
+  // 'corpId':'ding2df2301d75c33efa',
+  // 'versionUrl':'https://dingtalk.hecom.cn/oms/version.txt',
+  // 'loginUrl':'https://crmlogin.hecom.cn/mobile/login.html',
+  // 'loginChangeUrl':'https://crmlogin.hecom.cn/mobile/change.html'
+};
+
+var oms_apiList = {
+  "omslogin": "apiLogin/login",
+  "sendcodeForLogin": "apiLogin/send_code",
+  "getCrmToken": "apiLogin/getCrmToken",
+  "listPositions": "apiLogin/listPositions",
+  "switchAccount": "apiLogin/switchAccount",
+
+  "login": "apiCustomer/ddlogin/",
+  "getSubordinate": "apiCustomer/getSubordinate/",
+  "getCustomers": "apiCustomer/getCustomers/",
+  "getPerformance": "apiCustomer/getPerformance/",
+  "getPerformanceCompare": "apiCustomer/getPerformanceCompare/",
+  "getTodayWork": "apiCustomer/getTodayWork/",
+  "getSaleFunnel": "apiCustomer/getSaleFunnel/",
+  "getAreas": "apiCustomer/getAreas/",
+  "addCustomer": "apiCustomer/addCustomer/",
+  "isCustomerExists": "apiCustomer/isCustomerExists/",
+  "search": "apiCustomer/search/",
+  "pullCustomer": "apiCustomer/pullCustomer/",
+  "addContactors": "apiCustomer/addContactors/",
+  "throwCustomer": "apiCustomer/throwCustomer/",
+  "addLidan": "apiCustomer/addLidan/",
+  "getContactorsByCusid": "apiCustomer/getContactorsByCusid/",
+  "getCustomerInfo": "apiCustomer/getCustomerInfo/",
+  "renewAssign": "apiCustomer/renewAssign/",
+  "uploadImg": "apiCustomer/uploadImg/",
+  "levelModify": "apiCustomer/levelModify/",
+  "getAssignUser": "apiCustomer/getAssignUser/",
+  "editCustomer": "apiCustomer/editCustomer/",
+  "cancelLidan": "apiCustomer/cancelLidan/",
+  "startTrain": "apiCustomer/startTrain/",
+  "endTrain": "apiCustomer/endTrain/",
+  "submitTrainReport": "apiCustomer/submitTrainReport/",
+  "getUserInfo": "apiCustomer/getUserInfo/",
+  "getSubUsers": "apiCustomer/getSubUsers/",
+  "reAssign": "apiCustomer/reAssign/",
+  "isHaveCustomerPriv": "apiCustomer/isHaveCustomerPriv",
+
+  "getMonthTargetData": "apiTeam/getMonthTargetData",
+  "getLastUpdateTime": 'apiTeam/getLastUpdateTime',
+  "getLoudouData": 'apiTeam/getLoudouData',
+  //新一团战报
+  "warManagerList": "apiWarManagerReport/getList",
+  "warGetLidanList": "apiWarManagerReport/getLidanList",
+  //灭零率
+  "getKillZeroRateByDpt": 'apiTeam/getKillZeroRateByDpt',
+  "getKillZeroRate": 'apiTeam/getKillZeroRate',
+  "getKillZeroUsersByDpt": 'apiTeam/getKillZeroUsersByDpt',
+  "getNoneKillZeroUsersByDpt": 'apiTeam/getNoneKillZeroUsersByDpt',
+  "getKillZeroRateByPeriods": 'apiTeam/getKillZeroRateByPeriods',
+  "getNoneRateByPeriods": 'apiTeam/getNoneRateByPeriods',
+  "getOrderCustomerListByUid": 'apiTeam/getOrderCustomerListByUid',
+  //陪访量
+  "getPeifangNumByDpt": "apiPeifang/getPeifangNumByDpt",
+  //理单率
+  "lidanRateTable": "apiLidanRate/table",
+  "lidanRateList": "apiLidanRate/lidanList",
+  "getLeadersInfo": "apiUser/getLeadersInfo",
+
+  "callrecordpost": "apiTool/callrecordpost/",
+  "getCallrecordInfo": "apiTool/getCallrecordInfo/",
+  "visitrecordpost": "apiTool/visitrecordpost/",
+  "getVisitInfo": "apiTool/getVisitInfo/",
+  "checkPeifang": "apiTool/checkPeifang/",
+  "visitUpdateFinishTime": "apiTool/visitUpdateFinishTime/",
+  "getVisitData": "apiTool/getVisitData/",
+  "getTrainData": "apiTool/getTrainData/",
+  "visitUpdateInfo": "apiTool/visitUpdateInfo/",
+  "getWorkStateList": "apiTool/getWorkStateList/",
+  "checkState": "apiTool/checkState/",
+  "checkTrainState": "apiTool/checkTrainState/",
+  "getCacheList": "apiTool/getCacheList/",
+  "delCacheList": "apiTool/delCacheList/",
+
+  "todayTodo": "apiTodo/todayTodo/",
+  // "getSubordinate":"apiUser/getSubordinate/",
+
+  "getContractList": "apiContract/getContractList/",
+  "getContractBasedata": "apiContract/getContractBasedata/",
+  "addContract": "apiContract/addContract/",
+  "getContractDetail": "apiContract/getContractDetail/",
+  "getLastDataforCallRecord": "apiTool/getLastDataforCallRecord/",
+
+  "getContantList": "contacts_api/index/",
+
+  "getBillingInfo": "billing/getBillingInfo/",
+  "checkRenewConfig": "apiTool/checkRenewConfig/",
+  "addcall": "apiTool/addcall/",
+
+
+  "getCustomerDDid": "apiComment/getCustomerDDid/",
+  "getCustomerAssocUsers": "apiComment/getCustomerAssocUsers/",
+  "postComment": "apiComment/postComment/",
+  "getComments": "apiComment/getComments/",
+  "sendDuangComment": "apiComment/sendDuangComment/",
+
+  "getDayReport": "apiDayreport/index/",
+  "getAreaInfo": "apiDayreport/getAreaInfo/",
+  "getBaseInfo": "apiDayreport/getBaseInfo/",
+  "addDayReport": "apiDayreport/addDayReport/",
+  "getIsAddReport": "apiDayreport/getIsAddReport/",
+  "calling": "apiCall/calling",
+  "getRealtimeAction": "apiTeam/getRealtimeAction",
+
+  "setTop": "apiCustomer/set_top",
+  "unsetTop": "apiCustomer/unset_top",
+  "addLidanAttentionRate": "billing/addLidanAttentionRate",
+  "removeLidanAttentionRate": "billing/removeLidanAttentionRate",
+  "CallCancel": "apiCall/CallCancel",
+  "callFinish": "apiCall/callFinish",
+  "meeting": "apiMeeting/meeting",
+  "meetingInvite": "apiMeeting/addInviteJoinConf",
+  "endMeeting": "apiMeeting/DismissConf",
+  "getConfDetail": "apiMeeting/getConfDetail",
+  "getCallDetail": "apiMeeting/getCallDetail",
+  "getCallStatus": "apiMeeting/getCallStatus",
+  "getConfStatus": "apiMeeting/getConfStatus",
+  "addInviteJoinConf": "apiMeeting/addInviteJoinConf",
+
+  "getPredictList": "apiForecast/getList",
+  "getPredictDetail": "apiForecast/getInfo",
+  "sendPaymentRecord": "apiForecast/save",
+  "deletePaymentRecord": "apiForecast/delete",
+  "getPredictMenuList": "apiForecast/getMenuList",
+  "getSubmitData": "apiForecast/getFormList",
+  "saveSubmitData": "apiForecast/saveReview",
+
+  //闭环
+  "getLastShareContent": "apiVipcustomer/getLastShareContent",
+  "addShareContent": "apiVipcustomer/addShareContent",
+  "getQrcode": "apiVipcustomer/getQrcode",
+  "getShareContent": "apiVipcustomer/getShareContent",
+  "sendCodeByPhone": "apiVipcustomer/sendCodeByPhone",
+  "addPhoneCustomer": "apiVipcustomer/addPhoneCustomer",
+  "saveCustomrInfo": "apiVipcustomer/saveCustomrInfo",
+  "addOrder": "apiVipcustomer/addOrder",
+  "checkCustomerStatusByContentid": "apiVipcustomer/checkCustomerStatusByContentid",
+  "nonautoOpenEntcode": "apiVipcustomer/nonautoOpenEntcode",
+  "getVipCustomerList": "apiVipcustomer/getCustomerList",
+  "getVipCustomerInfo": "apiVipcustomer/getCustomerInfo",
+  "checkSingleCustomerStatus": "apiVipcustomer/checkSingleCustomerStatus",
+
+
+  //智能诊断后台配置
+  'getRangeConf': 'api_diag_alert/workAlertConf/getCurrentConf',
+  'getSpecRangeConf': 'api_diag_alert/workAlertConf/getClassConf',
+  'getRuleConf': 'api_diag_alert/workDiagConf/getCurrentConf',
+  'getSpecRuleConf': 'api_diag_alert/workDiagConf/getConf',
+  'saveRangeConf': 'api_diag_alert/workAlertConf/saveConf',
+  'saveRuleConf': 'api_diag_alert/workDiagConf/saveConf',
+  'delRangeConf': 'api_diag_alert/workAlertConf/delClassConf',
+  'delRuleConf': 'api_diag_alert/workDiagConf/delConf',
+
+  //诊断配置
+  "getLightConf": "api_diag_alert/diagalert/getLightConf",
+  "getDiagRes": "api_diag_alert/diagalert/getDiagRes",
+  "getDiagTable": "api_diag_alert/diagalert/getDiagTable",
+  "getDayReports": "api_diag_alert/workComment/getDayReports",
+  "getTodayComments": "api_diag_alert/workComment/getTodayComments",
+  "getLightAvgConf": "api_diag_alert/diagalert/getLightAvgConf",
+  "addComment": "api_diag_alert/workComment/addComment",
+
+  //理单结果分析
+  "getLidanRangeByDpt": "apiLidanRange/getLidanRangeByDpt",
+  "getLidanRangeByLevelId": "apiLidanRange/getLidanRangeByLevelId",
+  "getStaffList": "apiLidanRange/getStaffList",
+  "getLidanRangeCustomerList": "apiLidanRange/getCustomerList",
+
+  //认真评价
+  "assessAdd": "apiAssess/add",
+  "assessList": "apiAssess/show"
+};

@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>扔掉原因</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no" />
+<link href="css/frozen.css" rel="stylesheet" type="text/css">
+<link href="css/main.css" rel="stylesheet" type="text/css">
+        <style>
+        	.toPublic{
+        		background-color: #f5f5f6;
+        		height: 150px;
+        	}
+
+        	.toPublic-header{
+        		padding-top: 45px;
+        		height: 57px; 
+        		padding-bottom: 16px;		
+        	}
+        	.header-img{
+        		background-image: url(img/throw_away_the_reason.png);
+        		background-position: center;
+        		background-size: 174px auto;
+        		background-repeat: no-repeat;
+        		height: 57px;
+        	}
+        	.to-public-content{
+        		text-align: center;
+        		font-size: 11px;
+        		color: #666;
+        	}
+
+        	.ui-check-ok{
+				width: 18px; 
+			    height: 12px; 
+			    position:absolute;
+			    right: 15px;
+			    background-image: url(img/public_correct.png);
+			    background-repeat: no-repeat;
+			    background-position: right;
+			    background-size: 18px auto;
+			    top: 18px;
+			}
+			
+			.ui-icon-list_cerrect{
+				font-size: 18px;
+				height: 48px;
+				color: #ec564d;
+			}
+			.ui-list-active>li:active, .ui-list li.active{
+				background-color:#f5f5f6;
+			}
+			.main-content{
+				color: #222;
+				font-size: 15px !important;
+			}
+			.map-poi-container-wrap {overflow: hidden; overflow-y: auto;}
+            .map-poi-container .ui-icon-localicon {font-size: 14px;line-height: 14px;}
+            .map-poi-container .ui-icon-ok {color: #38ADFF;}
+            .map-poi-container .ui-poi-dist {color: #BBB;font-size: 12px;}
+            .map-poi-container-wrap {width: 100%;}
+            .map-poi-container-wrap .ui-list-text>li {height: auto;}
+            .map-poi-container-wrap .ui-list>li.ui-border-t:first-child {line-height: 48px; padding-top: 0;padding-bottom: 0;}
+            .map-poi-container-wrap .ui-list>li.ui-border-t{line-height: 48px;padding-top: 0;padding-bottom: 0;}
+        </style>
+</head>
+<body>
+
+<div class="ui-container" id="main-body">
+	<div class="toPublic">
+		<div class="toPublic-header"><div class="header-img"></div></div>
+		<div class="to-public-content">有时候，成功就差那么一点点~再试试</div>
+	</div>
+  	<!-- <ul class="ui-list ui-list-pure ui-border-tb" style="color:#666666">
+	    
+		<li>
+			<div class="ui-flex ui-flex-pack-center">
+			<h4>有时候，成功就差那么一点点</h4></div>
+		</li>
+
+		<li>
+			<div class="ui-flex ui-flex-pack-center">
+			<h4>再试试</h4></div>
+		</li> 
+  	</ul> -->
+
+	<div class="map-poi-container-wrap" style="height: 327px;"> 
+	    <div class="map-poi-container">
+		    <ul class="ui-list ui-list-text ui-list-active ui-border-tb" id="throwReason"> 
+		    	<!--<li class="ui-border-t" id="1">-->
+		    		<!--<div class="ui-list-info">-->
+		    			<!--<h4 class="ui-nowrap main-content">客户不存在/名称错误</h4>-->
+		    			<!---->
+		    		<!--</div>-->
+		    		<!--<div class="ui-poi-dist"><i class="ui-icon-list_cerrect"></i></div>-->
+		    	<!--</li>-->
+		    	<!--<li class="ui-border-t" id="2">-->
+			    	<!--<div class="ui-list-info">-->
+			    		<!--<h4 class="ui-nowrap main-content">绕不到电话/联系不上</h4>-->
+			    	<!--</div>-->
+			    	<!--<div class="ui-poi-dist"></div>-->
+		    	<!--</li>-->
+				<!---->
+				<!--<li class="ui-border-t" id="3">-->
+			    	<!--<div class="ui-list-info">-->
+			    		<!--<h4 class="ui-nowrap main-content">客户强烈不需要</h4>-->
+			    	<!--</div>-->
+			    	<!--<div class="ui-poi-dist"></div>-->
+		    	<!--</li>-->
+
+		    	<!--<li class="ui-border-t" id="4">-->
+			    	<!--<div class="ui-list-info">-->
+			    		<!--<h4 class="ui-nowrap main-content">已使用别家产品</h4>-->
+			    	<!--</div>-->
+			    	<!--<div class="ui-poi-dist"></div>-->
+		    	<!--</li>-->
+
+		    	<!--<li class="ui-border-t" id="5">-->
+			    	<!--<div class="ui-list-info">-->
+			    		<!--<h4 class="ui-nowrap main-content">已使用本公司产品</h4>-->
+			    	<!--</div>-->
+			    	<!--<div class="ui-poi-dist"></div>-->
+		    	<!--</li>-->
+
+
+		    </ul>
+	    </div>
+	</div>
+
+<script src="js/lib/zepto.min.js"></script>
+<script src="js/lib/frozen.min.js"></script>
+<script src="js/lib/dingtalk.min.js"></script>
+<script src="js/lib/fastclick.min.js"></script>
+<script src="js/lib/ddbanner.js"></script>
+<script src="js/lib/apiList.js"></script>
+<script src="js/lib/md5.min.js"></script>
+<script src="js/config.js"></script>
+<script src="js/common.js"></script>
+<script src="js/goldAgeCommon.js"></script>
+<script src="js/toPublic.js"></script>
+
+
+</body>
+</html>

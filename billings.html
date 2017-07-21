@@ -1,0 +1,382 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>理单列表</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, height=device-height, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no">
+    <!-- <meta http-equiv="refresh" content="1;url=billings2.html">  -->
+    <meta name="format-detection" content="telephone=no">
+    <link href="css/frozen.css" rel="stylesheet" type="text/css">
+    <link href="css/billing.css" rel="stylesheet" type="text/css">
+</head>
+
+<body>
+    <div id="loadingPanel" class="ui-loading-block">
+        <div class="ui-loading-cnt">
+            <i class="ui-loading-bright"></i>
+            <p>努力加载中...</p>
+        </div>
+    </div>
+    <nav id="listNav">
+        <ul class="b-bar ui-row ui-form-item ui-border-b tbp tbp-1" data-role="tabs">
+            <li class="ui-col ui-col-33 ui-border-r" data-target="seq" data-fold="allow"><span>自动排序</span><i class="ui-icon ui-icon-list_arrow_down"></i></li>
+            <li class="ui-col ui-col-33 ui-border-r" data-target="sift" data-fold="allow"><span>筛选</span><i class="ui-icon ui-icon-list_arrow_down"></i></li>
+            <li id="btnTabSearch" class="ui-col ui-col-33"><i class="ui-icon ui-icon-tab_search"></i><span>搜索</span></li>
+        </ul>
+        <div id="b-filter" class="ui-row ui-border-b ui-scroller-h">
+            <ul class="clearfix">
+                <script id="tpl-filter-repeater" type="text/template">
+                    {@each data as item}
+                    <li class="ui-col repeat-item ${item.className}">
+                        <div class="ui-flex ui-flex-ver ui-flex-align-center ui-flex-pack-center">
+                            <div>${item.label}</div>
+                            <div>${item.key}</div>
+                        </div>
+                    </li>
+                    {@/each}
+                </script>
+            </ul>
+        </div>
+        <div id="searchEmp">
+            <div class="search-tip"></div>
+            <form id="form-search-person">
+                <div class="ui-searchbar-wrap focus ui-border-b">
+                    <div class="ui-searchbar ui-border-radius">
+                        <i class="ui-icon-search"></i>
+                        <div class="ui-searchbar-text">搜索名字</div>
+                        <div class="ui-searchbar-input">
+                            <input value="" type="search" placeholder="搜索名字" autocapitalize="off">
+                        </div>
+                        <i class="ui-icon-close"></i>
+                    </div>
+                    <button class="ui-searchbar-cancel">取消</button>
+                </div>
+            </form>
+            <div id="searchList">
+                <ul class="ui-list ui-list-text ui-list-checkbox ui-border-b">
+                    <script id="tpl-search-person" type="text/template">
+                        {@each res as item}
+                        <li class="ui-border-t">
+                            <label class="ui-checkbox">
+                                <input type="checkbox" name="search-person" data-name="${item.realname}" data-id="${item.id}">
+                            </label>
+                            <p>${item.realname}</p>
+                        </li>
+                        {@/each}
+                    </script>
+                </ul>
+            </div>
+            <div class="btnbar ui-footer ui-footer-stable ui-btn-group ui-border-t">
+                <button id="choosePerson" class="ui-btn-s">选择</button>
+            </div>
+        </div>
+        <div id="searchBill">
+            <div class="search-tip"></div>
+            <form id="form-search-bill">
+                <div class="ui-searchbar-wrap focus ui-border-b">
+                    <div class="ui-searchbar ui-border-radius">
+                        <i class="ui-icon-search"></i>
+                        <div class="ui-searchbar-text">搜索客户名称</div>
+                        <div class="ui-searchbar-input">
+                            <input value="" type="search" placeholder="搜索客户名称" autocapitalize="off">
+                        </div>
+                        <i class="ui-icon-close"></i>
+                    </div>
+                    <button class="ui-searchbar-cancel">取消</button>
+                </div>
+            </form>
+            <div id="searchBillList" class="ui-scroller-v">
+                <ul class="cuslist join ui-list ui-list-text ui-border-b ui-list-active">
+                    <script id="tpl-search-bill" type="text/template">
+                        {@each res as section,index}
+                        <section data-role="tabs-panel" class="section active">
+                            <h2 class="b-header ui-txt-default ui-border-t">
+                                <span>${section.name}</span>
+                                <div class="more ui-flex ui-flex-align-center ui-flex-pack-end">
+                                    <span class="summary ui-txt-muted"><span data-role="paid"></span>/<span data-role="count"></span>个</span>
+                                    <i class="ui-icon-arrow"></i>
+                                </div>
+                            </h2>
+                            <ul class="list ui-list ui-list-pure">
+                                {@each section.list as item}
+                                <li class="item ui-border-b" data-cid="${item.cid}" data-bid="${item.bid}">
+                                    <h3 class="title">
+                                        <span>${item.customer}</span>
+                                        {@if item.attention_rate==1}
+                                        <em class="billing_attention">关注</em>
+                                        {@/if}
+                                        {@if item.score_trend==1}
+                                        <span class="predict_increase score-trend"></span>
+                                        {@/if}
+                                        {@if item.score_trend==-1}
+                                        <span class="predict_decrease score-trend"></span>
+                                        {@/if}
+                                        <div class="price">${item.price|priceFormat}</div>
+                                        <div class="folltype">${item.followtype|getFollowType}</div>
+                                    </h3>
+                                    <p class="para ui-txt-info">
+                                        ${item.level1}级|${item.level2}级
+                                        <span style="padding-left: 10px">加入时间: ${item.create_time?item.create_time:'暂无'}</span>
+                                    </p>
+                                    <p class="para ui-txt-info">
+                                        ${item.structure}-${item.follower}
+                                    </p>
+                                </li>
+                                {@/each}
+                            </ul>
+                        </section>
+                        {@/each}
+                    </script>
+                    <!-- end template script -->
+                </ul>
+            </div>
+        </div>
+        <div id="filter-panel">
+            <section class="seq" data-role="panel">
+                <ul class="ui-list ui-list-text ui-list-active ui-list-cover ui-border-tb tbp">
+                    <li class="ui-border-t" data-value="follow">
+                        <p data-label="跟进状态">自动排序-跟进状态</p>
+                    </li>
+                    <li class="ui-border-t" data-value="join">
+                        <p data-label="加入时间">加入时间</p>
+                    </li>
+                    <li class="ui-border-t" data-value="score">
+                        <p data-label="智能推荐排序">智能推荐排序</p>
+                    </li>
+                </ul>
+            </section>
+            <section class="sift" data-role="panel">
+                <div class="ui-row">
+                    <div class="sub-nav ui-col ui-col-33">
+                        <ul class="ui-list ui-list-text ui-list-cover ui-border-t tbp tbp-2" data-role="tabs">
+                            <li class="ui-border-t activated" data-target="sift1">
+                                <p>跟进人</p>
+                            </li>
+                            <li class="ui-border-t scroll-sift2" data-target="sift2">
+                                <p>联系情况</p>
+                            </li>
+                            <li class="ui-border-t" data-target="sift3">
+                                <p>个人评级</p>
+                            </li>
+                            <li class="ui-border-t" data-target="sift4">
+                                <p>经理评级</p>
+                            </li>
+                            <li class="ui-border-t scroll-sift5" data-target="sift5">
+                                <p>跟进记录</p>
+                            </li>
+                            <li class="ui-border-t" data-target="sift6">
+                                <p>下次拜访时间</p>
+                            </li>
+                        </ul>
+                    </div>
+                    <div class="sub-panel ui-col ui-col-67">
+                        <section class="sift1 activated" data-role="panel">
+                            <div id="btnSearchEmployee">
+                                <i class="ui-icon ui-icon-search"></i><span>查找跟进人</span>
+                            </div>
+                            <div id="siftListPerson" class="ui-scroller-v">
+                                <ul class="ui-list ui-list-text ui-list-checkbox">
+                                    <script id="tpl-sift-person" type="text/template">
+                                        {@each res as item}
+                                        <li class="ui-border-t" data-sort="person" data-label="跟进人" data-key="${item.name}" data-value="${item.id}">
+                                            <label class="ui-checkbox">
+                                                <input type="checkbox" name="search-person" data-name="${item.name}" data-id="${item.id}" disabled>
+                                            </label>
+                                            <p>${item.name}</p>
+                                        </li>
+                                        {@/each}
+                                    </script>
+                                </ul>
+                            </div>
+                        </section>
+                        <section class="sift2 ui-scroller-v" data-role="panel">
+                            <ul class="ui-list ui-list-text ui-list-checkbox">
+                                <li class="ui-border-t clear-all" data-sort="sift2" data-value="-1">
+                                    <label class="ui-checkbox">
+                                        <input name="sift2-clear" type="radio" disabled checked data-value="-1">
+                                    </label>
+                                    <p>不限</p>
+                                </li>
+                                <script id="tpl-contact-state" type="text/template">
+                                    {@each contact_state as item,index}
+                                    <li class="ui-border-t" data-sort="sift2" data-label="联系情况" data-key="${item}" data-value="${index}">
+                                        <label class="ui-checkbox">
+                                            <input name="contact-state" type="checkbox" data-value="${index}" disabled>
+                                        </label>
+                                        <p>${item}</p>
+                                    </li>
+                                    {@/each}
+                                </script>
+                            </ul>
+                        </section>
+                        <section class="sift3 ui-scroller-v" data-role="panel">
+                            <ul class="ui-list ui-list-text ui-list-checkbox">
+                                <li class="ui-border-t clear-all" data-sort="sift3" data-value="-1">
+                                    <label class="ui-checkbox">
+                                        <input name="sift3-clear" type="radio" disabled checked data-value="-1">
+                                    </label>
+                                    <p>不限</p>
+                                </li>
+                                <script id="tpl-grade-staff" type="text/template">
+                                    {@each grade_staff as item,index}
+                                    <li class="ui-border-t" data-sort="sift3" data-label="个人评级" data-key="${item}" data-value="${index}">
+                                        <label class="ui-checkbox">
+                                            <input name="grade-staff" type="checkbox" data-value="${index}" disabled>
+                                        </label>
+                                        <p>${item}</p>
+                                    </li>
+                                    {@/each}
+                                </script>
+                            </ul>
+                        </section>
+                        <section class="sift4 ui-scroller-v" data-role="panel">
+                            <ul class="ui-list ui-list-text ui-list-checkbox">
+                                <li class="ui-border-t clear-all" data-sort="sift4" data-value="-1">
+                                    <label class="ui-checkbox">
+                                        <input name="sift4-clear" type="radio" disabled checked data-value="-1">
+                                    </label>
+                                    <p>不限</p>
+                                </li>
+                                <script id="tpl-grade-mgr" type="text/template">
+                                    {@each grade_manager as item,index}
+                                    <li class="ui-border-t" data-sort="sift4" data-label="经理评级" data-key="${item}" data-value="${index}">
+                                        <label class="ui-checkbox">
+                                            <input name="grade-mgr" type="checkbox" data-value="${index}" disabled>
+                                        </label>
+                                        <p>${item}</p>
+                                    </li>
+                                    {@/each}
+                                </script>
+                            </ul>
+                        </section>
+                        <section class="sift5 ui-scroller-v" data-role="panel">
+                            <ul class="ui-list ui-list-text ui-list-checkbox">
+                                <li class="ui-border-t clear-all" data-sort="sift5" data-value="-1">
+                                    <label class="ui-checkbox">
+                                        <input name="sift5-clear" type="radio" disabled checked data-value="-1">
+                                    </label>
+                                    <p>不限</p>
+                                </li>
+                                <script id="tpl-follow-rec" type="text/template">
+                                    {@each follow_rec as item,index}
+                                    <li class="ui-border-t" data-sort="sift5" data-label="跟进记录" data-key="${item}" data-value="${index}">
+                                        <label class="ui-checkbox">
+                                            <input name="follow-rec" type="checkbox" data-value="${index|removePrefix}" disabled>
+                                        </label>
+                                        <p>${item}</p>
+                                    </li>
+                                    {@/each}
+                                </script>
+                            </ul>
+                        </section>
+                        <section class="sift6" data-role="panel">
+                            <ul class="ui-list ui-list-text ui-list-checkbox ui-border-t">
+                                <li class="ui-border-t clear-all" data-sort="sift6" data-value="-1">
+                                    <label class="ui-checkbox">
+                                        <input name="sift6-clear" type="radio" disabled checked data-value="-1">
+                                    </label>
+                                    <p>不限</p>
+                                </li>
+                                <script id="tpl-follow-time" type="text/template">
+                                    {@each follow_time as item,index}
+                                    <li class="ui-border-t" data-sort="sift6" data-label="下次拜访时间" data-key="${item}" data-value="${index}">
+                                        <label class="ui-checkbox">
+                                            <input name="follow-time" type="radio" data-value="${index}" disabled>
+                                        </label>
+                                        <p>${item}</p>
+                                    </li>
+                                    {@/each}
+                                </script>
+                            </ul>
+                            <ul id="datepicker-group">
+                                <li>
+                                    <input type="text" name="start-time" readonly placeholder="开始时间">
+                                </li>
+                                <li>
+                                    <input type="text" name="end-time" readonly placeholder="结束时间">
+                                </li>
+                            </ul>
+                        </section>
+                    </div>
+                </div>
+                <div class="control-bar ui-footer-stable ui-btn-group">
+                    <button id="btnResetFilter" class="ui-btn-lg ui-border-r ui-border-t">
+                        重置
+                    </button>
+                    <button id="btnConfirmFilter" class="ui-btn-lg">
+                        确定
+                    </button>
+                </div>
+            </section>
+        </div>
+    </nav>
+    <section id="list">
+        <div id="bar-total">
+            合计: <span id="totalcount"></span>
+            <div class="others">
+                漏斗内合计：<span id="totalsiftcount"></span>
+            </div>
+        </div>
+        <div id="wrapper">
+            <section class="scroller">
+                <ul id="cuslist" class="cuslist ui-list ui-list-text ui-border-b ui-list-active">
+                <script id="tpl-cuslist" type="text/template">
+                    {@each res as section,index}
+                    <section data-role="tabs-panel" class="section">
+                        <h2 class="b-header ui-txt-default {@if index!=0 }ui-border-t{@/if}">
+                                    <span>${section.name}</span>
+                                    <div class="more ui-flex ui-flex-align-center ui-flex-pack-end">
+                                        <span class="summary ui-txt-muted"><span data-role="paid"></span>/<span data-role="count"></span>个</span>
+                                        <i class="ui-icon-list_arrow_down"></i>
+                                    </div>
+                                </h2>
+                        <ul class="list ui-list ui-list-pure ui-border-t" id="cus-render-list">
+                            {@each section.list as item}
+                            <li class="item ui-border-b" data-cid="${item.cid}" data-bid="${item.bid}">
+                                <h3 class="title">
+                                            <span>${item.customer}</span>
+                                            {@if item.attention_rate==1}
+                                            <em class="billing_attention">关注</em>
+                                            {@/if}
+                                            {@if item.score_trend==1}
+                                            <span class="predict_increase score-trend"></span>
+                                            {@/if}
+                                            {@if item.score_trend==-1}
+                                            <span class="predict_decrease score-trend"></span>
+                                            {@/if}
+                                            <div class="price">${item.price|priceFormat}</div>
+                                            <div class="folltype">${item.followtype|getFollowType}</div>
+                                        </h3>
+                                <p class="para ui-txt-info">
+                                    ${item.level1}级&nbsp;|&nbsp;${item.level2}级
+                                    <span style="padding-left: 10px">加入时间: ${item.create_time?item.create_time:'暂无'}</span>
+                                </p>
+                                <p class="para ui-txt-info">
+                                    ${item.structure}-${item.follower}
+                                </p>
+                            </li>
+                            {@/each}
+                        </ul>
+                    </section>
+                    {@/each}
+                </script>
+                <!-- end template script -->
+            </ul>
+            </section>
+        </div>
+    </section>
+    <script src="js/lib/dingtalk.min.js"></script>
+    <script src="js/lib/zepto.min.js"></script>
+    <script src="js/lib/frozen.min.js"></script>
+    <script src="js/lib/juicer.min.js"></script>
+    <script src="js/lib/fastclick.min.js"></script>
+    <script src="js/lib/iscroll.min.js"></script>
+    <script src="js/scroll-index.js"></script>
+    <script src="js/lib/apiList.js"></script>
+    <script src="js/config.js"></script>
+    <script src="js/billingCommon.js"></script>
+    <script src="js/billingList.js"></script>
+</body>
+
+</html>

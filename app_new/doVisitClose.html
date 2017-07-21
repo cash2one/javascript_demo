@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>拜访中</title>
+    <meta name="description" content="">
+    <meta name="viewport" content="width=device-width, height=device-height, initial-scale=1, maximum-scale=1, user-scalable=no">
+    <meta name="format-detection" content="telephone=no">
+    <link href="css/frozen.css" rel="stylesheet" type="text/css">
+    <link href="css/main.css" rel="stylesheet" type="text/css">
+    <link href="css/doVisitClose.css" rel="stylesheet" type="text/css">
+</head>
+<body>
+
+<div class="ui-container">
+
+    <div class="visitClosePart1" style="background: #fff;">
+        <h3 class="visitTime" style="color: #ec564d;font-size: 60px;font-weight: 100;"></h3>
+        <h4 class="visitStyleTitle" style="color: #666;font-size: 15px;"></h4>
+    </div>
+    <div class="visitClosePart2">
+        <div>
+            <span>
+                <i class="ui-icon-company_name"></i>
+            </span>
+            <span id="cusName"></span>
+        </div>
+        <div>
+            <span>
+                <i class="ui-icon-time"></i>
+            </span>
+            <span id="visitTime"></span>
+        </div>
+        <div>
+            <span>
+                <i class="ui-icon-location"></i>
+            </span>
+            <span id="position"></span>
+        </div>
+        <!-- <div id="personDiv">
+            <span>
+                <i class="ui-icon-toolbar_interview"></i>
+            </span>
+            <span id="person"></span>
+        </div> -->
+    </div>
+    <div id="visitRemindMsg" style="display: none;text-align: center;color: #4ca4d1;font-size: 11px;">
+        <p>如有陪访人员</p>
+        <p style="margin-top: 10px;">请在“结束拜访”前通知对方“开始陪访”</p>
+    </div>
+    <div class="visitClosePart3 ui-center" style="margin-top: 9%;">
+        <div class="visitCloseBtn" id="visitCloseBtn">结束拜访</div>
+    </div>
+
+</div>
+
+
+<div class="ui-container" style="display: hide;height: 0;">
+    <!-- <div class="ui-center map-loading-cover">加载中...</div> -->
+
+    <div class="map-container-wrap" >
+        <div id="map-container" style="position: relative;"></div>
+    </div>
+
+    <div class="map-poi-container-wrap">
+        <div id="map-poi-loading">
+            <!--<div class="ui-center">-->
+                <!--<div class="ui-loading-wrap">-->
+                    <!--<i class="ui-loading"></i><p>...</p>-->
+                <!--</div>-->
+            <!--</div>-->
+        </div>
+        <div id="map-poi-container"></div>
+        <div id="map-poi-loading-more" class="ui-loading-wrap">
+            <!-- <i class="ui-loading"></i><p>加载中...</p> -->
+        </div>
+    </div>
+</div>
+
+<script src="//webapi.amap.com/maps?v=1.3&key=c5b79a9a87ab2ca92eecd69ab3c00c17"></script>
+<script src="js/lib/zepto.min.js"></script>
+<script src="js/lib/frozen.min.js"></script>
+<script src="js/lib/moment.min.js"></script>
+<script src="js/lib/dtapi.js"></script>
+<script src="js/lib/dingtalk.min.js"></script>
+<script src="js/lib/fastclick.min.js"></script>
+<script src="js/lib/map.js"></script>
+<script src="js/lib/coordTransform.js"></script>
+<script src="js/lib/multipart.js"></script>
+<script src="js/lib/ddbanner.js"></script>
+<script src="js/lib/apiList.js"></script>
+<script src="js/config.js"></script>
+<script src="js/doVisitClose.js"></script>
+</body>
+</html>

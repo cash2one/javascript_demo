@@ -1,0 +1,233 @@
+body, html {
+    font-family: STHeitiSC-Light, 'Heiti SC Light', 'Heiti SC';
+    background-color: #f5f5f6;
+    min-height: 100%;
+    color: #666
+}
+
+header {
+    padding-top: 15px
+}
+
+.reportHeader {
+    position: relative;
+    height: 50px;
+    line-height: 50px;
+    padding: 0 30px;
+    background-color: #FFF;
+    overflow: hidden;
+    font-size: 0
+}
+
+.reportHeader i, .reportHeader span {
+    display: inline-block;
+    vertical-align: top;
+    font-size: 15px
+}
+
+.reportHeader i {
+    float: right;
+    font-size: 12px;
+    line-height: 50px
+}
+
+.reportHeader .report-header-title {
+    float: left;
+    color: #333
+}
+
+.reportHeader .report-header-type {
+    margin-right: 10px;
+    float: right;
+    color: #aaaec3
+}
+
+#wrapper {
+    /*position: absolute;*/
+    width: 100%;
+    top: 65px;
+    bottom: 0
+}
+
+#wrapper #report-msg {
+    position: absolute;
+    width: 100%;
+    height: 40px;
+    margin-top: -40px;
+    top: 50%;
+    font-size: 15px
+}
+
+#wrapper .report-list {
+    padding-bottom: 20px
+}
+
+#wrapper .report-list .report-list-cell {
+    padding: 0 15px
+}
+
+#wrapper .report-list .report-list-cell .report-list-cell-time {
+    font-size: 10px;
+    height: 30px;
+    line-height: 30px;
+    text-align: center
+}
+
+#wrapper .report-list .report-list-cell .report-list-cell-body {
+    background-color: #FFF;
+    border-radius: 6px
+}
+
+#wrapper .report-list .report-list-cell .report-list-cell-title {
+    position: relative;
+    height: 40px;
+    line-height: 40px;
+    padding: 0 15px;
+    overflow: hidden;
+    font-size: 0
+}
+
+#wrapper .report-list .report-list-cell .report-list-cell-title i, #wrapper .report-list .report-list-cell .report-list-cell-title span {
+    font-size: 14px;
+    display: inline-block;
+    vertical-align: top
+}
+
+#wrapper .report-list .report-list-cell .report-list-cell-title span {
+    color: #333
+}
+
+#wrapper .report-list .report-list-cell .report-list-cell-title span:nth-child(1) {
+    margin-right: 15px
+}
+
+#wrapper .report-list .report-list-cell .report-list-cell-title i {
+    float: right;
+    line-height: 40px
+}
+
+#wrapper .report-list .report-list-cell .report-list-cell-content {
+    position: relative;
+    padding: 0 15px;
+    font-size: 12px
+}
+
+#wrapper .report-list .report-list-cell .report-list-cell-content ul {
+    overflow: hidden;
+    padding: 10px 0
+}
+
+#wrapper .report-list .report-list-cell .report-list-cell-content ul li {
+    float: left;
+    width: 50%;
+    height: 25px;
+    line-height: 25px;
+    display: table
+}
+
+#wrapper .report-list .report-list-cell .report-list-cell-content ul li span {
+    display: table-cell;
+    width: 50%
+}
+
+#wrapper .report-list .report-list-cell .report-list-cell-plan {
+    position: relative;
+    padding: 10px 15px;
+    font-size: 12px
+}
+
+#wrapper .report-list .report-list-cell .report-list-cell-plan ul li {
+    height: 25px;
+    line-height: 25px
+}
+
+#empty {
+    text-align: center;
+    font-size: 15px;
+    display: none
+}
+
+#empty .emptyIcon {
+    margin-top: 60px
+}
+
+#empty .emptyIcon img {
+    width: 60px
+}
+
+#empty p {
+    margin-top: 10px
+}
+
+.scroller {
+    width: 100%;
+    padding: 0;
+    -webkit-tap-highlight-color: transparent
+}
+
+#pullDown, #pullUp {
+    text-align: center;
+    height: 45px;
+    line-height: 45px;
+    font-weight: 700;
+    font-size: 14px;
+    color: #888;
+    vertical-align: middle
+}
+
+#pullDown .pullDownIcon, #pullUp .pullUpIcon {
+    display: inline-block;
+    width: 40px;
+    height: 40px;
+    background: url(../img/pull-icon@2x.png) 0 0 no-repeat;
+    -webkit-background-size: 40px 80px;
+    background-size: 40px 80px;
+    -webkit-transition-property: -webkit-transform;
+    -webkit-transition-duration: 250ms;
+    vertical-align: middle
+}
+
+#pullDown .pullDownLabel, #pullUp .pullUpLabel {
+    display: inline-block;
+    vertical-align: middle
+}
+
+#pullDown .pullDownIcon {
+    margin-top: -4px;
+    -webkit-transform: rotate(180deg) translateZ(0)
+}
+
+#pullUp .pullUpIcon {
+    margin-top: 3px;
+    -webkit-transform: rotate(0) translateZ(0)
+}
+
+#pullDown.flip .pullDownIcon {
+    margin-top: 3px;
+    -webkit-transform: rotate(0) translateZ(0)
+}
+
+#pullUp.flip .pullUpIcon {
+    margin-top: -4px;
+    -webkit-transform: rotate(180deg) translateZ(0)
+}
+
+#pullDown.loading .pullDownIcon, #pullUp.loading .pullUpIcon {
+    margin-top: 0;
+    background-position: 0 100%;
+    -webkit-transform: rotate(0) translateZ(0);
+    -webkit-transition-duration: 0s;
+    -webkit-animation-name: loading;
+    -webkit-animation-duration: 2s;
+    -webkit-animation-iteration-count: infinite;
+    -webkit-animation-timing-function: linear
+}
+
+@-webkit-keyframes loading {
+    from {
+        -webkit-transform: rotate(0) translateZ(0)
+    }
+    to {
+        -webkit-transform: rotate(360deg) translateZ(0)
+    }
+}

@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+
+<head>
+    <meta charset="UTF-8">
+    <title>智能诊断配置</title>
+    <meta name="viewport" content="width=device-width, height=device-height, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no">
+    <meta name="format-detection" content="telephone=no">
+    <link href="css/frozen.css" rel="stylesheet" type="text/css">
+    <link rel="stylesheet" href="css/main.css" />
+    <link rel="stylesheet" href="css/data-decision.css" />
+    <link rel="stylesheet" href="css/teamDiagnoseConfig.css" />
+
+</head>
+
+<body>
+    <section class="ui-whitespace inner-container">
+        <section class="diag-config-ctn">
+            <div class="ui-tab">
+                <ul class="ui-tab-nav ui-border-b" id="tabCtn">
+                    <li class="current" data-type="range"><span>警示灯配置</span></li>
+                    <li data-type="rule"><span>诊断配置</span></li>
+                </ul>
+                <ul class="ui-tab-content">
+                    <li class="content-range current">
+                        <div id="headertable-wrap" class="table-header">
+                            <table id="headertable" class="ui-table table-head">
+                                <thead>
+                                    <tr>
+                                        <th style="width:120px;" class="table-title">分类</th>
+                                        <th>红灯</th>
+                                        <th>黄灯</th>
+                                        <th>绿灯 </th>
+                                    </tr>
+                                </thead>
+                            </table>
+                        </div>
+                        <div id="bodytable-wrap" class="table-body">
+                            <h3 id="table-tip" class="tb-tip" style="display:none;"></h3>
+                            <table id="bodyRange" class="ui-table table-content">
+
+                                <tbody>
+
+                                </tbody>
+                            </table>
+                        </div>
+                    </li>
+                    <li class="content-rule">
+                        <div id="headertable-wrap" class="table-header">
+                                <table id="headertable" class="ui-table ui-border table-head">
+                                    <thead>
+                                        <tr>
+                                            <th class="table-title">工作结果</th>
+                                            <th>诊断结果</th>
+                                            <th>工作建议</th>
+                                        </tr>
+                                    </thead>
+                                </table>
+                        </div>
+                        <div id="bodytable-wrap" class="table-body">
+                                <h3 id="table-tip" class="tb-tip" style="display:none;"></h3>
+                                <table id="bodyRule" class="ui-table ui-border table-content">
+                                    <tbody>
+                                    </tbody>
+                                </table>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+            <footer class="ui-footer ui-footer-btn">
+                <ul class="ui-tiled">
+                    <li class="diagnose-add ui-border-t" id="add"><i class="ui-icon ui-icon-add"></i><span>新增配置</span></li>
+                </ul>
+            </footer>
+        </section>
+    </section>
+    <script src="js/lib/dingtalk.min.js"></script>
+    <script src="js/lib/zepto.min.js"></script>
+    <script src="js/lib/frozen.min.js"></script>
+    <script src="js/lib/juicer.min.js"></script>
+    <script src="js/lib/fastclick.min.js"></script>
+    <script src="js/lib/ddbanner.js"></script>
+    <script src="js/config.js"></script>
+    <script src="js/common.js"></script>
+    <script src="js/lib/apiList.js"></script>
+    <script src="js/teamDiagnoseCommon.js"></script>
+    <script src="js/teamDiagnoseConfig.js"></script>
+</body>
+
+</html>

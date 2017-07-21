@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title></title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no" />
+<link href="css/frozen.css" rel="stylesheet" type="text/css">
+<link href="css/main.css" rel="stylesheet" type="text/css">
+<link href="css/addCustomer.css" rel="stylesheet" type="text/css">
+<link href="css/areas.css" rel="stylesheet" type="text/css">
+</head>
+<body>
+<section class="ui-container" id="main-body">
+	<form id="customer_form">
+		<div class="banner-label ui-flex  ui-flex-align-center">基本信息</div>
+
+		<div id="addcustomer" style="display:block;">
+			<div class="ui-form ui-form-gap ui-form-auto ui-border-tb">
+				<div id="v-container2" class="form-group">
+					<div class="ui-form-item ui-form-item-input-l ui-border-b">
+						<label>公司名称</label>
+						<input type="text" id="name" name="name" novalidate="" placeholder="请输入">
+					</div>
+					<div class="ui-form-item ui-form-item-icon ui-form-item-input-l">
+						<input type="hidden">
+						<label>公司行业</label>
+						<div class="ui-select">
+							<select id="industry" name="industry">
+								<option value="">请选择</option>
+							</select>
+							<i class="ui-icon-list_arrow_right"></i>
+						</div>
+					</div>
+					<div class="ui-form-item ui-form-item-icon ui-form-item-input-l">
+						<input type="hidden">
+						<label>客户来源</label>
+						<div class="ui-select">
+							<select id="sourceId" name="sourceId">
+								<option value="" default>请选择</option>
+							</select>
+							<i class="ui-icon-list_arrow_right"></i>
+						</div>
+					</div>
+					<div class="ui-form-item ui-form-item-icon ui-form-item-input-l">
+						<input type="hidden">
+						<label>客户等级</label>
+						<div class="ui-select">
+							<select id="companyLevel" name="companyLevel">
+								<option value="" default>请选择</option>
+							</select>
+							<i class="ui-icon-list_arrow_right"></i>
+						</div>
+					</div>
+					<div class="ui-form-item ui-form-item-input-l ui-border-b">
+						<label>预计金额</label>
+						<input type="tel" novalidate="" placeholder="请输入" id="moneyForecast" name="moneyForecast">
+						<span class="ui-unit">元</span>
+					</div>
+				</div>
+			</div>
+		</div>
+
+
+		<div class="banner-label ui-flex  ui-flex-align-center">
+			联系人信息
+		</div>
+
+		<div style="display:none;" id="showcontactlist"></div>
+		<div style="margin-top: 10px;display:none;" id="showcontactposren"></div>
+
+		<div id="addcontactperson" style="display:block;">
+			<div id="main" style="display:block;">
+				<div name="formdetail" id="formdetail" style="position: relative;">
+					<div class="ui-form ui-form-gap form-group" id="qfcontact1">
+						<div class="ui-form-item ui-form-item-l  ui-border-b">
+							<label>
+								联系人姓名
+							</label>
+							<input type="text" name="name_1" id="name_1" placeholder="请输入">
+						</div>
+						<div class="ui-form-item ui-form-item-l  ui-border-b">
+							<label>
+								联系人电话
+							</label>
+							<input type="tel" name="phone_1" id="phone_1" placeholder="请输入">
+						</div>
+
+						<div class="ui-form-item ui-form-item-l  ui-border-b">
+							<label>
+								联系人职务
+							</label>
+							<input type="text" name="position_1" id="position_1" placeholder="请输入">
+							<!--<div class="ui-select">-->
+								<!--<select name="position_1" id="position_1" >-->
+									<!--<option value="" default>请选择</option>-->
+								<!--</select>-->
+								<!--<i class="ui-icon-list_arrow_right"></i>-->
+							<!--</div>-->
+						</div>
+					</div>
+
+					<div style="display:block;" id="addcontactpersonmore">
+						<ul class="ui-list ui-list-text ui-list-cover ui-row-flex form-group">
+							<li class="ui-col ui-col ui-flex ui-flex-pack-end">
+								<i id="_add_relation_" class="ui-icon-add_relation" style="font-size: 14px;color: #ec564d"></i><div class="add-content">添加联系人</div>
+							</li>
+						</ul>
+					</div>
+				</div>
+			</div>
+			<input type="hidden" id="contact_count" value="1">
+		</div>
+
+		<div class="ui-form-item-blank" style="background-color: #f5f5f6; width: 100%"></div>
+
+		<!--<div class="ui-form ui-form-gap form-group ui-form-auto">-->
+			<!--<div class="ui-form-item ui-form-item-textarea">-->
+				<!--&lt;!&ndash; <label></label> &ndash;&gt;-->
+				<!--<textarea novalidate="" id="remark" name="remark" rows="3" placeholder="备注"></textarea>-->
+			<!--</div>-->
+		<!--</div>-->
+		<div style="display:none;"><input type="button" id="losefocus" /></div>
+	</form>
+</section>
+
+<div class="ui-dialog" id="toPrivate">
+	<div class="ui-dialog-cnt">
+		<div class="ui-dialog-bd">
+            <h4>客户存在于公海/开放池</h4>
+        </div>
+		<div class="ui-dialog-ft">
+			<button type="button" style="color:#858e99;" id="pullCancel" data-role="button">取消</button>
+			<button type="button" style="color:#e15151;" id="pullConfirm" data-role="button">拉入</button>
+		</div>
+	</div>
+</div>
+
+<script src="js/lib/zepto.min.js"></script>
+<script src="js/lib/frozen.min.js"></script>
+<script src="js/lib/dingtalk.min.js"></script>
+<script src="js/lib/fastclick.min.js"></script>
+<script src="js/lib/ddbanner.js"></script>
+<script src="js/lib/apiList.js"></script>
+<script src="js/lib/lodash.js"></script>
+<script src="js/lib/md5.min.js"></script>
+<script src="js/config.js"></script>
+<script src="js/common.js"></script>
+<script src="js/goldAgeCommon.js"></script>
+<script src="js/businessCustomers.js"></script>
+<script src="js/cusAddComplete.js"></script>
+<script src="js/areas.js"></script>
+<script src="js/draftwork.js"></script>
+</body>
+</html>

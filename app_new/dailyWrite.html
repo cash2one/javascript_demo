@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <title>写日报</title>
+        <meta name="viewport" content="width=device-width, height=device-height, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no">
+        <meta name="format-detection" content="telephone=no">
+        <link href="css/frozen.css" rel="stylesheet" type="text/css">
+        <link href="css/dailyWrite.css" rel="stylesheet" type="text/css">
+    </head>
+    <body>
+        <section id="wrapper">
+            <div class="multi_account">
+                <span id="curVwar"></span>
+                <span id="curName"></span>
+                <i class="ui-icon-list_arrow_right"></i>
+            </div>
+            <div class="write-data" id="dataContainer">
+               <!--  <ul class="ui-row ui-border-b">
+                    <li class="ui-col ui-col-50">本月目标<span class="dailyNum">15000</span></li>
+                    <li class="ui-col ui-col-50">本月回款<span class="dailyNum">29400</span></li>
+                    <li class="ui-col ui-col-50">本周预测<span class="dailyNum">11800</span></li>
+                    <li class="ui-col ui-col-50">本周回款<span class="dailyNum">0</span></li>
+                    <li class="ui-col ui-col-50">今日预测<span class="dailyNum">5800</span></li>
+                </ul> -->
+            </div>
+            <div class="ui-form-item ui-form-item-show dailyInputRow">
+                <label for="today_return">今日达成</label>
+                <input name="today_return" id="today_return" type="number" value="" placeholder="选填" onkeyup="ValidateNumber(this)">
+            </div>
+
+            <div class="ui-form-item-textarea write-desription">
+                <textarea name="today_summary" id="today_summary" placeholder="今日纪要" ></textarea>
+            </div>
+        </section>
+
+        <div class="ui-dialog">
+            <div class="ui-dialog-cnt" id="ui-dialog-cnt"></div>        
+        </div>
+
+        <script src="js/lib/zepto.min.js"></script>
+        <script src="js/lib/frozen.min.js"></script>
+        <script src="js/lib/dingtalk.min.js"></script>
+        <script src="js/lib/ddbanner.js"></script>
+        <script src="js/lib/apiList.js"></script>
+
+        <script src="js/login.js"></script>
+        <script src="js/config.js"></script>
+
+        <script src="js/dailyWrite.js"></script>
+    </body>
+</html>

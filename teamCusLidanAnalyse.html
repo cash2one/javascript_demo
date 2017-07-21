@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>客户列表</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, height=device-height, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no">
+    <meta name="format-detection" content="telephone=no">
+    <link href="css/frozen.css" rel="stylesheet" type="text/css">
+    <link href="css/main.css" rel="stylesheet" type="text/css">
+    <link href="css/searchWidget.css" rel="stylesheet" type="text/css">
+    <link href="css/customerlist.css" rel="stylesheet" type="text/css">
+    <link rel="stylesheet" href="css/data-decision.css" />
+</head>
+<body>
+<nav id="listNav">
+    <div class="ui-row ui-form-item ui-border-b">
+        <li class="ui-col ui-col-100" id="title" style="padding-left:30px;">请稍后...</li>
+    </div>
+</nav>
+<section id="top" class="ui-container">
+    <div class="ui-loading-wrap" id="msg">正在加载中...</div>
+    <div id="wrapper">
+    <section class="scroller">
+        <ul class="ui-list ui-list-active ui-list-text ui-border-b" id="cuslist"></ul>
+    </section>
+    <div id="biao" class="table-container fo_fix" style="display:none">
+      <div class="ui-whitespace inner-container">
+          <div id="headertable-wrap" class="table-header">
+              <div class="table-fixed">
+                  <table>
+                      <tr><th class="table-title">姓名</th></tr>
+                  </table>
+              </div>
+              <table id="headertable" class="table-head">
+                <thead>
+                  <tr>
+                    <th  style="max-width:100px;"  class="table-title">姓名</th>
+                    <th >部门</th>
+                    <th >职级</th>
+                    <th >预计回款客户数</th>
+                  </tr>
+                </thead>
+              </table>
+          </div>
+          <table id="lefttable" class="table-col">
+          <tbody></tbody>
+          </table>
+          <div id="bodytable-wrap" class="table-body">
+              <h3 id="table-tip" class="tb-tip" style="display:none;"></h3>
+              <table id="bodytable" class="table-content">
+                <tbody></tbody>
+              </table>
+          </div>
+      </div>
+  </div>
+    </div>
+</section>
+<div style="display:none;" class="backtotop">返回顶部</div>
+<div id="v-container-empty" style="display:none;position:fixed;top:1px;z-index: 999"><img width="98%" src="./img/default_empty_client.png"></div>
+
+<script src="js/lib/zepto.min.js"></script>
+<script src="js/lib/frozen.min.js"></script>
+<script src="js/lib/dingtalk.min.js"></script>
+<script src="js/lib/fastclick.min.js"></script>
+<script src="js/lib/ddbanner.js"></script>
+<script src="js/lib/apiList.js"></script>
+<script src="js/login.js"></script>
+<script src="js/config.js"></script>
+
+<script src="js/teamCusLidanAnalyse.js"></script>
+</body>
+</html>

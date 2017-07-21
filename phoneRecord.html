@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>电话记录</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no"/>
+        <link href="css/frozen.css" rel="stylesheet" type="text/css">
+        <link href="css/main.css" rel="stylesheet" type="text/css">
+        <link href="css/addCustomer.css" rel="stylesheet" type="text/css">
+        <link href="css/contactListPureJS.css" rel="stylesheet" type="text/css">
+    </head>
+    <style>
+    </style>
+
+    <body style="background-color: #f5f5f6">
+
+        <div class="ui-container" id="main-body">
+						<div class="ui-form-item ui-form-item-input-l ui-border-b" id="select_type" style="display:none">
+								<div class="">
+										<span class="sign_type_flag" id="sign_type_flag" style="color:#333">新签</span> | <span class="resign_type_flag" id="resign_type_flag" style="color:#333">续签</span>
+								</div>
+						</div>
+            <div class="ui-form ui-form-gap ui-form-auto ui-border-tb" id="new-sign" style="display: none">
+                <div id="v-container2" class="form-group">
+                    <form id="call_form_sign" name="call_form_sign">
+                        <div id="detail-content" class="detail-content">
+                            <div class="ui-form-item ui-form-item-input-l ui-border-b">
+                                <label>客户</label>
+                                <input type="text" id="cusname" name="cusname" readonly>
+                            </div>
+                        </div>
+                        <div id="home-content_sign" class="sign_cusname"></div>
+                        <div class="ui-form-item-blank ui-border-tb" style="background-color: #f5f5f6;"></div>
+                        <div class="ui-form-item ui-form-item-icon ui-form-item-input-l ui-border-b">
+                            <label>联系情况</label>
+                            <div class="ui-select">
+                                <select id="linkstatus" name="linkstatus">
+                                    <option value="">请选择</option>
+                                    <option value="联系中">联系中</option>
+                                    <option value="绕到负责人">绕到负责人</option>
+                                    <option value="约到负责人">约到负责人</option>
+                                    <option value="已经使用">已经使用</option>
+                                    <option value="未联系">未联系</option>
+                                    <option value="联系负责人中">联系负责人中</option>
+                                </select>
+                                <i class="ui-icon-list_arrow_right"></i>
+                            </div>
+                        </div>
+
+                        <div class="ui-form-item ui-form-item-icon ui-form-item-input-l ui-border-b">
+                            <label>联系人</label>
+                            <input type="text" id="link" placeholder="请选择" readonly="" name="link">
+                            <input type="hidden" id="cusids" value="">
+                            <i class="ui-icon-list_arrow_right"></i>
+                        </div>
+
+                        <div class="ui-form-item ui-form-item-input-l ui-border-b">
+                            <label>外勤人数</label>
+                            <input type="tel" novalidate="" placeholder="请输入" id="legworknumber_sign" name="legworknumber_sign">
+                            <span class="ui-unit">人</span>
+                        </div>
+
+                        <div class="ui-form-item ui-form-item-input-l ui-border-b">
+                            <label>车辆数</label>
+                            <input type="tel" novalidate="" placeholder="请输入" id="carnumber_sign" name="carnumber_sign">
+                            <span class="ui-unit">辆</span>
+                        </div>
+
+                        <div class="ui-form-item ui-form-item-input-l ui-border-b">
+                            <label for="next_time">下次联系</label>
+                            <input type="text" id="next_time_sign" class="date-input" readonly="" placeholder="请选择日期" name="next_time_sign">
+                            <i class="ui-icon-list_calendar"></i>
+                        </div>
+
+
+                        <div class="ui-form-item ui-form-item-switch ui-border-b">
+                            <label>邀请会议</label>
+                            <div class="ui-select" id="invite_msg" name="invite_msg">
+                                <select id="meetingId" name="meetingId">
+
+                                </select>
+                                <i class="ui-icon-list_arrow_right"></i>
+                            </div>
+                        </div>
+
+                        <div class="ui-form-item ui-form-item-input-l ui-border-b" id="meetTime" style="display:none">
+                            <label for="see_time">约见时间</label>
+                            <input type="text" id="see_time" class="date-input" readonly="" placeholder="请选择日期" name="see_time">
+                            <i class="ui-icon-list_calendar"></i>
+                        </div>
+
+                        <div class="ui-form-item ui-form-item-input-l ui-border-b" id="meetPlace" style="display:none">
+                            <label>约见地点</label>
+                            <input type="text" novalidate="" id="see_addr" name="see_addr" placeholder="请输入">
+                        </div>
+
+                        <div class="ui-form-item ui-form-item-textarea ui-border-b">
+                            <textarea novalidate="" rows="3" id="content_sign" name="content_sign" placeholder="请输入致电详情"></textarea>
+                        </div>
+                    </form>
+                </div>
+            </div>
+
+
+            <div class="ui-form ui-form-gap ui-form-auto ui-border-tb" id="resign" style="display: none">
+
+                <div id="v-container2" class="form-group">
+                    <form id="call_form_resign" name="call_form_resign">
+                        <div id="detail-content" class="detail-content">
+                            <div class="ui-form-item ui-form-item-input-l">
+                                <label>客户</label>
+                                <input type="text" class="resign_cusname" id="cusname" name="cusname" readonly>
+                            </div>
+                        </div>
+
+                        <div id="home-content_resign"></div>
+                        <div class="ui-form-item-blank ui-border-tb" style="background-color: #f5f5f6;"></div>
+                        <div class="ui-form-item ui-form-item-input-l ui-border-b">
+                            <label>回访类型</label>
+                            <div class="ui-select">
+                                <select id="review_type" name="review_type">
+                                    <option value="">请选择</option>
+                                    <option value="1">客户来电</option>
+                                    <option value="2">约见客户</option>
+                                    <option value="3">使用情况了解</option>
+                                </select>
+                                <i class="ui-icon-list_arrow_right"></i>
+                            </div>
+                        </div>
+
+                        <div class="ui-form-item ui-form-item-input-l ui-border-b">
+                            <label>回访对象</label>
+                            <input type="text" id="link_resign" name="link_resign" placeholder="请选择" readonly="">
+                            <input type="hidden" id="cusids_resign" value="">
+                            <i class="ui-icon-list_arrow_right"></i>
+                        </div>
+
+                        <div class="ui-form-item ui-form-item-input-l ui-border-b">
+                            <label>外勤人数</label>
+                            <input type="tel" novalidate="" placeholder="请输入" id="legworknumber" name="legworknumber">
+                            <span class="ui-unit">人</span>
+                        </div>
+
+                        <div class="ui-form-item ui-form-item-input-l ui-border-b">
+                            <label>车辆数</label>
+                            <input type="tel" novalidate="" placeholder="请输入" id="carnumber" name="carnumber">
+                            <span class="ui-unit">辆</span>
+                        </div>
+
+                        <div class="ui-form-item ui-form-item-input-l ui-border-b">
+                            <label for="next_time">下次回访</label>
+                            <input type="text" id="next_time" name="next_time" readonly="" class="date-input" placeholder="请选择日期">
+                            <i class="ui-icon-list_calendar"></i>
+                        </div>
+                        <div class="ui-form-item-blank ui-border-tb" style="background-color: #f5f5f6;" id="add_problem_split"></div>
+                        <div class="ui-form-item ui-form-item-input-l ui-border-b" id="add_problem" style="display:block;">
+                            <div>添加问题描述（未解决）</div>
+                            <i class="ui-icon-list_arrow_right"></i>
+                        </div>
+                        <div name="formPhone" id="formPhone" style="position: relative;">
+                            <div style="display:none; position: absolute;right: 0;bottom: 0;" id="addMoreProblem">
+                                <ul class="ui-list ui-list-text ui-list-cover form-group">
+                                    <li>
+                                        <i id="_add_relation_" class="ui-icon-list_creat" style="font-size: 12px;color: #ec564d"></i>
+                                        <div class="add-content">添加问题</div>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                        <input type="hidden" id="problem_count" value="1">
+
+                        <div class="ui-form-item-blank ui-border-tb" style="background-color: #f5f5f6;"></div>
+                        <div class="ui-form-item ui-form-item-textarea ui-border-b">
+                            <textarea novalidate="" rows="3" id="content" name="content" placeholder="请输入致电详情"></textarea>
+                        </div>
+                    </form>
+                </div>
+            </div>
+
+        </div>
+
+
+        <!-- <script src="js/locate.js"></script> -->
+        <script src="js/lib/zepto.min.js"></script>
+        <!-- <script src="js/lib/jquery.min.js"></script> -->
+        <script src="js/lib/frozen.min.js"></script>
+        <script src="js/lib/dingtalk.min.js"></script>
+        <script src="js/lib/fastclick.min.js"></script>
+        <script src="js/lib/zeptoAjaxFileUpload.js"></script>
+        <script src="js/lib/ddbanner.js"></script>
+        <script src="js/lib/moment.min.js"></script>
+        <script src="js/lib/lodash.js"></script>
+        <script src="js/lib/apiList.js"></script>
+        <script src="js/config.js"></script>
+        <script src="js/common.js"></script>
+        <script src="js/phoneRecord.js"></script>
+        <script src="js/customerContact.js"></script>
+        <script src="js/customerContactAdd.js"></script>
+        <script src="js/customerContactAdd.js"></script>
+        <script src="js/customerSel.js"></script>
+        <script src="js/draftwork.js"></script>
+        <!-- <script src="js/customer.flush.js"></script> -->
+
+    </body>
+</html>

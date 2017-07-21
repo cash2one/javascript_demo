@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>电话会议</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no"/>
+        <link href="css/frozen.css" rel="stylesheet" type="text/css">
+        <link href="css/main.css" rel="stylesheet" type="text/css">
+        <link href="css/businessCall.css" rel="stylesheet" type="text/css">
+        <link href="css/businessCalls.css" rel="stylesheet" type="text/css">
+        <script type="text/javascript">
+            function resize() {
+                var remFontSize = +document.documentElement.clientWidth / 16;
+                document.documentElement.style.fontSize = remFontSize + "px";
+            }
+            var b = null;
+            window.addEventListener("resize", function() {
+                clearTimeout(b),
+                b = setTimeout(resize, 300)
+            }, !1);
+            resize();
+        </script>
+    </head>
+
+    <body>
+        <section class="ui-container" id="main-body">
+            <div class="" id="hidden_page" style="background-image:url('img/down.png');background-size:1.4rem auto; width: 2.4rem; height:2.4rem; background-repeat:no-repeat;position:absolute;margin-top:0.75rem;margin-left:0.75rem;">
+            </div>
+            <div class="meeting-title">
+                <div class="title-content">
+                    <div class="info-title-name"><h3 id="info_name"></h3></div>
+                    <div class="info-title-info"><h4 id="info_topic" style="color:#666"></h4></div>
+                    <div class="info-title-duration"><h4 id="info_duration"></h4></div>
+                </div>
+            </div>
+            <div class="meeting-body">
+                <div class="call-status" id="call_status">
+                    <ul id="call_participates">
+                        <li class="list-content" id="addMore" style="display:none">
+                            <div class="follow-avatar">
+                                <span class="avatar-content" id="addParticipate">
+                                    <i class="ui-icon-list_creat"></i>
+                                </span>
+                            </div>
+
+                        </li>
+
+                    </ul>
+                </div>
+            </div>
+            <div class="meeting-footer" id="meeting_footer">
+                <!-- <div class="ui-btn-wrap">
+                    <button class="ui-btn ui-btn-danger" id="cancelCall">
+                        结束会议
+                    </button>
+                </div>
+                <div class="footer-content">
+                    <div>
+                        结束会议，将会立即结束所有通话
+                    </div>
+                </div> -->
+            </div>
+        </section>
+
+        <script src="js/lib/zepto.min.js"></script>
+        <script src="js/lib/frozen.min.js"></script>
+        <script src="js/lib/dingtalk.min.js"></script>
+        <script src="js/lib/fastclick.min.js"></script>
+        <script src="js/lib/ddbanner.js"></script>
+        <script src="js/lib/apiList.js"></script>
+        <script src="js/lib/lodash.js"></script>
+        <script src="js/config.js"></script>
+        <script src="js/common.js"></script>
+        <script src="js/login.js"></script>
+        <script src="js/businessCallMeeting.js"></script>
+        <!-- 搜索 -->
+        <script src="js/lib/iscroll.min.js"></script>
+        <script src="js/scroll-index.js"></script>
+        <script src="js/login.js"></script>
+        <script src="js/businessCalls.js"></script>
+
+    </body>
+</html>

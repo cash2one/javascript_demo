@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>跟进记录</title>
+    <meta name="viewport"
+          content="width=device-width, height=device-height, initial-scale=1, maximum-scale=1, user-scalable=no">
+    <meta name="format-detection" content="telephone=no">
+    <link rel="stylesheet" href="css/frozen.css">
+    <link rel="stylesheet" href="css/contract.css">
+    <style>
+        [v-cloak] {
+            display: none;
+        }
+    </style>
+</head>
+<body class="contract-form--body" v-cloak>
+<article id="main-body" class="ui-container">
+    <form id="form" name="form" class="contract-form" novalidate>
+        <fieldset>
+            <legend class="ui-whitespace">客户信息</legend>
+            <div class="ui-form ui-form-gap">
+                <div class="ui-form-item ui-form-item-icon ui-border-b">
+                    <label for="">跟进类型</label>
+                    <input type="text" readonly placeholder="请选择" v-model="follow.typeName">
+                </div>
+                <div class="ui-form-item ui-border-b" v-if="status==1">
+                    <label for="">邀约主题</label>
+                    <input type="text" readonly placeholder="请选择" v-model="follow.inviteTypeMap[follow.inviteTypeId]">
+                </div>
+                <div class="ui-form-item ui-border-b">
+                    <label for="">跟进方式</label>
+                    <input type="text" readonly placeholder="请选择"
+                           v-model="follow.followChanelMap[follow.followChanelId]">
+                </div>
+                <div class="ui-form-item ui-border-b">
+                    <label for="">跟进时间</label>
+                    <input type="text" readonly placeholder="请选择" v-model="follow.followTime | getDate">
+                </div>
+                <div class="ui-form-item ui-border-b">
+                    <label for="">跟进内容</label>
+                    <input type="text" readonly placeholder="请选择" v-model="follow.keypoint">
+                </div>
+                <div class="ui-form-item ui-border-b">
+                    <label for="">沟通结果</label>
+                    <input type="text" readonly placeholder="请选择" v-model="follow.talkResult">
+                </div>
+                <div class="ui-form-item ui-border-b" v-if="follow.reason!=''">
+                    <label for="">不来原因</label>
+                    <input type="text" readonly v-model="follow.reason">
+                </div>
+                <div class="ui-form-item ui-border-b">
+                    <label for="" v-if="follow.reason!=''">下次致电时间</label>
+                    <label for="" v-else>预约时间</label>
+                    <input type="text" readonly v-model="follow.reservationTime">
+                </div>
+                <div class="ui-form-item ui-border-b">
+                    <label for="">照片</label>
+                </div>
+                <div>
+                    <ul class="ui-form-camera-list ui-whitespace clearfix" v-if="follow.images&&follow.images.length">
+
+                            <li class="ui-form-camera-item" v-for="image in follow.images">
+                                <template v-if="image.imgurl != undefined">
+                                    <img v-bind:src="image.imgurl | thumb" v-on:tap="previewImages(image)">
+                                </template>
+                            </li>
+                    </ul>
+                </div>
+            </div>
+        </fieldset>
+    </form>
+</article>
+
+<script src="js/lib/dingtalk.min.js"></script>
+<script src="js/lib/zepto.min.js"></script>
+<script src="js/lib/fastclick.min.js"></script>
+<script src="js/lib/vue.min.js"></script>
+<script src="js/lib/moment.min.js"></script>
+<script src="js/lib/zeptoAjaxFileUpload.js"></script>
+<script src="js/lib/ddbanner.js"></script>
+<script src="js/lib/apiList.js"></script>
+<script src="js/lib/md5.min.js"></script>
+<script src="js/config.js"></script>
+<script src="js/common.js"></script>
+<script src="js/login.js"></script>
+<script src="js/goldAgeCommon.js"></script>
+<script src="js/coachSel.js"></script>
+<script src="js/customerContact.js"></script>
+<script src="js/draftwork.js"></script>
+<script src="js/customerFollow.js"></script>
+</body>
+</html>

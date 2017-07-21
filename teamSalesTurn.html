@@ -1,0 +1,229 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<meta content="initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
+	<meta content="telephone=no" name="format-detection">
+	<title>销售执行转化分析</title>
+	<link href="css/frozen.css" rel="stylesheet" type="text/css">
+	<link href="css/main.css" rel="stylesheet" type="text/css">
+	<link rel="stylesheet" href="css/team.css" />
+	<link rel="stylesheet" href="css/data-decision.css" />
+</head>
+<body>
+<section>
+	<div class="ui-container" style="background: #F8F8F8;">
+		<div class="chart-panel hide" id="top-btn" style="height: 10px;">
+			<div class="show-btn  toggle-btn-t">
+				<span class="ui-icon-arrow ligth-green"></span>
+			</div>
+		</div>
+
+		<div class="chart-panel" id="chart-container">
+			<ul class="ui-list ui-list-text">
+				<li class="">
+					<div id="ave_files_container" class="chart-container" style="height:220px;width:100%;">
+						<div class="ui-loading-wrap text-center">
+							<p>图表加载中</p>
+							<i class="ui-loading"></i>
+						</div>
+					</div>
+				</li>
+			</ul>
+			<div class="hide-btn toggle-btn-t">
+				<span class="ui-icon-arrow ligth-green"></span>
+			</div>
+		</div>
+
+		<div style="margin-top: 20px;">
+
+			<div id="biao" class="table-container fo_fix" >
+				<div class="ui-whitespace inner-container">
+					<div id="headertable-wrap" class="table-header">
+						<div class="table-fixed">
+							<table>
+								<tr><th class="table-title">城市</th></tr>
+							</table>
+						</div>
+						<table id="headertable" class="table-head">
+							<thead>
+							<tr>
+								<th style="max-width:100px;" class="table-title">城市</th>
+								<th id="leader_title">Leader</th>
+								<th >资料量</th>
+								<th >已电话</th>
+								<!--<th >已约访</th>-->
+								<th >已拜访</th>
+								<th >已成单</th>
+							</tr>
+							</thead>
+						</table>
+					</div>
+					<table id="lefttable" class="table-col">
+						<tbody></tbody>
+					</table>
+					<div id="bodytable-wrap" class="table-body">
+						<h3 id="table-tip" class="tb-tip" style="display:none;"></h3>
+						<table id="bodytable" class="table-content">
+							<tbody></tbody>
+						</table>
+					</div>
+				</div>
+			</div>
+		</div>
+
+	</div>
+</section>
+<script type="text/javascript" src="js/lib/fastclick.min.js" ></script>
+<script type="text/javascript" src="js/lib/jquery.min.js" ></script>
+<script type="text/javascript" src="js/lib/highcharts.js" ></script>
+<script type="text/javascript" src="js/lib/highcharts-more.js" ></script>
+<script src="js/lib/dingtalk.min.js"></script>
+<script src="js/lib/ddbanner.js"></script>
+<script src="js/lib/apiList.js"></script>
+<script src="js/login.js"></script>
+<script src="js/config.js"></script>
+<script src="js/common.js"></script>
+<script type="text/javascript" src="js/team.js" ></script>
+
+<script>
+	var swidth;
+	$(document).ready(function() {
+		setTableTitle(team.user.position);
+		document.title='销售执行转化分析';
+		var level=getUrlParam('level');
+		var orgid=getUrlParam('orgid');
+		var issub=getUrlParam('issub');
+		if(!level){
+			getColumnData(0,0,0);
+		}else{
+			getColumnData(level,orgid,issub);
+		}
+
+	});
+
+	function getColumnData(level,orgid,issub){
+		team.postData.level=level;
+		team.postData.orgid=orgid;
+		team.postData.issub=issub;
+		if(level < 4){
+				$("#leader_title").show();
+		}else{
+				$("#leader_title").hide();
+		}
+		$.ajax({
+			type:"post",
+			url:oms_config.apiUrl+"apiTeam/getSalesTransformAnalysis?t="+new Date().getTime(),
+			async:true,
+			data:team.postData,
+			dataType:'json',
+			success:function(rs){
+				if(rs.res==1){
+					setTrunColumnChart(rs.data.total);
+					setTableTitle2(rs.data.level);
+
+					var tableData=rs.data.table;
+					//console.log(tableData);
+					var tableColumn="";
+					var lefttable="";
+					lefttable += '<tr><td style="max-width:100px;">合计</td></tr>';
+					//var links = '&s=' + tableData[i].level + '&id=' + tableData[i].vwar_id;
+					tableColumn +='  <tr class="'+trClass+'" >\
+									                <td style="max-width:100px;min-width:100px;" >合计</td>';
+					if(level < 4){
+							tableColumn += '<td class="text-center">--</td>';
+					}
+					tableColumn += '<td class="text-center">'+rs.data.total.cus_num+" ("+rs.data.total.cus_num_r+')</td>\
+									                <td class="text-center">'+rs.data.total.call_num+" ("+rs.data.total.call_num_r+')</td>\
+									                <td class="text-center">'+rs.data.total.visit_num+" ("+rs.data.total.visit_num_r+')</td>\
+									                <td class="text-center">'+rs.data.total.yeji_num+" ("+rs.data.total.yeji_num_r+')</td>\
+									            </tr>';
+					for(var i in tableData){
+						var trClass='odd';
+						if(i%2==0){
+							trClass='even';
+						}
+						var dept=tableData[i].vwar_name;
+						var issub = 1;
+						if(tableData[i].isClick==1){
+							dept='<a href="teamSalesTurn.html?level='+tableData[i].level+'&orgid='+tableData[i].vwar_id+'&issub=1" >'+dept+'</a>';
+						}
+						if (tableData[i].level == 5){
+							dept='<a href="profile.html?id='+tableData[i].vwar_id+'&do=0" >'+dept+'</a>';
+						}
+						lefttable += '<tr><td style="max-width:100px;" class="fix-column"><span class="ui-nowrap tdspan">'+dept+'</span></td></tr>';
+
+						var links = '&s=' + tableData[i].level + '&id=' + tableData[i].vwar_id;
+						tableColumn += '  <tr class="' + trClass + '" >\
+									    <td style="max-width:100px;min-width:100px;" class="fix-column" ><span 	class="ui-nowrap tdspan">' + dept + '</span></td>';
+						if(level < 4){
+								tableColumn += '<td class="text-center">'+(team.leaderInfo[tableData[i].vwar_id]?team.leaderInfo[tableData[i].vwar_id]:'--')+'</td>';
+						}
+						tableColumn +=  '<td class="text-center"><a href="teamCusList.html?t=7'+links+'">' + tableData[i].cus_num
+									+ "("+tableData[i].cus_num_r+')</a></td>\
+									     <td class="text-center"><a href="teamCusList.html?t=8'+links+'">' +
+									tableData[i].call_num + "("+tableData[i].call_num_r+')</a></td>\
+									     <td class="text-center"><a href="teamCusList.html?t=9'+links+'">' +
+									tableData[i].visit_num + "("+tableData[i].visit_num_r+')</a></td>\
+									     <td class="text-center"><a href="teamCusList.html?t=1'+links+'">' +
+									tableData[i].yeji_num + "("+tableData[i].yeji_num_r+')</a></td>\
+									        </tr>';
+					}
+
+					$("#lefttable tbody").html(lefttable);
+					$("#bodytable tbody").html(tableColumn);
+					scrollTablet();
+				}
+
+			},
+			error:function(e){
+				console.log(JSON.stringify(e));
+			}
+		});
+	}
+
+	function comparesort(a,b){
+		if (a[1] < b[1]) return 1;
+		if (a[1] > b[1]) return -1;
+		return 0;
+	}
+	function scrollTablet(){
+		console.log("test");
+		setTableBody();
+		$('#lefttable').show();
+		$(window).resize(setTableBody);
+		$(".table-body").scroll(function (){
+			console.log(this.scrollTop);
+			$("#headertable").offset({ left: -1*this.scrollLeft });
+			if($("#chart-container").css('display')=='none'){
+				$("#lefttable").offset({ top: -1*this.scrollTop + 77 });
+			}else{
+				$("#lefttable").offset({ top: -1*this.scrollTop + 299 });
+			}
+		});
+
+		$(window).scroll(function (){
+			if($("#chart-container").css('display')=='none'){
+				$("#lefttable").offset({ top: -1*this.scrollTop + 77 });
+			}else{
+				$("#lefttable").offset({ top: -1*this.scrollTop + 299 });
+			}
+		});
+	}
+	$('.toggle-btn-t').click(function(){
+		$('.chart-panel').slideToggle(
+				'fast',function(){
+					if($("#chart-container").css('display')=='none'){
+						$("#lefttable").offset({ top: -1*this.scrollTop + 77 });
+					}else{
+						$("#lefttable").offset({ top: -1*this.scrollTop + 299 });
+					}
+
+				});
+	});
+
+
+</script>
+
+</body>
+</html>

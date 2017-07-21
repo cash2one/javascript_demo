@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>合同详情</title>
+    <meta name="viewport" content="width=device-width, height=device-height, initial-scale=1, maximum-scale=1, user-scalable=no">
+    <meta name="format-detection" content="telephone=no">
+    <link rel="stylesheet" href="css/frozen.css">
+    <link rel="stylesheet" href="css/contract.css">
+    <style>
+        [v-cloak] {
+          display: none;
+        }
+    </style>
+</head>
+<body class="contract-info--body" v-cloak>
+    <article class="contract-info">
+        <header>
+            <div class="ui-flex ui-flex-ver ui-flex-pack-center ui-flex-align-center">
+                <h2>{{ title }}</h2>
+                <p v-show="htmoney">合同金额：{{ htmoney | currency '￥' 2 }}</p>
+            </div>
+        </header>
+        <div class="ui-tab">
+            <ul class="ui-tab-nav ui-border-b">
+                <li>合同信息</li>
+                <li>客户信息</li>
+                <li>产品服务</li>
+            </ul>
+            <ul class="ui-tab-content" style="width:300%;">
+                <li>
+                    <div class="ui-panel">
+                        <ul class="ui-list ui-border-b">
+                            <li class="ui-border-t">
+                                <div class="ui-form-item">
+                                    <label for="">合同名称</label>
+                                    <input type="text" readonly v-bind:value="contract.contractname">
+                                </div>
+                            </li>
+                            <li class="ui-border-t">
+                                <div class="ui-form-item">
+                                    <label for="">合同规格</label>
+                                    <input type="text" readonly v-bind:value="contract.standard_str">
+                                </div>
+                            </li>
+                            <li class="ui-border-t">
+                                <div class="ui-form-item">
+                                    <label for="">合同号</label>
+                                    <input type="text" readonly v-bind:value="contract.contractno">
+                                </div>
+                            </li>
+                            <li class="ui-border-t">
+                                <div class="ui-form-item">
+                                    <label for="">合同性质</label>
+                                    <input type="text" readonly v-bind:value="contract.property">
+                                </div>
+                            </li>
+                            <li class="ui-border-t">
+                                <div class="ui-form-item">
+                                    <label for="">合同类型</label>
+                                    <input type="text" readonly v-bind:value="contract.type">
+                                </div>
+                            </li>
+                            <li class="ui-border-t">
+                                <div class="ui-form-item">
+                                    <label for="">合同金额</label>
+                                    <input type="text" readonly v-bind:value="contract.htmoney | currency '￥' 2">
+                                </div>
+                            </li>
+                            <li class="ui-border-t">
+                                <div class="ui-form-item">
+                                    <label for="">服务总额</label>
+                                    <input type="text" readonly v-bind:value="contract.sermoney | currency '￥' 2">
+                                </div>
+                            </li>
+                            <li class="ui-border-t">
+                                <div class="ui-form-item">
+                                    <label for="">设备总额</label>
+                                    <input type="text" readonly v-bind:value="contract.devmoney | currency '￥' 2">
+                                </div>
+                            </li>
+                            <li class="ui-border-t">
+                                <div class="ui-form-item">
+                                    <label for="">签单业务员</label>
+                                    <input type="text" readonly v-bind:value="contract.staff">
+                                </div>
+                            </li>
+                            <li class="ui-border-t">
+                                <div class="ui-form-item">
+                                    <label for="">签订日期</label>
+                                    <input type="text" readonly v-bind:value="contract.sign_date">
+                                </div>
+                            </li>
+                            <li class="ui-border-t">
+                                <div class="ui-form-item">
+                                    <label for="">审核状态</label>
+                                    <input type="text" readonly v-bind:value="contract.audit_flg | auditStringify">
+                                </div>
+                            </li>
+                        </ul>
+                    </div>
+                    <div class="ui-panel">
+                        <div class="ui-panel-legend ui-whitespace"><h6>合同扫描件</h6></div>
+                        <ul class="ui-whitespace ui-thumb-trisect">
+                            <li v-for="img in contract.imageurls">
+                                <a class="thumbnail" v-on:click="preview(img)">
+                                    <img v-bind:src="img | thumb" alt="X">
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+                </li>
+                <li>
+                    <div class="ui-panel">
+                        <ul class="ui-list ui-list-pure ui-border-b">
+                            <li class="ui-border-t">
+                                <p>客户名称</p>
+                                <h4 v-text="contract.cusname"></h4>
+                            </li>
+                            <li class="ui-border-t">
+                                <p>客户编码</p>
+                                <h4 v-text="contract.cuscode"></h4>
+                            </li>
+                            <li class="ui-border-t">
+                                <p>客户行业</p>
+                                <h4 v-text="contract.trade"></h4>
+                            </li>
+                            <li class="ui-border-t">
+                                <p>客户联系人</p>
+                                <h4 v-text="[contract.linkman, contract.telephone].join(' | ')"></h4>
+                            </li>
+                        </ul>
+                    </div>
+                </li>
+                <li>
+                    <div class="ui-panel">
+                        <ul class="ui-list ui-list-pure ui-border-b">
+                            <li class="ui-border-t">
+                                <p>产品版本</p>
+                                <h4 v-text="contract.new_product_version"></h4>
+                            </li>
+                            <li class="ui-border-t">
+                                <p>购买期限</p>
+                                <h4 v-text="contract.period+'个月'"></h4>
+                            </li>
+                            <li class="ui-border-t">
+                                <p>赠送期限</p>
+                                <h4 v-text="contract.giftperiod+'个月'"></h4>
+                            </li>
+                            <li class="ui-border-t">
+                                <p>服务起止时间</p>
+                                <h4 v-text="contract.begindate + '~' + contract.enddate"></h4>
+                            </li>
+                        </ul>
+                    </div>
+                    <div class="ui-panel">
+                        <div class="ui-panel-legend ui-whitespace"><h6>服务详情</h6></div>
+                        <ul class="ui-list ui-list-text ui-border-b">
+                            <li class="ui-border-t" v-for="item in contract.details">
+                                <div class="ui-list-info">
+                                    <h4 v-text="item.name + '*' + item.number">手持服务*15</h4>
+                                    <p>单价：<span v-text="item.price | currency '￥' 2"></span></p>
+                                </div>
+                                <div class="ui-txt-info" v-text="item.amount | currency '￥' 2"></div>
+                            </li>
+                        </ul>
+                    </div>
+                </li>
+            </ul>
+        </div>
+    </article>
+
+<script src="js/lib/zepto.min.js"></script>
+<script src="js/lib/frozen.min.js"></script>
+<script src="js/lib/dingtalk.min.js"></script>
+<script src="js/lib/vue.min.js"></script>
+<script src="js/lib/ddbanner.js"></script>
+<script src="js/lib/apiList.js"></script>
+<script src="js/config.js"></script>
+<script src="js/common.js"></script>
+<script src="js/login.js"></script>
+<script src="js/contract.js"></script>
+</body>
+</html>

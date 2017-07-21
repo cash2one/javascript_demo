@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>登录测试</title>
+</head>
+<body>
+	<script src="js/lib/zepto.min.js"></script>
+	<script src="js/lib/frozen.min.js"></script>
+	<script src="js/lib/dingtalk.min.js"></script>
+	<script src="js/lib/fastclick.min.js"></script>
+	<script src="js/lib/ddbanner.js"></script>
+	<script src="js/lib/apiList.js"></script>
+	<script src="js/login.js"></script>
+	<script src="js/config.js"></script>
+	<script src="js/common.js"></script>
+	<script type="text/javascript">
+		var loginApi=oms_config.apiUrl+oms_apiList.login;
+		new Login(oms_config.corpId,oms_config.baseUrl,loginApi,function(){
+			console.log('这里是回调');
+			var omsUser=getCookie('omsUser');
+			console.log(omsUser);
+		})
+	</script>
+</body>
+</html>

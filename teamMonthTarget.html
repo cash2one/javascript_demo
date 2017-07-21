@@ -1,0 +1,374 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta content="initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
+<meta content="telephone=no" name="format-detection">
+<title>销售目标达成</title>
+<link href="css/frozen.css" rel="stylesheet" type="text/css">
+<link href="css/main.css" rel="stylesheet" type="text/css">
+<link rel="stylesheet" href="css/team.css" />
+<link rel="stylesheet" href="css/data-decision.css" />
+</head>
+<body>
+<section>
+	<div class="ui-container" style="background: #F8F8F8;">
+		<div class="chart-panel  hide" style="height: 10px;">
+			<div class="show-btn toggle-btn">
+			<span class="ui-icon-arrow ligth-green"></span>
+		</div>
+		</div>
+
+	<div class="chart-panel" id="chart-container">
+		<ul class="ui-list ui-list-text">
+			<li class="">
+				<div id="month_target"  class="chart-container">
+					<div class="ui-loading-wrap text-center">
+							    <p>图表加载中</p>
+							    <i class="ui-loading"></i>
+							</div>
+						</div>
+					</li>
+		</ul>
+		<div class="hide-btn toggle-btn">
+			<span class="ui-icon-arrow ligth-green"></span>
+		</div>
+		</div>
+
+		<div style="margin-top: 20px;">
+
+		    <div id="biao" class="table-container fo_fix" >
+	        <div class="ui-whitespace inner-container">
+	            <div id="headertable-wrap" class="table-header">
+	                <div class="table-fixed">
+	                    <table>
+	                        <tr><th class="table-title">部门</th></tr>
+	                    </table>
+	                </div>
+	                <table id="headertable" class="table-head">
+	                	<thead>
+					<tr>
+						<th style="max-width:100px;" class="table-title">部门</th>
+						<!--<th id="leader_title" style="max-width:100px;min-width:100px;">Leader</th>-->
+						<th >总业绩</th>
+						<th >完成率</th>
+						<th >客服业绩</th>
+						<th >完成率</th>
+						<th >私教业绩</th>
+						<th >完成率</th>
+					</tr>
+					</thead>
+	                </table>
+	            </div>
+	            <table id="lefttable" class="table-col">
+	            <tbody></tbody>
+	            </table>
+	            <div id="bodytable-wrap" class="table-body">
+	                <h3 id="table-tip" class="tb-tip" style="display:none;"></h3>
+	                <table id="bodytable" class="table-content">
+	                	<tbody></tbody>
+	                </table>
+	            </div>
+	        </div>
+	    </div>
+
+
+
+		</div>
+
+	</div>
+</section>
+<script type="text/javascript" src="js/lib/fastclick.min.js" ></script>
+<script type="text/javascript" src="js/lib/jquery.min.js" ></script>
+<script type="text/javascript" src="js/lib/highcharts.js" ></script>
+<script type="text/javascript" src="js/lib/highcharts-more.js" ></script>
+<script src="js/lib/dingtalk.min.js"></script>
+<script src="js/lib/ddbanner.js"></script>
+<script src="js/lib/apiList.js"></script>
+<script src="js/lib/md5.min.js"></script>
+<script src="js/login.js"></script>
+<script src="js/config.js"></script>
+<script src="js/common.js"></script>
+<script src="js/goldAgeCommon.js"></script>
+<script type="text/javascript" src="js/team.js" ></script>
+<script>
+</script>
+<script>
+	$(document).ready(function() {
+//		var defaultValue = new Date().getFullYear() + '-' + (new Date().getMonth()+1);
+		var defaultValue = new Date().Format("yyyy-MM");
+			ddbanner.changeBannerTitle(defaultValue + '最新业绩');
+//		    setTableTitle(team.user.position);
+		    var level=getUrlParam('level');
+		    var orgid=getUrlParam('orgid');
+		    var issub=getUrlParam('issub');
+		var month=localStorage.getItem('team.monthTarget.dat') || defaultValue;
+		    if(!level){
+		     	getMonthTargetData(0,0,0,month);
+		    }else{
+		     	getMonthTargetData(level,orgid,issub,month);
+		    }
+		dd.ready(function(){
+			var monthvalue = month, now = new Date();
+			if(!monthvalue){
+//			monthvalue = now.getFullYear() + '-' + (now.getMonth()+1);
+				monthvalue = new Date().Format("yyyy-MM");
+			}
+
+			dd.biz.navigation.setTitle({
+				title: monthvalue + '最新业绩'
+			});
+			resetRight(monthvalue);
+
+			function resetRight(monthvalue){
+				dd.biz.navigation.setRight({
+					control: true,
+					text: monthvalue,
+					onSuccess : function(result) {
+						dd.biz.util.datepicker({
+							format: 'yyyy-MM',
+							mode: 'month',
+							value: monthvalue,
+							onSuccess: function(result) {
+//							var selmonth = new Date(result.value);
+//							if(selmonth.getYear()>now.getYear()
+//								|| (selmonth.getYear()==now.getYear() && selmonth.getMonth()>now.getMonth())){
+//								return dd.device.notification.toast({text: '请选择当前或过去的月份'});
+//							}
+								monthvalue = result.value;
+								localStorage.setItem('team.monthTarget.dat', monthvalue);
+								//重置 rightMenu
+								resetRight(monthvalue);
+								//加载数据
+								getMonthTargetData(level,orgid,issub,monthvalue);
+							}
+						});
+					}
+				});
+			}
+		});
+	});
+
+	function getMonthTargetData(level,orgid,issub, month){
+		team.postData.level = level;
+		team.postData.orgid = orgid;
+		team.postData.issub = issub;
+		team.postData.userId = JSON.parse(getCookie("omsUser")).id;
+		team.postData.day = month;
+		team.postData.dayType = 'month';
+		if(level == 4){
+				$("#leader_title").hide();
+		}else{
+				$("#leader_title").show();
+		}
+		OMS_COM.ajaxPost({
+			api: 'getTargetData',
+			data: team.postData,
+			success: function (data) {
+				var res = JSON.parse(data);
+				if(parseInt(res.code) === 0) {
+					if(res.data.chart == undefined){
+						res.data.chart = {
+							target:0,
+							complete:0,
+							salesComplete:0,
+							salesTarget:0,
+							privateTeachComplete:0,
+							privateTeachTarget:0
+						};
+						res.data.table = {
+						}
+					}
+					setTargetChart(res.data.chart.target, res.data.chart.complete);
+//					setTableTitle2(rs.data.level);
+
+					var tableData=res.data.table;
+					var chartData = res.data.chart;
+					var tableColumn="";
+					var lefttable="";
+					var doneRateAll='0.00%';
+					if(chartData.target!=0&&chartData.target!=null){
+						doneRateAll=((chartData.complete/chartData.target)*100).toFixed(2)+'%';
+					}
+
+					var saleDoneRateAll='0.00%';
+					if(chartData.salesTarget!=0&&chartData.salesTarget!=null){
+						saleDoneRateAll=((chartData.salesComplete/chartData.salesTarget)*100).toFixed(2)+'%';
+					}
+
+					var privateDoneRateAll='0.00%';
+					if(chartData.privateTeachTarget!=0&&chartData.privateTeachTarget!=null){
+						privateDoneRateAll=((chartData.privateTeachComplete/chartData.privateTeachTarget)*100).toFixed(2)+'%';
+					}
+					lefttable += '  <tr class="even" >\
+											<td style="max-width:100px;min-width:100px;" class="fix-column" ><span class="ui-nowrap tdspan">汇总</span></td>';
+					tableColumn += '  <tr class="even" >\
+											<td style="max-width:100px;min-width:100px;" class="fix-column" ><span class="ui-nowrap tdspan">汇总</span></td>';
+					tableColumn+= ' <td class="text-center">' + chartData.complete + '('+chartData.target+')' + '</td>\
+											<td class="text-center">' + doneRateAll + '</td>\
+											<td class="text-center">' + chartData.salesComplete + '('+chartData.salesTarget+')' + '</td>\
+											<td class="text-center">' + saleDoneRateAll + '</td>\
+											<td class="text-center">' + chartData.privateTeachComplete + '('+chartData.privateTeachTarget+')' + '</td>\
+											<td class="text-center">' + privateDoneRateAll + '</td>\
+										</tr>';
+					for(var i in tableData){
+						var trClass='odd';
+						if(i%2==0){
+							trClass='even';
+						}
+						var dept=tableData[i].name;
+						var issub = 1;
+
+						if(tableData[i].isClick==1){
+							dept='<a href="teamMonthTarget.html?level='+tableData[i].level+'&orgid='+tableData[i].id+'&issub=1" >'+dept+'</a>';
+						}
+//						if (tableData[i].level == 5){
+//							dept='<a href="profile.html?id='+tableData[i].id+'&do=0" >'+dept+'</a>';
+//						}
+						var doneRate='0.00%';
+						if(tableData[i].target!=0&&tableData[i].target!=null){
+							 doneRate=((tableData[i].complete/tableData[i].target)*100).toFixed(2)+'%';
+						}
+
+						var saleDoneRate='0.00%';
+						if(tableData[i].salesTarget!=0&&tableData[i].salesTarget!=null){
+							saleDoneRate=((tableData[i].salesComplete/tableData[i].salesTarget)*100).toFixed(2)+'%';
+						}
+
+						var privateDoneRate='0.00%';
+						if(tableData[i].privateTeachTarget!=0&&tableData[i].privateTeachTarget!=null){
+							privateDoneRate=((tableData[i].privateTeachComplete/tableData[i].privateTeachTarget)*100).toFixed(2)+'%';
+						}
+
+						var done=tableData[i].complete==null?0:tableData[i].complete;
+						var target=tableData[i].target==null?0:tableData[i].target;
+
+						var saleDone=tableData[i].salesComplete==null?0:tableData[i].salesComplete;
+						var saleTarget=tableData[i].salesTarget==null?0:tableData[i].salesTarget;
+
+						var privateDone=tableData[i].privateTeachComplete==null?0:tableData[i].privateTeachComplete;
+						var privateTarget=tableData[i].privateTeachTarget==null?0:tableData[i].privateTeachTarget;
+
+						lefttable += '<tr><td style="max-width:100px;" class="fix-column"><span class="ui-nowrap tdspan">'+dept+'</span></td></tr>';
+						if(tableData[i].isClick==1 || tableData[i].level==5 ) {
+							var links = '&s=' + tableData[i].level + '&id=' + tableData[i].id;
+
+							tableColumn += '  <tr class="' + trClass + '" >\
+											<td style="max-width:100px;min-width:100px;" class="fix-column" ><span class="ui-nowrap tdspan">' + dept + '</span></td>';
+//							if(level != 4){
+//									tableColumn+= 	'<td class="text-center" style="max-width:100px;min-width:100px;">'+
+////											(team.leaderInfo[tableData[i].id]?team.leaderInfo[tableData[i].id]:'--')+
+//											'</td>';
+//							}
+
+//							tableColumn+= ' <td class="text-center">' + doneRate + '</td>\
+//											<td class="text-center"><a href="teamCusList.html?t=1'+links+'">' + done + '</a></td>\
+//											<td class="text-center">' + target + '</td>\
+//										</tr>';
+							tableColumn+= ' <td class="text-center">' + done + '('+target+')' + '</td>\
+											<td class="text-center">' + doneRate + '</td>\
+											<td class="text-center">' + saleDone + '('+saleTarget+')' + '</td>\
+											<td class="text-center">' + saleDoneRate + '</td>\
+											<td class="text-center">' + privateDone + '('+privateTarget+')' + '</td>\
+											<td class="text-center">' + privateDoneRate + '</td>\
+										</tr>';
+						}else {
+							tableColumn += '  <tr class="' + trClass + '" >\
+											<td style="max-width:100px;min-width:100px;" class="fix-column" ><span class="ui-nowrap tdspan">' + dept + '</span></td>';
+//							if(level !=4){
+//									tableColumn+= 	'<td class="text-center" style="max-width:100px;min-width:100px;">'+(team.leaderInfo[tableData[i].id]?team.leaderInfo[tableData[i].id]:'--')+'</td>';
+//							}
+							tableColumn+= ' <td class="text-center">' + done + '('+target+')' + '</td>\
+											<td class="text-center">' + doneRate + '</td>\
+											<td class="text-center">' + saleDone + '('+saleTarget+')' + '</td>\
+											<td class="text-center">' + saleDoneRate + '</td>\
+											<td class="text-center">' + privateDone + '('+privateTarget+')' + '</td>\
+											<td class="text-center">' + privateDoneRate + '</td>\
+										</tr>';
+						}
+					}
+					$("#lefttable tbody").html(lefttable);
+					$("#bodytable tbody").html(tableColumn);
+					scrollTable();
+				}
+			}
+		});
+//		$.ajax({
+//					type:"post",
+//					url:oms_config.apiUrl+oms_apiList.getMonthTargetData,
+//					async:true,
+//					data:team.postData,
+//					dataType:'json',
+//					success:function(rs){
+//						console.log(JSON.stringify(rs));
+//						if(rs.res==1){
+//							setTargetChart(rs.data.target, rs.data.done);
+//						    setTableTitle2(rs.data.level);
+//
+//							var tableData=rs.data.tableData;
+//							var tableColumn="";
+//							var lefttable="";
+//							for(var i in tableData){
+//								var trClass='odd';
+//								if(i%2==0){
+//									trClass='even';
+//								}
+//								var dept=tableData[i].name;
+//								var issub = 1;
+//
+//								if(tableData[i].isClick==1){
+//									dept='<a href="teamMonthTarget.html?level='+tableData[i].level+'&orgid='+tableData[i].id+'&issub=1" >'+dept+'</a>';
+//								}
+//								if (tableData[i].level == 5){
+//									dept='<a href="profile.html?id='+tableData[i].id+'&do=0" >'+dept+'</a>';
+//								}
+//								if(tableData[i].target==0||tableData[i].target==null){
+//									var doneRate='0.00%';
+//								}else{
+//									 doneRate=((tableData[i].done/tableData[i].target)*100).toFixed(2)+'%';
+//								}
+//								var done=tableData[i].done==null?0:tableData[i].done;
+//								var target=tableData[i].target==null?0:tableData[i].target;
+//
+//								lefttable += '<tr><td style="max-width:100px;" class="fix-column"><span class="ui-nowrap tdspan">'+dept+'</span></td></tr>';
+//								if(tableData[i].isClick==1 || tableData[i].level==5 ) {
+//									var links = '&s=' + tableData[i].level + '&id=' + tableData[i].id;
+//
+//									tableColumn += '  <tr class="' + trClass + '" >\
+//									                <td style="max-width:100px;min-width:100px;" class="fix-column" ><span class="ui-nowrap tdspan">' + dept + '</span></td>';
+//									if(level != 4){
+//											tableColumn+= 	'<td class="text-center" style="max-width:100px;min-width:100px;">'+(team.leaderInfo[tableData[i].id]?team.leaderInfo[tableData[i].id]:'--')+'</td>';
+//									}
+//
+//									tableColumn+= ' <td class="text-center">' + doneRate + '</td>\
+//									                <td class="text-center"><a href="teamCusList.html?t=1'+links+'">' + done + '</a></td>\
+//									                <td class="text-center">' + target + '</td>\
+//									            </tr>';
+//								}else {
+//									tableColumn += '  <tr class="' + trClass + '" >\
+//									                <td style="max-width:100px;min-width:100px;" class="fix-column" ><span class="ui-nowrap tdspan">' + dept + '</span></td>';
+//									if(level !=4){
+//											tableColumn+= 	'<td class="text-center" style="max-width:100px;min-width:100px;">'+(team.leaderInfo[tableData[i].id]?team.leaderInfo[tableData[i].id]:'--')+'</td>';
+//									}
+//									tableColumn+= ' <td class="text-center">' + doneRate + '</td>\
+//									                <td class="text-center">' + done + '</td>\
+//									                <td class="text-center">' + target + '</td>\
+//									            </tr>';
+//								}
+//							}
+//							$("#lefttable tbody").html(lefttable);
+//							$("#bodytable tbody").html(tableColumn);
+//							scrollTable();
+//						}
+//
+//					},
+//					error:function(e){
+//						console.log(JSON.stringify(e));
+//					}
+//				});
+
+	}
+</script>
+
+</body>
+</html>

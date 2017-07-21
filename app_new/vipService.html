@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html style="height:100%;">
+
+<head>
+	<title>VIP客户优惠</title>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, height=device-height, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no">
+	<meta name="format-detection" content="telephone=no">
+	<link href="css/frozen.css" rel="stylesheet" type="text/css">
+	<link href="css/index.css" rel="stylesheet" type="text/css">
+  <link href="css/vipService.css" rel="stylesheet" type="text/css">
+	<script type="text/javascript">
+		function resize() {
+			var remFontSize = +document.documentElement.clientWidth / 16;
+			document.documentElement.style.fontSize = remFontSize + "px";
+		}
+		var b = null;
+		window.addEventListener("resize", function() {
+			clearTimeout(b),
+				b = setTimeout(resize, 300)
+		}, !1);
+		resize();
+	</script>
+</head>
+
+<body style="height:100%">
+	<div class="container" style="height:100%;background-color:#fff;">
+
+    <!-- <ul class="ui-list ui-list-text ui-list-link ui-border-tb">
+        <li>
+            <h4 id="vip_download">推荐下载</h4>
+        </li>
+        <li>
+            <h4 id="vip_qr">扫码优惠</h4>
+        </li>
+        <li>
+            <h4 id="vip_customer">VIP客户服务</h4>
+        </li>
+    </ul> -->
+    <div class="vip-service" style="height:100%;">
+				<!-- <div class="vip-service-gap">
+				</div> -->
+				<div class="vip-block-border1"></div>
+				<div class="vip-block-border2"></div>
+				<div class="vip-block-border3"></div>
+				<div class="vip-block-border4"></div>
+        <div class="vip-service-block vip-service-block-top">
+            <div class="vip-service-content vip-download-bg" id="vip_download">
+                <div class="vip-service-word">推荐下载</div>
+								<div class="vip-step-1"></div>
+            </div>
+        </div>
+        <div class="vip-service-block">
+            <div class="vip-service-content vip-qr-bg" id="vip_qr">
+                <div class="vip-service-word">扫码优惠</div>
+								<div class="vip-step-2"></div>
+            </div>
+        </div>
+        <div class="vip-service-block">
+            <div class="vip-service-content vip-customer-bg" id="vip_customer">
+                <div class="vip-service-word">VIP客户服务</div>
+								<div class="vip-step-3"></div>
+            </div>
+        </div>
+    </div>
+	</div>
+
+	<script src="js/lib/zepto.min.js"></script>
+	<script src="js/lib/frozen.min.js"></script>
+	<script src="js/lib/dingtalk.min.js"></script>
+	<script src="js/lib/fastclick.min.js"></script>
+	<script src="js/lib/ddbanner.js"></script>
+	<script src="js/lib/iscroll.min.js"></script>
+
+	<script src="js/lib/apiList.js"></script>
+	<script src="js/login.js"></script>
+	<script src="js/config.js"></script>
+	<script src="js/scroll-index.js"></script>
+	<script src="js/vipService.js"></script>
+
+	<!-- <script src="js/index.js"></script> -->
+</body>
+
+</html>

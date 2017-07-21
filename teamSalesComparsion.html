@@ -1,0 +1,398 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta content="initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
+<meta content="telephone=no" name="format-detection">
+<title>销售业绩趋势对比</title>
+<link href="css/frozen.css" rel="stylesheet" type="text/css">
+<link href="css/main.css" rel="stylesheet" type="text/css">
+<link rel="stylesheet" href="css/team.css" />
+<link rel="stylesheet" href="css/data-decision.css" />
+</head>
+<style>
+	.table-body td{
+		min-width: 80px;
+	}
+</style>
+<body>
+<section>
+	<div class="ui-container" style="background: #F8F8F8;">
+		<div class="chart-panel hide"  style="height: 10px;">
+			<div class="show-btn  toggle-btn">
+				<span class="ui-icon-arrow ligth-green"></span>
+			</div>
+		</div>
+
+		<div class="chart-panel" id="chart-container">
+            <ul class="ui-list ui-list-text">
+                <li class="">
+                    <div id="line_comparison" class="chart-container" >
+                        <div class="ui-loading-wrap text-center">
+                            <p>图表加载中</p>
+                            <i class="ui-loading"></i>
+                        </div>
+                    </div>
+                </li>
+            </ul>
+            <div class="hide-btn toggle-btn">
+                <span class="ui-icon-arrow ligth-green"></span>
+            </div>
+        </div>
+
+		<div style="margin-top: 20px;">
+			<div id="biao" class="table-container fo_fix" >
+	        	<div class="ui-whitespace inner-container">
+	            	<div id="headertable-wrap" class="table-header">
+	                	<div class="table-fixed">
+	                    <table>
+	                        <tr><th style="max-width:100px;"  class="table-title">城市</th></tr>
+	                    </table>
+	                	</div>
+	                <table id="headertable" class="table-head">
+	                	<thead>
+					<tr>
+						<th style="width:100px;" class="table-title">城市</th>
+						<!--<th id="leader_title" style="width: 100px; min-width: 100px;">Leader</th>-->
+						<th id="col-title1">本月累计回款</th>
+						<!--<th id="col-title2">本月人均回款</th>-->
+						<th id="col-title2">上月同期回款</th>
+						<th id="col-title2">最高同期回款</th>
+					</tr>
+					</thead>
+	                </table>
+	            	</div>
+	            <table id="lefttable" class="table-col">
+	            <tbody></tbody>
+	            </table>
+	            	<div id="bodytable-wrap" class="table-body">
+	                <h3 id="table-tip" class="tb-tip" style="display:none;"></h3>
+	                <table id="bodytable" class="table-content">
+	                	<tbody></tbody>
+	                </table>
+	            	</div>
+	        	</div>
+	    	</div>
+		</div>
+	</div>
+</section>
+<script type="text/javascript" src="js/lib/fastclick.min.js" ></script>
+<script type="text/javascript" src="js/lib/jquery.min.js" ></script>
+<script type="text/javascript" src="js/lib/highcharts.js" ></script>
+<script type="text/javascript" src="js/lib/highcharts-more.js" ></script>
+<script src="js/lib/dingtalk.min.js"></script>
+<script src="js/lib/ddbanner.js"></script>
+<script src="js/lib/apiList.js"></script>
+<script src="js/lib/md5.min.js"></script>
+<script src="js/login.js"></script>
+<script src="js/config.js"></script>
+<script src="js/common.js"></script>
+<script src="js/goldAgeCommon.js"></script>
+<script type="text/javascript" src="js/team.js" ></script>
+<script>
+var swidth;
+var cat = 'money';
+var navTitle='销售业绩趋势对比',
+	   chartTitle="月销售业绩对比",
+	   udataName='上月业绩',
+	   ndataName='本月业绩',
+	   bdataName= '业绩',
+	   toptitle= '业绩';
+
+dd.ready(function(){
+	dd.biz.navigation.setTitle({
+		title: navTitle
+	});
+});
+
+$(document).ready(function() {
+	console.log(cat);
+//	var defaultValue = new Date().getFullYear() + '-' + (new Date().getMonth()+1);
+	var defaultValue = new Date().Format("yyyy-MM");
+	ddbanner.changeBannerTitle(defaultValue + '业绩对比');
+//	setTableTitle(team.user.position);
+
+	var level=getUrlParam('level');
+    var orgid=getUrlParam('orgid');
+    var issub=getUrlParam('issub');
+	var month=localStorage.getItem('team.salesComparison.dat') || defaultValue;
+    if(!level){
+     	getCompareData(cat,0,0,0,month);
+    }else{
+     	getCompareData(cat,level,orgid,issub, month);
+    }
+	dd.ready(function(){
+		var monthvalue = month, now = new Date();
+		if(!monthvalue){
+//			monthvalue = now.getFullYear() + '-' + (now.getMonth()+1);
+			monthvalue = new Date().Format("yyyy-MM");
+		}
+
+		dd.biz.navigation.setTitle({
+			title: monthvalue + '业绩对比'
+		});
+		resetRight(monthvalue);
+
+		function resetRight(monthvalue){
+			dd.biz.navigation.setRight({
+				control: true,
+				text: monthvalue,
+				onSuccess : function(result) {
+					dd.biz.util.datepicker({
+						format: 'yyyy-MM',
+						mode: 'month',
+						value: monthvalue,
+						onSuccess: function(result) {
+//							var selmonth = new Date(result.value);
+//							if(selmonth.getYear()>now.getYear()
+//								|| (selmonth.getYear()==now.getYear() && selmonth.getMonth()>now.getMonth())){
+//								return dd.device.notification.toast({text: '请选择当前或过去的月份'});
+//							}
+							monthvalue = result.value;
+							localStorage.setItem('team.salesComparison.dat', monthvalue);
+							//重置 rightMenu
+							resetRight(monthvalue);
+							//加载数据
+							getCompareData(cat, level, orgid, issub, monthvalue);
+						}
+					});
+				}
+			});
+		}
+	});
+});
+function getCompareData(cat,level,orgid,issub,month){
+	team.postData.cat=cat;
+	team.postData.orgid=orgid;
+	team.postData.level=level;
+	team.postData.issub=issub;
+	team.postData.userId = JSON.parse(getCookie("omsUser")).id;
+	team.postData.day = month;
+	team.postData.dayType = 'month'
+	OMS_COM.ajaxPost({
+		api: 'getCompareData',
+		data: team.postData,
+		success: function (data) {
+			var res = JSON.parse(data);
+			if(parseInt(res.code) === 0) {
+				if(res.data.chart == undefined){
+					res.data.chart = {
+						bdata:0,
+						udata:0,
+						ndata:0,
+						ndata:0
+					};
+				}
+				SetComparsionChart({
+					bdata: res.data.chart.bdata,
+					bdataName: (res.data.chart.bmonth==null?'':res.data.chart.bmonth)+bdataName,
+					udata: res.data.chart.udata,
+					udataName: udataName,
+					ndata: res.data.chart.ndata,
+					ndataName: ndataName,
+					lineu: res.data.chart.lineu,
+					lineb: res.data.chart.lineb,
+					linen: res.data.chart.linen,
+//					lines: res.data.chart.lines,
+					title: chartTitle,
+					topTitle: toptitle,
+					containerId: 'line_comparison',
+				});
+
+				var tableData=res.data.table;
+//				if(tableData[0].level < 5){
+//						$("#leader_title").show();
+//				}else{
+//						$("#leader_title").hide();
+//				}
+//				setTableTitle2(tableData[0].level);
+				var tableColumn="";
+				var lefttable='<tr><td style="max-width:100px;" class="fix-column"><span class="ui-nowrap tdspan">汇总</span></td></tr>';
+				var sums_total = 0, this_total = 0, last_total = 0, best_total = 0;
+				for(var i in tableData) {
+					var trClass = 'odd';
+					if (i % 2 == 0) {
+						trClass = 'even';
+					}
+					var dept = tableData[i].name;
+					if (tableData[i].isClick == 1) {
+						dept = '<a href="teamSalesComparsion.html?cat=' + cat + '&level=' + tableData[i].level + '&orgid=' + tableData[i].id + '&issub=1" >' + dept + '</a>';
+					}
+//					if (tableData[i].level == 5){
+//						dept='<a href="profile.html?id='+tableData[i].id+'&do=0" >'+dept+'</a>';
+//					}
+
+					lefttable += '<tr><td style="max-width:100px;" ><span class="ui-nowrap tdspan">' + dept + '</span></td></tr>';
+//					var sums = tableData[i].sums[0] == null ? 0 : tableData[i].sums[0];
+					var sums = 0;
+					var avgs = tableData[i].this_month == null ? 0 : tableData[i].this_month;
+					var last = tableData[i].last_month == null ? 0 : tableData[i].last_month;
+					var best = tableData[i].best_month == null ? 0 : tableData[i].best_month;
+//					sums_total = sums_total + parseInt(sums);
+					this_total = this_total + parseInt(avgs);
+					last_total = last_total + parseInt(last);
+					best_total = best_total + parseInt(best);
+					if (tableData[i].isClick == 1 || tableData[i].level==5 ) {
+						var links = '&s=' + tableData[i].level + '&id=' + tableData[i].id;
+						tableColumn += '  <tr class="' + trClass + '" >\
+									                <td style="max-width:100px;min-width:100px;" > <span class="ui-nowrap tdspan">' + dept + '</span></td>';
+//						if(tableData[0].level < 5){
+//								tableColumn += '<td class="text-center" style="max-width:100px;min-width:100px;">'+(team.leaderInfo[tableData[i].id]?team.leaderInfo[tableData[i].id]:'--')+'</td>';
+//						}
+						tableColumn +=
+//								'  <td class="text-center">' +
+//								'<a href="teamCusList.html?t=1'+links+'">' + sums + '</a>\
+//								</td>'+
+									                '<td class="text-center">' + avgs + '</td>\
+									                <td class="text-center">' + last + '</td>\
+									                <td class="text-center">' + best + '</td>\
+									            </tr>';
+					} else {
+						tableColumn += '  <tr class="' + trClass + '" >\
+									                <td style="max-width:100px;min-width:100px;" > <span class="ui-nowrap tdspan">' + dept + '</span></td>';
+						if(tableData[0].level < 5){
+//								tableColumn += '<td class="text-center" style="max-width:100px;min-width:100px;">'+(team.leaderInfo[tableData[i].id]?team.leaderInfo[tableData[i].id]:'--')+'</td>';
+						}
+						tableColumn +=
+//								'<td class="text-center">' + sums + '</td>'+
+									                '<td class="text-center">' + avgs + '</td>\
+									                <td class="text-center">' + last + '</td>\
+									                <td class="text-center">' + best + '</td>\
+									            </tr>';
+					}
+				}
+
+				tableColumn1 = '<tr class="' + trClass + '" >'
+//				if(tableData[0].level < 4){
+//						tableColumn1 += '<td class="text-center" style="max-width:100px;min-width:100px;">--</td>'
+//				}
+				tableColumn1	+=
+//						'<td style="max-width:100px;min-width: 100px;" > <span class="ui-nowrap tdspan">--</span></td>'+
+															'<td class="text-center">' + sums_total + '</td>'+
+																'<td class="text-center">' + this_total + '</td>\
+																<td class="text-center">' +last_total+ '</td>\
+																<td class="text-center">' +best_total + '</td>\
+															</tr>';
+				tableColumn = tableColumn1+ tableColumn;
+
+					$("#lefttable tbody").html(lefttable);
+					$("#bodytable tbody").html(tableColumn);
+					scrollTable();
+			}
+		},
+		error: function () {
+
+		},
+		always: function () {
+
+		}
+	});
+//	$.ajax({
+//		type:"post",
+//		url:oms_config.apiUrl+"apiTeam/getCompareData",
+//		async:true,
+//		data:team.postData,
+//		dataType:'json',
+//		success:function(rs){
+//			if(rs.res==1){
+//				SetComparsionChart({
+//						bdata: rs.data.chartData.bdata,
+//						bdataName: (rs.data.chartData.bmonth==null?'':rs.data.chartData.bmonth)+bdataName,
+//						udata: rs.data.chartData.udata,
+//						udataName: udataName,
+//						ndata: rs.data.chartData.ndata,
+//						ndataName: ndataName,
+//						lineu: rs.data.chartData.lineu,
+//						lineb: rs.data.chartData.lineb,
+//						linen: rs.data.chartData.linen,
+//						lines: rs.data.chartData.lines,
+//						title: chartTitle,
+//						topTitle: toptitle,
+//						containerId: 'line_comparison',
+//				});
+//
+//				var tableData=rs.data.tableData;
+//				if(tableData[0].level < 5){
+//						$("#leader_title").show();
+//				}else{
+//						$("#leader_title").hide();
+//				}
+//				setTableTitle2(tableData[0].level);
+//				var tableColumn="";
+//				var lefttable='<tr><td style="max-width:100px;" class="fix-column"><span class="ui-nowrap tdspan">汇总</span></td></tr>';
+//				var sums_total = 0, avgs_total = 0, last_total = 0, best_total = 0;
+//				for(var i in tableData) {
+//					var trClass = 'odd';
+//					if (i % 2 == 0) {
+//						trClass = 'even';
+//					}
+//					var dept = tableData[i].name;
+//					if (tableData[i].isClick == 1) {
+//						dept = '<a href="teamSalesComparsion.html?cat=' + cat + '&level=' + tableData[i].level + '&orgid=' + tableData[i].id + '&issub=1" >' + dept + '</a>';
+//					}
+//					if (tableData[i].level == 5){
+//						dept='<a href="profile.html?id='+tableData[i].id+'&do=0" >'+dept+'</a>';
+//					}
+//
+//					lefttable += '<tr><td style="max-width:100px;" ><span class="ui-nowrap tdspan">' + dept + '</span></td></tr>';
+//					var sums = tableData[i].sums[0] == null ? 0 : tableData[i].sums[0];
+//					var avgs = tableData[i].avgs == null ? 0 : tableData[i].avgs;
+//					var last = tableData[i].last == null ? 0 : tableData[i].last;
+//					var best = tableData[i].best == null ? 0 : tableData[i].best;
+//					sums_total = sums_total + parseInt(sums);
+//					avgs_total = avgs_total + parseFloat(avgs);
+//					last_total = last_total + parseInt(last);
+//					best_total = best_total + parseInt(best);
+//					if (tableData[i].isClick == 1 || tableData[i].level==5 ) {
+//						var links = '&s=' + tableData[i].level + '&id=' + tableData[i].id;
+//						tableColumn += '  <tr class="' + trClass + '" >\
+//									                <td style="max-width:100px;min-width:100px;" > <span class="ui-nowrap tdspan">' + dept + '</span></td>';
+//						if(tableData[0].level < 5){
+//								tableColumn += '<td class="text-center" style="max-width:100px;min-width:100px;">'+(team.leaderInfo[tableData[i].id]?team.leaderInfo[tableData[i].id]:'--')+'</td>';
+//						}
+//						tableColumn += '  <td class="text-center"><a href="teamCusList.html?t=1'+links+'">' + sums + '</a></td>\
+//									                <td class="text-center">' + avgs + '</td>\
+//									                <td class="text-center">' + last + '</td>\
+//									                <td class="text-center">' + best + '</td>\
+//									            </tr>';
+//					} else {
+//						tableColumn += '  <tr class="' + trClass + '" >\
+//									                <td style="max-width:100px;min-width:100px;" > <span class="ui-nowrap tdspan">' + dept + '</span></td>';
+//						if(tableData[0].level < 5){
+//								tableColumn += '<td class="text-center" style="max-width:100px;min-width:100px;">'+(team.leaderInfo[tableData[i].id]?team.leaderInfo[tableData[i].id]:'--')+'</td>';
+//						}
+//						tableColumn += '<td class="text-center">' + sums + '</td>\
+//									                <td class="text-center">' + avgs + '</td>\
+//									                <td class="text-center">' + last + '</td>\
+//									                <td class="text-center">' + best + '</td>\
+//									            </tr>';
+//					}
+//				}
+//
+//				tableColumn1 = '<tr class="' + trClass + '" >'
+//				if(tableData[0].level < 4){
+//						tableColumn1 += '<td class="text-center" style="max-width:100px;min-width:100px;">--</td>'
+//				}
+//				tableColumn1	+=	'<td style="max-width:100px;min-width: 100px;" > <span class="ui-nowrap tdspan">--</span></td>\
+//															<td class="text-center">' + sums_total + '</td>\
+//																<td class="text-center">' + (avgs_total/tableData.length).toFixed(2) + '</td>\
+//																<td class="text-center">' +last_total+ '</td>\
+//																<td class="text-center">' +/*best_total*/ '--' + '</td>\
+//															</tr>';
+//				tableColumn = tableColumn1+ tableColumn;
+//
+//					$("#lefttable tbody").html(lefttable);
+//					$("#bodytable tbody").html(tableColumn);
+//					scrollTable();
+//			}
+//		},
+//		error:function(e){
+//			console.log(JSON.stringify(e));
+//		}
+//	});
+}
+
+</script>
+
+</body>
+</html>

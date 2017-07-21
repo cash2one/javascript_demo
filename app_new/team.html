@@ -1,0 +1,307 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1,maximum-scale=1,user-scalable=no">
+		<meta content="telephone=no" name="format-detection">
+		<title>分析</title>
+		<link href="css/frozen.css" rel="stylesheet" type="text/css">
+		<link href="css/main.css" rel="stylesheet" type="text/css">
+		<link rel="stylesheet" href="css/team.css" />
+	</head>
+
+	<body>
+		<section>
+			<div class="ui-container">
+				<ul class="ui-list ui-list-link ui-list-active ui-list-cover ui-border-tb" >
+					<li class="ui-border-b" onclick="window.location.href='lidanAnalyse.html?type=clients'" id="lidanAnalyse">
+							<div class="ui-list-img ui-tag-hecomnew">
+								<span style=" width: 48px;height: 48px;background-image:url(./img/reportform_4.png)"></span>
+							</div>
+							<div class="ui-list-info">
+								<h4 class="ui-nowrap">理单结果分析</h4>
+								<p class="ui-nowrap ">最后更新:<span class="last-update">今日 15:30</span></p>
+							</div>
+					</li>
+
+					<li class="ui-border-b" onclick="window.location.href='teamDiagnose.html?action=0&type=user'" id="teamDiagnose" style="display: none;">
+							<div class="ui-list-img ui-tag-hecomnew">
+								<span style=" width: 48px;height: 48px;background-image:url(./img/reportform_4.png)"></span>
+							</div>
+							<div class="ui-list-info">
+								<h4 class="ui-nowrap">智能诊断</h4>
+								<p class="ui-nowrap ">最后更新:<span class="last-update">今日 15:30</span></p>
+							</div>
+
+					</li>
+
+					<li class="ui-border-b" onclick="window.location.href='teamWarManager.html?type=war'">
+							<div class="ui-list-img ui-tag-hecomnew">
+								<span style=" width: 48px;height: 48px;background-image:url(./img/reportform_4.png)"></span>
+							</div>
+							<div class="ui-list-info">
+								<h4 class="ui-nowrap">新一团战报</h4>
+								<p class="ui-nowrap ">最后更新:<span class="last-update">今日 15:30</span></p>
+							</div>
+
+					</li>
+
+					<li class="ui-border-b" onclick="window.location.href='teamLidanRate.html?action=0'" id="teamLidanRate">
+							<div class="ui-list-img ui-tag-hecomnew">
+								<span style=" width: 48px;height: 48px;background-image:url(./img/reportform_4.png)"></span>
+							</div>
+							<div class="ui-list-info">
+								<h4 class="ui-nowrap">理单率</h4>
+								<p class="ui-nowrap ">最后更新:<span class="last-update">今日 15:30</span></p>
+							</div>
+
+					</li>
+
+					<li class="ui-border-b" onclick="window.location.href='teamAccompany.html?action=0'">
+							<div class="ui-list-img ui-tag-hecomnew">
+								<span style=" width: 48px;height: 48px;background-image:url(./img/reportform_4.png)"></span>
+							</div>
+							<div class="ui-list-info">
+								<h4 class="ui-nowrap">陪访量</h4>
+								<p class="ui-nowrap ">最后更新:<span class="last-update">今日 15:30</span></p>
+							</div>
+
+					</li>
+					<li class="ui-border-b" onclick="window.location.href='teamKillZero.html?level=0'">
+							<div class="ui-list-img ui-tag-hecomnew">
+								<span style=" width: 48px;height: 48px;background-image:url(./img/reportform_4.png)"></span>
+							</div>
+							<div class="ui-list-info">
+								<h4 class="ui-nowrap">灭零率</h4>
+								<p class="ui-nowrap ">最后更新:<span class="last-update">今日 15:30</span></p>
+							</div>
+
+					</li>
+
+					<li class="ui-border-b" onclick="window.location.href='teamMonthTarget.html'">
+							<div class="ui-list-img">
+								<span style=" width: 48px;height: 48px;background-image:url(./img/reportform_1.png)"></span>
+							</div>
+							<div class="ui-list-info">
+								<h4 class="ui-nowrap">销售目标达成</h4>
+								<p class="ui-nowrap ">最后更新:<span class="last-update">今日 15:30</span></p>
+							</div>
+
+					</li>
+
+					<li class="ui-border-b" onclick="window.location.href='teamLoudou.html'">
+						<!--<a href="teamMonthTarget.html">-->
+
+						<div class="ui-list-img">
+							<span style=" width: 48px;height: 48px;background-image:url(./img/reportform_2.png)"></span>
+						</div>
+						<div class="ui-list-info">
+							<h4 class="ui-nowrap">销售漏斗</h4>
+							<p class="ui-nowrap">最后更新:<span class="last-update">今日 15:30</span></p>
+						</div>
+
+					</li>
+					<li class="ui-border-b" id="payment" onclick="window.location.href='teamTodayPayment.html?action=0'">
+						<div class="ui-list-img ui-tag-hecomnew">
+							<span style=" width: 48px;height: 48px;background-image:url(./img/reportform_4.png)"></span>
+						</div>
+						<div class="ui-list-info">
+							<h4 class="ui-nowrap">今日回款</h4>
+							<p class="ui-nowrap">最后更新:<span class="last-update">今日 15:30</span></p>
+						</div>
+
+					</li>
+					<li class="ui-border-b" onclick="window.location.href='teamSalesComparsion.html?'" id="list">
+
+						<div class="ui-list-img">
+							<span style=" width: 48px;height: 48px;background-image:url(./img/reportform_3.png)"></span>
+						</div>
+						<div class="ui-list-info">
+							<h4 class="ui-nowrap">销售业绩趋势对比</h4>
+							<p class="ui-nowrap">最后更新:<span class="last-update">今日 15:30</span></p>
+						</div>
+
+					</li>
+					<li class="ui-border-b" onclick="window.location.href='teamSalesLadder.html?'">
+
+						<div class="ui-list-img ui-tag-hecomnew">
+							<span style=" width: 48px;height: 48px;background-image:url(./img/saleslist6.png)"></span>
+						</div>
+						<div class="ui-list-info">
+							<h4 class="ui-nowrap">销售阶梯图</h4>
+							<p class="ui-nowrap">最后更新:<span class="last-update">今日 15:30</span></p>
+						</div>
+
+					</li>
+					<li class="ui-border-b"
+						onclick="window.location.href='teamTodaySales.html'">
+
+						<div class="ui-list-img ui-tag-hecomnew">
+							<span style=" width: 48px;height: 48px;background-image:url(./img/follow7.png)"></span>
+						</div>
+						<div class="ui-list-info">
+							<h4 class="ui-nowrap">今日战区销售执行</h4>
+							<p class="ui-nowrap">最后更新:<span class="last-update">今日 15:30</span></p>
+						</div>
+
+					</li>
+
+					<li class="ui-border-b"
+						onclick="window.location.href='teamSalesTurn.html'">
+
+						<div class="ui-list-img ui-tag-hecomnew">
+							<span style=" width: 48px;height: 48px;background-image:url(./img/loudou2.png)"></span>
+						</div>
+						<div class="ui-list-info">
+							<h4 class="ui-nowrap">销售执行转化分析</h4>
+							<p class="ui-nowrap">最后更新:<span class="last-update">今日 15:30</span></p>
+						</div>
+
+					</li>
+					<li class="ui-border-b"
+						onclick="window.location.href='teamCusProportion.html'">
+
+						<div class="ui-list-img ui-tag-hecomnew">
+							<span style="
+							width: 48px;height: 48px;background-image:url(./img/bingtu.png)"></span>
+						</div>
+						<div class="ui-list-info">
+							<h4 class="ui-nowrap">客户分级占比</h4>
+							<p class="ui-nowrap">最后更新:<span class="last-update">今日 15:30</span></p>
+						</div>
+
+					</li>
+					<li class="ui-border-b"
+						onclick="window.location.href='teamSalesList.html'">
+
+						<div class="ui-list-img ui-tag-hecomnew">
+							<span style="
+							width: 48px;height: 48px;background-image:url(./img/reportform_4.png)"></span>
+						</div>
+						<div class="ui-list-info">
+							<h4 class="ui-nowrap">直销城市神话榜</h4>
+							<p class="ui-nowrap">最后更新:<span class="last-update">今日 15:30</span></p>
+						</div>
+
+					</li>
+					<li class="ui-border-b" onclick="window.location.href='teamAve.html?cat=files'">
+
+						<div class="ui-list-img">
+							<span style=" width: 48px;height: 48px;background-image:url(./img/reportform_4.png)"></span>
+						</div>
+						<div class="ui-list-info">
+							<h4 class="ui-nowrap">人均资料量</h4>
+							<p class="ui-nowrap">最后更新:<span class="last-update">今日 15:30</span></p>
+						</div>
+
+					</li>
+					<li class="ui-border-b" onclick="window.location.href='teamAve.html?cat=phone'">
+
+						<div class="ui-list-img">
+							<span style=" width: 48px;height: 48px;background-image:url(./img/reportform_4.png)"></span>
+						</div>
+						<div class="ui-list-info">
+							<h4 class="ui-nowrap">人均电话量</h4>
+							<p class="ui-nowrap">最后更新:<span class="last-update">今日 15:30</span></p>
+						</div>
+
+					</li>
+					<li class="ui-border-b" onclick="window.location.href='teamAve.html?cat=visit'">
+
+
+						<div class="ui-list-img">
+							<span style=" width: 48px;height: 48px;background-image:url(./img/reportform_4.png)"></span>
+						</div>
+						<div class="ui-list-info">
+							<h4 class="ui-nowrap">人均拜访量</h4>
+							<p class="ui-nowrap">最后更新:<span class="last-update">今日 15:30</span></p>
+						</div>
+
+					</li>
+					<li class="ui-border-b" onclick="window.location.href='teamComparsion.html?cat=files'">
+
+						<div class="ui-list-img">
+							<span style=" width: 48px;height: 48px;background-image:url(./img/reportform_3.png)"></span>
+						</div>
+						<div class="ui-list-info">
+							<h4 class="ui-nowrap">人均资料量趋势对比</h4>
+							<p class="ui-nowrap">最后更新:<span class="last-update">今日 15:30</span></p>
+						</div>
+
+					</li>
+					<li class="ui-border-b" onclick="window.location.href='teamComparsion.html?cat=phone'">
+
+						<div class="ui-list-img">
+							<span style=" width: 48px;height: 48px;background-image:url(./img/reportform_3.png)"></span>
+						</div>
+						<div class="ui-list-info">
+							<h4 class="ui-nowrap">人均电话量趋势对比</h4>
+							<p class="ui-nowrap">最后更新:<span class="last-update">今日 15:30</span></p>
+						</div>
+
+					</li>
+					<li class="ui-border-b" onclick="window.location.href='teamComparsion.html?cat=visit'">
+
+						<div class="ui-list-img">
+							<span style=" width: 48px;height: 48px;background-image:url(./img/reportform_3.png)"></span>
+						</div>
+						<div class="ui-list-info">
+							<h4 class="ui-nowrap">人均拜访量趋势对比</h4>
+							<p class="ui-nowrap">最后更新:<span class="last-update">今日 15:30</span></p>
+						</div>
+					</li>
+				</ul>
+			</div>
+		</section>
+		<script type="text/javascript" src="js/lib/fastclick.min.js" ></script>
+		<script type="text/javascript" src="js/lib/jquery-1.9.1.min.js"></script>
+		<script type="text/javascript" src="js/lib/dingtalk.min.js"></script>
+		<script type="text/javascript" src="js/lib/ddbanner.js"></script>
+		<script type="text/javascript" src="js/lib/apiList.js"></script>
+		<script type="text/javascript" src="js/login.js"></script>
+		<script type="text/javascript" src="js/config.js"></script>
+		<script type="text/javascript" src="js/common.js"></script>
+		<script type="text/javascript" src="js/lib/highcharts.js"></script>
+		<script type="text/javascript" src="js/lib/highcharts-more.js"></script>
+		<script type="text/javascript" src="js/team.js"></script>
+		<script>
+			var swidth;
+			$(function() {
+				ddbanner.changeBannerTitle('分析');
+				swidth = $(window).width() - 50;
+
+				console.log(swidth);
+				console.log(team.postData);
+				$.ajax({
+					type:"post",
+					url:oms_config.apiUrl+oms_apiList.getLastUpdateTime,
+					async:true,
+					data:team.postData,
+					dataType:'json',
+					success:function(rs){
+						console.log(JSON.stringify(rs));
+						if(rs.res==1){
+							$(".last-update").html(rs.data.lasttime);
+						}
+					},
+					error:function(e){
+						console.log(JSON.stringify(e));
+					}
+				});
+
+				//销售漏斗 月份筛选缓存
+				localStorage.removeItem('team.loudou.month');
+
+				//智能诊断 用户权限配置
+				var userInfo = JSON.parse(getCookie('omsUser'));
+				if('13000000001|18510453616|18017395577|18637300660|15554186533|13331135913|18811430499|18911390111|'.indexOf(userInfo.telephone) >= 0){
+					$('#teamDiagnose').css('display', '');
+				}
+			});
+
+		</script>
+
+	</body>
+
+</html>

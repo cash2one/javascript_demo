@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta content="initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
+<meta content="telephone=no" name="format-detection">
+<title>新一团战报</title>
+<link href="css/frozen.css" rel="stylesheet" type="text/css">
+<link href="css/main.css" rel="stylesheet" type="text/css">
+<link rel="stylesheet" href="css/team.css" />
+<link rel="stylesheet" href="css/data-decision.css" />
+<link href="css/toDoDynamic.css" rel="stylesheet" type="text/css">
+<link rel="stylesheet" href="css/teamTodayPayment.css" />
+<script type="text/javascript">
+    function resize() {
+        var remFontSize = +document.documentElement.clientWidth / 16;
+        document.documentElement.style.fontSize = remFontSize + "px";
+    }
+    var b = null;
+    window.addEventListener("resize", function() {
+        clearTimeout(b),
+        b = setTimeout(resize, 300)
+    }, !1);
+    resize();
+</script>
+<style>
+.tdspan {width:100px!important;}
+#hccalendarwrap_header {
+	height: 35px;
+	line-height: 35px;
+	text-align: center;
+	font-size: 13px;
+	background: #fff;
+}
+
+.table-title-icon{
+	position: relative;
+}
+.table-title-icon i{
+	position: absolute;
+	font-size: 12px;
+	top: 0;
+	right: 5px;
+	height: 45px;
+	line-height: 45px;
+	color: #333;
+}
+a{
+	color:#00a5e0;
+}
+
+</style>
+</head>
+<body>
+<section>
+	<div class="ui-container" style="background: #F8F8F8;">
+    <div class="chart-panel  hide" style="height: 10px;">
+			<div class="show-btn toggle-btn">
+				<span class="ui-icon-arrow ligth-green"></span>
+			</div>
+		</div>
+		<div class="chart-panel" id="chart-container">
+			<ul class="ui-list ui-list-pure">
+				<li>
+					<div id="war_ladder_toggle" class="ui-btn-wrap" style="padding-top:0">
+						<button class="ui-btn-s" data-chart-type="war_rate">达标率</button>
+						<button class="ui-btn-s" data-chart-type="war_ladder" style="width:75px">销售阶梯</button>
+            <div class="ui-row war_rate_chart" style="position:absolute; right: 0;top: 0;height: 55px;padding: 15px 10px;line-height: 1;">
+             <div id="manager-target" style="float: right; padding-top: 0px;font-size: 14px; padding-left: 15px;"></div>
+            </div>
+					</div>
+					<div id="war_ladder_chart" class="chart-container" style="display:none">
+						<div class="ui-loading-wrap text-center">
+							<p>图表加载中</p>
+							<i class="ui-loading"></i>
+						</div>
+					</div>
+          <div class="renew-top war_rate_chart" id="war_rate_chart">
+             <div class="ui-row-flex ">
+               <div class="ui-col ui-col ui-center">
+                 <p id="standard-leader" class="text-center red"></p>
+                 <p class="text-center">已达标Leader</p>
+               </div>
+               <div class="ui-col ui-col ui-center">
+                 <p id="unstandard-leader" class="text-center red"></p>
+                 <p class="text-center">未达标Leader</p>
+               </div>
+               <div class="ui-col ui-col ui-center">
+                 <p id="leader-rate" class="text-center red"></p>
+                 <p class="text-center">达标率</p>
+               </div>
+             </div>
+         </div>
+
+				</li>
+			</ul>
+			<div class="hide-btn toggle-btn">
+				<span class="ui-icon-arrow ligth-green"></span>
+			</div>
+		</div>
+
+   <div style="margin-top: 20px;">
+       <div id="biao" class="table-container fo_fix" >
+         <div class="ui-loading-wrap" id="biao_msg" style="position:relative;margin-top:10px;font-size:13px;">数据加载中...</div>
+         <div class="ui-whitespace inner-container" id="biao_data" style="display:none">
+             <div id="headertable-wrap" class="table-header">
+                 <div class="table-fixed">
+                     <table>
+                         <tr><th class="table-title">战区</th></tr>
+                     </table>
+                 </div>
+                 <table id="headertable" class="table-head">
+                   <thead>
+                     <tr id="war_tr" style="display:none">
+                       <th  style="max-width:100px;"  class="table-title">战区</th>
+                       <th  style="max-width:100px; min-width: 100px"  class="table-title">Leader</th>
+                       <th class="table-title-icon sort-class" style="min-width:80px;" data-sort="none" data-id="0">本月回款<i class="ui-icon-paixu"></i></th>
+                       <th class="table-title-icon sort-class" style="min-width:80px;" data-sort="none" data-id="5">私海量<i class="ui-icon-paixu"></i></th>
+                       <th class="table-title-icon sort-class" style="min-width:80px;" data-sort="none" data-id="1">资料量<i class="ui-icon-paixu"></i></th>
+                       <th class="table-title-icon sort-class" style="min-width:80px;" data-sort="none" data-id="2">电话量<i class="ui-icon-paixu"></i></th>
+                       <th class="table-title-icon sort-class" style="min-width:80px;" data-sort="none" data-id="3">拜访量<i class="ui-icon-paixu"></i></th>
+                       <th class="table-title-icon sort-class" style="min-width:80px;" data-sort="none" data-id="4">陪访量<i class="ui-icon-paixu"></i></th>
+                     </tr>
+                     <tr id="ladder_tr" style="display:none">
+       									<th class="table-title">战区</th>
+       									<th  style="max-width:100px; min-width: 100px"  class="table-title">Leader</th>
+       									<th>已签已回</th>
+       									<th>已签未回</th>
+       									<th>重点跟进</th>
+       									<th>能签能回</th>
+       									<th>冲击客户</th>
+       									<th>推进中</th>
+       									<th>已死客户</th>
+     								</tr>
+                   </thead>
+                 </table>
+             </div>
+             <table id="lefttable" class="table-col">
+             <tbody></tbody>
+             </table>
+             <div id="bodytable-wrap" class="table-body">
+                 <h3 id="table-tip" class="tb-tip" style="display:none;"></h3>
+                 <table id="bodytable" class="table-content">
+                   <tbody></tbody>
+                 </table>
+             </div>
+         </div>
+     </div>
+   </div>
+
+	</div>
+</section>
+<script type="text/javascript" src="js/lib/fastclick.min.js"></script>
+<script type="text/javascript" src="js/lib/zepto.min.js" ></script>
+<script type="text/javascript" src="js/lib/frozen.min.js" ></script>
+<script type="text/javascript" src="js/lib/jquery.min.js" ></script>
+<script type="text/javascript" src="js/lib/highcharts.js" ></script>
+<script type="text/javascript" src="js/lib/highcharts-more.js" ></script>
+<script src="js/zepto.touchSwipe.min.js"></script>
+<script src="js/lib/dingtalk.min.js"></script>
+<script src="js/lib/ddbanner.js"></script>
+
+<script src="js/lib/apiList.js"></script>
+<script src="js/login.js"></script>
+<script src="js/config.js"></script>
+<script src="js/team.js"></script>
+<script src="js/teamWarManager.js"></script>
+
+
+</body>
+</html>

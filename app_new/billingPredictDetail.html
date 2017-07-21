@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>预测详情</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, height=device-height, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no">
+    <meta name="format-detection" content="telephone=no">
+    <link href="css/frozen.css" rel="stylesheet" type="text/css">
+    <link href="css/billingPredict.css" rel="stylesheet" type="text/css">
+<script type="text/javascript">
+    function resize() {
+        var remFontSize = +document.documentElement.clientWidth / 16;
+        document.documentElement.style.fontSize = remFontSize + "px";
+    }
+    var b = null;
+    window.addEventListener("resize", function() {
+        clearTimeout(b),
+        b = setTimeout(resize, 300)
+    }, !1);
+    resize();
+</script>
+</head>
+
+<body>
+    <section id="data">
+        
+        <ul id="dataArea" class="detail-list">
+            <li>
+                <span>公司名称</span>
+                <span></span>
+            </li>
+            <li>
+                <span>跟进人</span>
+                <span></span>
+            </li>
+            <li>
+                <span>预测金额</span>
+                <span></span>
+            </li>
+            <li>
+                <span>回款时间</span>
+                <span></span>
+            </li>
+            <li>
+                <span>提报时间</span>
+                <span></span>
+            </li>
+        </ul>
+        
+		<ul id="followStatus" class="detail-list detail-description">
+            <li>
+                <span style="vertical-align: top;">跟进情况</span>
+                <span class="detail-desc"></span>
+            </li>
+            
+        </ul>        
+    </section>
+    <script src="js/lib/dingtalk.min.js"></script>
+    <script src="js/lib/zepto.min.js"></script>
+    <script src="js/lib/frozen.min.js"></script>
+    <script src="js/lib/fastclick.min.js"></script>
+    <script src="js/lib/apiList.js"></script>
+    <script src="js/config.js"></script>
+    <script src="js/billingCommon.js"></script>
+    <script src="js/billingPredict.js"></script>
+</body>
+
+</html>

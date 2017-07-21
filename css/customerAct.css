@@ -1,0 +1,169 @@
+.customerActFrame{
+    background: #fff;
+    margin-left: 15px;
+    margin-right: 15px;
+    border: 1px solid #ddd;
+    padding-left: 10px;
+    padding-right: 10px;
+    margin-top: 5px;
+    font-size: 14px;
+}
+.customerActVisitFrame{
+    background: #fff;
+    margin-left: 15px;
+    margin-right: 15px;
+    /*border: 1px solid #ddd;*/
+    padding-left: 11px;
+    padding-right: 11px;
+    margin-top: 15px;
+    font-size: 12px;
+    padding-top: 11px;
+    padding-bottom: 11px;
+}
+.customerActSubVisitFrame{
+    background: #fff;
+    margin-left: 15px;
+    margin-right: 15px;
+    /*border: 1px solid #ddd;*/
+    padding-left: 11px;
+    padding-right: 11px;
+    margin-top: 15px;
+    font-size: 12px;
+    padding-top: 11px;
+    padding-bottom: 11px;
+}
+.customerActCallFrame{
+    background: #fff;
+    margin-left: 15px;
+    margin-right: 15px;
+    /*border: 1px solid #ddd;*/
+    padding-left: 11px;
+    padding-right: 11px;
+    margin-top: 15px;
+    font-size: 12px;
+    padding-top: 11px;
+    padding-bottom: 11px;
+}
+.customerActTrainFrame{
+    background: #fff;
+    margin-left: 15px;
+    margin-right: 15px;
+    /*border: 1px solid #ddd;*/
+    padding-left: 11px;
+    padding-right: 11px;
+    margin-top: 15px;
+    font-size: 12px;
+    padding-top: 11px;
+    padding-bottom: 11px;
+}
+.customerActFrameLine1{
+    /*margin-top: 10px;*/
+    /*padding-top: 5px;*/
+}
+.customerActVisit{
+    width: 50px;
+    display: inline-block;
+    background: #ec564d;
+    border-radius: 6px;
+    text-align: center;
+    height: 21px;
+    line-height: 22px;
+    color: #fff;
+    margin-right: 10px;
+    font-size: 12px;
+}
+.customerActVisit2{
+    width: 50px;
+    display: inline-block;
+    background: #ec564d;
+    border-radius: 6px;
+    text-align: center;
+    /*height: 21px;*/
+    /*line-height: 22px;*/
+    color: #fff;
+    margin-right: 10px;
+    font-size: 12px;
+}
+.customerActFrameLine2 .fields-2{
+    width: 154px;
+    display: inline-block;
+}
+.customerActFrameLine2 .fields-3{
+    width: 90px;
+    display: inline-block;
+}
+.customerActSubVisit{
+    width: 40px;
+    display: inline-block;
+    background: #6db3d8;
+    border-radius: 6px;
+    text-align: center;
+    height: 21px;
+    line-height: 22px;
+    color: #fff;
+    margin-right: 10px;
+    font-size: 12px;
+}
+.customerActSubordinate{
+    color: #333;
+    margin-right: 5px;
+    font-size: 13px;
+}
+.customerActLeader{
+    color: #999;
+}
+.customerActVisitStartTime{
+    float: right;
+    color: #666;
+    font-size: 10px;
+}
+.customerActContent{
+    margin: 11px 0 0 0;
+    color: #333;
+    font-size: 13px;
+}
+.customerActFrameLine2{
+    border-bottom: 1px solid #ddd;
+    padding-bottom: 5px;
+}
+.customerActFrameLine3{
+    padding-top: 5px;
+}
+.customerActPhoneRecords{
+    background: #fd9109;
+    width: 65px;
+    display: inline-block;
+    border-radius: 6px;
+    text-align: center;
+    height: 21px;
+    line-height: 22px;
+    color: #fff;
+    margin-right: 10px;
+    font-size: 12px;
+}
+.customerActTraining{
+    width: 40px;
+    display: inline-block;
+    background: #B9D3EE;
+    border-radius: 6px;
+    text-align: center;
+    height: 21px;
+    line-height: 22px;
+    color: #fff;
+    margin-right: 10px;
+    font-size: 12px;
+}
+#customerActSelect{
+    /*margin-top: 15px;*/
+}
+/*.customerActAccompany{*/
+    /*width: 40px;*/
+    /*display: inline-block;*/
+    /*background: #EEAD0E;*/
+    /*border-radius: 6px;*/
+    /*text-align: center;*/
+    /*height: 21px;*/
+    /*line-height: 22px;*/
+    /*color: #fff;*/
+    /*margin-right: 10px;*/
+/*}*/

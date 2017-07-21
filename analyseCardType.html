@@ -1,0 +1,365 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<meta content="initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
+	<meta content="telephone=no" name="format-detection">
+	<title>卡种类分析</title>
+	<link href="css/frozen.css" rel="stylesheet" type="text/css">
+	<link href="css/main.css" rel="stylesheet" type="text/css">
+	<link rel="stylesheet" href="css/team.css" />
+	<link rel="stylesheet" href="css/data-decision.css" />
+</head>
+<body>
+<section>
+	<div class="ui-container" style="background: #F8F8F8;">
+		<div class="chart-panel hide" id="top-btn" style="height: 10px;">
+			<div class="show-btn  toggle-btn">
+				<span class="ui-icon-arrow ligth-green"></span>
+			</div>
+		</div>
+
+		<div class="chart-panel" id="chart-container">
+			<ul class="ui-list ui-list-text">
+				<li class="">
+					<div id="pro_files_container" class="chart-container" >
+						<div class="ui-loading-wrap text-center">
+							<p>图表加载中</p>
+							<i class="ui-loading"></i>
+						</div>
+					</div>
+				</li>
+			</ul>
+			<div class="hide-btn toggle-btn">
+				<span class="ui-icon-arrow ligth-green"></span>
+			</div>
+		</div>
+
+		<div style="margin-top: 20px;">
+
+			<div id="biao" class="table-container fo_fix" >
+				<div class="ui-whitespace inner-container">
+					<div id="headertable-wrap" class="table-header">
+						<div class="table-fixed">
+							<table>
+								<tr><th class="table-title">城市</th></tr>
+							</table>
+						</div>
+						<table id="headertable" class="table-head">
+
+						</table>
+					</div>
+					<table id="lefttable" class="table-col">
+						<tbody></tbody>
+					</table>
+					<div id="bodytable-wrap" class="table-body">
+						<h3 id="table-tip" class="tb-tip" style="display:none;"></h3>
+						<table id="bodytable" class="table-content">
+							<tbody></tbody>
+						</table>
+					</div>
+				</div>
+			</div>
+		</div>
+
+	</div>
+</section>
+<script type="text/javascript" src="js/lib/fastclick.min.js" ></script>
+<script type="text/javascript" src="js/lib/jquery.min.js" ></script>
+<script type="text/javascript" src="js/lib/highcharts.js" ></script>
+<script type="text/javascript" src="js/lib/highcharts-more.js" ></script>
+<script src="js/lib/dingtalk.min.js"></script>
+<script src="js/lib/ddbanner.js"></script>
+<script src="js/lib/apiList.js"></script>
+<script src="js/lib/md5.min.js"></script>
+<script src="js/login.js"></script>
+<script src="js/config.js"></script>
+<script src="js/common.js"></script>
+<script src="js/goldAgeCommon.js"></script>
+<script type="text/javascript" src="js/team.js" ></script>
+
+<script>
+	var swidth;
+	var colorMap=[
+		'#ea5751',
+		'#fb9128',
+		'#3cb67f',
+		'#6acccb',
+		'#d4ac0d',
+		'#48C9B0',
+		'#9B59B6',
+		'#C0392B',
+		'#34495E'
+	];
+	var nameMap = {
+		'all':{
+			'year':'年卡',
+			'lose':'减肥训练营',
+			'children':'少儿泳班',
+			'times':'次卡'
+		},
+		'year':{
+			"month": '月卡',
+			"year": '年卡',
+			"yearVip": '年卡VIP',
+			"twoYear": '两年卡',
+			"twoYearVip": '两年卡VIP',
+			"threeYear": '三年卡',
+			"threeYearVip": '三年卡VIP',
+			"fivesYear": '五年卡',
+			"eightYear": '八年卡'
+		},
+		'times':{
+			"thirty": '30次卡',
+			"fifty": '50次卡',
+			"hundred": '100次卡',
+			"twoHundred": '200次卡',
+			"threeHundred": '300次卡'
+		}
+	};
+	$(document).ready(function() {
+		var defaultValue = new Date().Format("yyyy-MM");
+		ddbanner.changeBannerTitle(defaultValue + '卡种类分析');
+		var orgId=getUrlParam('orgid');
+		var view = getUrlParam('view');
+		var title = '';
+		console.log(view);
+		if(!view){
+			view = 'all';
+		}
+		if(view == 'all')
+			title = '卡种类分析';
+		else if(view == 'year')
+			title = '年卡种类分析';
+		else if(view == 'times')
+			title = '次卡种类分析';
+
+		var month=localStorage.getItem('team.cardType.dat') || defaultValue;
+		var dayType='month';
+		dd.ready(function(){
+			var monthvalue = month;
+			if(!monthvalue){
+				monthvalue = new Date().Format("yyyy-MM");
+			}
+
+			dd.biz.navigation.setTitle({
+				title: monthvalue + title
+			});
+			resetRight(monthvalue);
+
+			function resetRight(monthvalue){
+				dd.biz.navigation.setRight({
+					control: true,
+					text: monthvalue,
+					onSuccess : function(result) {
+						dd.biz.util.datepicker({
+							format: 'yyyy-MM',
+							mode: 'month',
+							value: monthvalue,
+							onSuccess: function(result) {
+//							var selmonth = new Date(result.value);
+//							if(selmonth.getYear()>now.getYear()
+//								|| (selmonth.getYear()==now.getYear() && selmonth.getMonth()>now.getMonth())){
+//								return dd.device.notification.toast({text: '请选择当前或过去的月份'});
+//							}
+								monthvalue = result.value;
+								localStorage.setItem('team.cardType.dat', monthvalue);
+								//重置 rightMenu
+								resetRight(monthvalue);
+								//加载数据
+								getCardTypeReport(monthvalue,dayType,view,orgId,[],[]);
+							}
+						});
+					}
+				});
+			}
+		});
+
+		getCardTypeReport(month,dayType, view, orgId, [], []);
+	});
+	function getCardTypeReport(day, dayType, view, orgId, userList, userStatus){
+		orgId = orgId==''?[]:JSON.stringify([orgId]);
+		OMS_COM.ajaxPost({
+			api: 'getCardReportData',
+			data: {
+				orgList:orgId,
+				userList: userList,
+				userStatus: userStatus,
+				day: day,
+				dayType: dayType,
+				view: view
+			},
+			success: function (data) {
+				console.log(data);
+				var res = JSON.parse(data);
+				if(res.code === 0){
+					if(res.data.chart!=undefined) {
+						setCardTypeChart(res.data.chart, view, orgId);
+						setTableData(res.data, view, orgId);
+					}else{
+						$('#pro_files_container').html('暂无资料');
+					}
+				}
+			},
+			error: function () {
+
+			},
+			always: function () {
+
+			}
+		});
+	}
+
+	function setTableData(data, view, orgId) {
+		var tableData=data.table;
+		var tableColumn="";
+		var lefttable="";
+
+		lefttable += '<tr><td style="max-width:100px;">汇总</td></tr>';
+		tableColumn +='  <tr class="'+trClass+'" >\
+										 <td style="max-width:100px;min-width:100px;" >合计</td>';
+		$.each(Object.keys(nameMap[view]), function (i, val) {
+			tableColumn += '<td class="text-center">' + data.chart[val] + '</td>';
+		})
+		tableColumn += '</tr>';
+		for(var i in tableData){
+			var trClass='odd';
+			if(i%2==0){
+				trClass='even';
+			}
+
+			var dept=tableData[i].name;
+			if(tableData[i].isClick==1){
+				dept='<a href="analyseCardType.html?orgid='+tableData[i].id+'&view='+view+'" >'+dept+'</a>';
+			}
+			lefttable += '<tr><td style="max-width:100px;" class="fix-column"><span class="ui-nowrap tdspan">'+dept+'</span></td></tr>';
+
+			tableColumn += '  <tr class="' + trClass + '" >\
+									    <td style="max-width:100px;min-width:100px;" class="fix-column" ><span	class="ui-nowrap tdspan">' + dept + '</span></td>';
+			var currentData = tableData[i];
+			$.each(Object.keys(nameMap[view]), function (i, val) {
+				tableColumn += '<td class="text-center">' + currentData[val] + '</td>';
+			})
+			tableColumn += '</tr>';
+		}
+		var head = '<thead>\
+				<tr>\
+				<th style="max-width:100px;" class="table-title">部门</th>';
+		$.each(nameMap[view], function (i, val) {
+			head += '<th>'+val+'</th>';
+		});
+		head += '</tr>\
+				</thead>';
+		$("#headertable").html(head);
+		$("#lefttable tbody").html(lefttable);
+		$("#bodytable tbody").html(tableColumn);
+		scrollTable();
+	}
+	//卡种类分析
+	function setCardTypeChart(data, view, orgId){
+		var total = 0;
+		var renderData = [];
+		$.each(data,function (i,val) {
+			total += val;
+		})
+		$.each(Object.keys(nameMap[view]),function (i, val) {
+			renderData.push({
+				name:nameMap[view][val],
+				y:data[val],
+				color:colorMap[i]
+			})
+		})
+		$('#pro_files_container').highcharts({
+			chart: {
+				width:swidth,
+				height:210,
+			},
+			title: {
+				text: '客户总量'+total+"个",
+				style: {
+					fontSize: '13px',
+					color: '#666666'
+				},
+			},
+			tooltip: {
+
+			},
+			legend: {
+				layout : 'vertical ',
+				align: 'left',
+				x: 0,
+				width:50,
+				y: -20,
+				itemMarginTop:2,
+				floating: true
+				//itemWidth:30,
+			},
+			plotOptions: {
+				pie: {
+					allowPointSelect: true,
+					cursor: 'pointer',
+					dataLabels: {
+						enabled: false
+					},
+					showInLegend: true
+				},
+				series: {
+					cursor: 'pointer',
+					point: {
+						events: {
+							click: function() {
+								if(this.name == '次卡') {
+									openLink('analyseCardType.html?orgid=' + orgId + '&view=times');
+								}else if(this.name == '年卡') {
+									openLink('analyseCardType.html?orgid=' + orgId + '&view=year');
+								}
+							}
+						}
+					}
+				}
+			},
+			series: [{
+				type: 'pie',
+				name: '客户总量'+total,
+				data: renderData
+			}],
+			exporting: {
+				enabled: false
+			},
+			credits: {
+				enabled: false
+			}
+		});
+	}
+
+	function comparesort(a,b){
+		if (a[1] < b[1]) return 1;
+		if (a[1] > b[1]) return -1;
+		return 0;
+	}
+	function scrollTable(){
+		setTableBody();
+		$('#lefttable').show();
+		$(window).resize(setTableBody);
+		$(".table-body").scroll(function (){
+			$("#headertable").offset({ left: -1*this.scrollLeft });
+			if($("#chart-container").css('display')=='none'){
+				$("#lefttable").offset({ top: -1*this.scrollTop + 77 });
+			}else{
+				$("#lefttable").offset({ top: -1*this.scrollTop + 289 });
+			}
+		});
+
+		$(window).scroll(function (){
+			if($("#chart-container").css('display')=='none'){
+				$("#lefttable").offset({ top: -1*this.scrollTop + 77 });
+			}else{
+				$("#lefttable").offset({ top: -1*this.scrollTop + 289 });
+			}
+		});
+	}
+
+</script>
+
+</body>
+</html>

@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+
+<head>
+    <meta charset="UTF-8">
+    <title>智能警示灯配置</title>
+    <meta name="viewport" content="width=device-width, height=device-height, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no">
+    <meta name="format-detection" content="telephone=no">
+    <link href="css/frozen.css" rel="stylesheet" type="text/css">
+    <link rel="stylesheet" href="css/data-decision.css" type="text/css">
+    <link href="css/teamDiagnoseConfig.css" rel="stylesheet" type="text/css">
+</head>
+
+<body>
+    <setcion class="body-diagnose">
+        <section class="main-range">
+            <section class="ui-form">
+                <div class="ui-form-item ui-form-item-show">
+                    <label class="cat-title">分类</label>
+                    <div class="ui-select ui-border-l">
+                        <select id="fType">
+                            <option value="1">工作量</option>
+                            <option value="2">业绩</option>
+                            <option value="3">其他</option>
+                        </select>
+                        <i class="ui-icon-list_arrow_right"></i>
+                    </div>
+                </div>
+                <div class="ui-form-item ui-form-item-show ui-border-b">
+                    <label class="cat-title-s">分类</label>
+                    <div class="ui-select ui-border-tl">
+                        <select id="sType">
+                            <option value="1" class="opt1" selected="selected">资料量</option>
+                            <option value="2" class="opt1">绕KP量</option> 
+                            <option value="3" class="opt1">电话量</option>
+                            <option value="4" class="opt1">拜访量</option>
+                            <option value="5" class="opt1">理单完成率</option>
+                        </select>
+                        <i class="ui-icon-list_arrow_right"></i>
+                    </div>
+                </div>
+                
+                <!-- <div class="ui-form-item ui-form-item-show ui-border-b">
+                    <label>时间范围</label>
+                    <div class="ui-select ui-border-b">
+                        <select id="trade" name="trade">
+                            <option value="3">月</option>
+                            <option value="1">天</option>
+                        </select>
+                    </div>
+                </div>
+ -->               
+                <div class="ui-form-item ui-form-item-show ui-border-b">
+                    <label>红灯阈值<span class="item-desc" style="display: none;">(%)</span></label>
+                    <span class="diag-input"><i>0</i> - <input type="number" placeholder="请填写红灯阈值" id="red" class="act-num"></span>
+                    
+                </div>
+                <div class="ui-form-item ui-form-item-show ui-border-b">
+                    <label>黄灯阈值<span class="item-desc" style="display: none;">(%)</span></label>
+                    <span class="diag-input"><i id="lred">1</i> - <input type="number" placeholder="请填写黄灯阈值" id="yellow" class="act-num"/></span>
+                </div>
+                <div class="ui-form-item ui-form-item-show ui-border-b">
+                    <label>绿灯阈值<span class="item-desc" style="display: none;">(%)</span></label>
+                    <span class="diag-input"> > <i id="lyellow">1</i></span>
+                </div>
+            </section>
+            <section class="diagnose-info warning">
+                <i class="ui-icon ui-icon-warning_2"></i>
+                <span>「团队警示灯」会根据「团队人均值」获取</span>
+            </section>
+        </section>
+        <footer class="ui-footer ui-footer-btn">
+            <ul class="ui-tiled">
+                <li class="btn-del ui-border-t" id="cancel">删除</li>
+                <li class="btn-save" id="save">保存</li>
+            </ul>
+        </footer>
+    </section>
+    <script src="js/lib/zepto.min.js"></script>
+    <script src="js/lib/frozen.min.js"></script>
+    <script src="js/lib/dingtalk.min.js"></script>
+    <script src="js/lib/juicer.min.js"></script>
+    <script src="js/lib/fastclick.min.js"></script>
+    <script src="js/lib/ddbanner.js"></script>
+    <script src="js/lib/apiList.js"></script>
+    <script src="js/config.js"></script>
+    <script src="js/common.js"></script>
+    <script src="js/teamDiagnoseCommon.js"></script>
+    <script src="js/teamDiagnoseRangeAdd.js"></script>
+   
+</body>
+
+</html>

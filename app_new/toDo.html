@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>待办</title>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, height=device-height, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no">
+	<meta name="format-detection" content="telephone=no">
+    <link href="css/frozen.css" rel="stylesheet" type="text/css">
+    <link href="css/main.css" rel="stylesheet" type="text/css">
+    <link href="css/todo.css" rel="stylesheet" type="text/css">
+
+</head>
+
+
+<body>
+<div id="bcolor"></div>
+<div id="bg-color" class="bg-color">
+    <div id="hccalendarwrap_up" class="hccalendarwrap_up">
+<div id="hccalendarwrap"></div>
+</div>
+<span id="hccalendarwrap_tips"></span>
+<input type="hidden" name="pageDate" id="pageDate" value="" />
+<input type="hidden" name="ulid" id="ulid" value="" />
+<input type="hidden" name="selecteddate" id="selecteddate" value="" />
+
+    <section class="ui-container" id="main-body">
+        <div class="ui-tab" style="margin-top:-50px;">
+            <ul class="ui-tab-content" id="transformer" style="width:100%;min-height:280px;">
+                <li class="current">
+                    <div class="todo_nav " id="todoTips"></div>
+                    <div style="display:block;height:auto;overflow:auto;" id="listC">
+                        <div id="lay_swi" class="lay_swi" style="display: block;"></div>
+                        <ul class="ui-list ui-list-pure ui-list-active" id="todoList"
+                            style="background-color:#ffffff;">
+                        </ul>
+                    </div>
+                </li>
+            </ul>
+        </div>
+    </section>
+</div>
+
+
+
+<div class="cus_conn">
+ <div class="cus_detail" id="contact">
+    <div class="ui-whitespace dtitle">
+        <h2 style="margin-top:10px;margin-bottom:10px;text-align: center;">客户联系人</h2>
+    </div>
+    <ul class="ui-list ui-border-tb" id="detail_mes">
+    </ul>
+    <div class="ui-whitespace" id="contactCancel">
+        <h2 style="margin-top:10px;margin-bottom:10px;text-align: center">取消</h2>
+    </div>
+</div>
+</div>
+
+<script type="text/javascript" src="js/lib/zepto.min.js" ></script>
+<script type="text/javascript" src="js/lib/frozen.min.js" ></script>
+<script src="js/zepto.touchSwipe.min.js"></script>
+<script src="js/lib/dingtalk.min.js"></script>
+<script src="js/lib/ddbanner.js"></script>
+
+<script src="js/lib/apiList.js"></script>
+<script src="js/login.js"></script>
+<script src="js/config.js"></script>
+<script src="js/common.js"></script>
+<script src="js/lib/iscroll.min.js"></script>
+<script src="js/scroll-index.js"></script>
+<script src="js/todo.js"></script>
+<script src="js/hccalendar.js" ></script>
+<!--<script src="js/reallocate.js"></script>-->
+
+
+</body>
+</html>

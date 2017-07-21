@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>检索</title>
+    <meta name="viewport" content="width=device-width, height=device-height, initial-scale=1, maximum-scale=1, user-scalable=no">
+    <meta name="format-detection" content="telephone=no">
+    <link rel="stylesheet" href="css/frozen.css">
+    <link rel="stylesheet" href="css/search.css">
+    <style>
+        [v-cloak] {
+          display: none;
+        }
+    </style>
+</head>
+<body class="search-global--body" v-cloak>
+    <header class="ui-header">
+        <form v-on:submit="redoSearch($event)">
+            <div class="ui-searchbar-wrap" v-bind:class="{focus: searchbar.opened}" v-on:tap="activeSearch(null)">
+                <div class="ui-searchbar">
+                    <i class="ui-icon-search"></i>
+                    <div class="ui-searchbar-text">{{ searchbar.placeholder }}</div>
+                    <div class="ui-searchbar-input">
+                        <input type="search" v-model="searchbar.keyword"
+                            v-bind:placeholder="searchbar.placeholder" autocapitalize="off">
+                    </div>
+                    <i class="ui-icon-close" v-on:tap="searchbar.keyword=''"></i>
+                </div>
+                <!-- <button type="submit" class="ui-searchbar-cancel">搜索</button> -->
+            </div>
+        </form>
+    </header>
+    <div class="ui-container">
+        <!-- blankpage -->
+        <div class="ui-panel" v-if="visibles.length==0">
+            <div class="ui-searchtip" v-if="showTip">
+                <p>点击键盘上的“搜索”按钮<br>进行搜索</p>
+            </div>
+            <div class="ui-nohistory" v-else></div>
+        </div>
+        <!-- history -->
+        <div class="ui-panel ui-panel-group" v-el:history-panel v-if="visibles.indexOf('historyPanel')>-1">
+            <div class="ui-panel-header">
+                <div class="ui-whitespace">搜索历史</div>
+            </div>
+            <div class="ui-panel-body">
+                <ul class="ui-list ui-list-pure ui-list-active ui-border-tb">
+                    <li class="ui-border-t" v-for="word in data.history" v-on:click="activeSearch(word)">
+                        <p>{{* word }}</p>
+                    </li>
+                </ul>
+            </div>
+        </div>
+        <!-- loading -->
+        <div class="ui-panel ui-panel-group" v-el:loading-panel v-if="visibles.indexOf('loadingPanel')>-1">
+            <div class="ui-panel-body">
+                <div class="ui-center">
+                    <div class="ui-loading-wrap"><i class="ui-loading"></i></div>
+                </div>
+            </div>
+        </div>
+        <!-- customers -->
+        <div class="ui-panel ui-panel-group" v-el:customers-panel v-if="visibles.indexOf('customersPanel')>-1">
+            <div class="ui-panel-header">
+                <div class="ui-whitespace">客户</div>
+            </div>
+            <div class="ui-panel-body">
+                <ul class="ui-list ui-list-text ui-list-active ui-border-tb">
+                    <li class="ui-border-t" v-on:click.stop="open(item)"
+                        v-for="item of data.customers | limitBy data.customers.limit" track-by="id">
+                        <div class="ui-list-info">
+                            <h4>{{* item.cusname }}</h4>
+                            <p v-if="item.type == '1' || item.type == '3'">{{* item.lastInfo | lastFollowState }}</p>
+                            <p>{{* item.type | typeStringify }}</p>
+                        </div>
+                        <div class="ui-txt-info" v-if="pullAble(item)">
+                            <button class="ui-btn btn-pull" v-on:click.stop="pull(item)">拉入</button>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+            <div class="ui-panel-footer" v-if="data.customers.folded">
+                <p v-on:click="showMore('customer', data.customers, $els.customersPanel)">查看更多</p>
+            </div>
+        </div>
+        <!-- contactors -->
+        <div class="ui-panel ui-panel-group" v-el:contactors-panel v-if="visibles.indexOf('contactorsPanel')>-1">
+            <div class="ui-panel-header">
+                <div class="ui-whitespace">联系人</div>
+            </div>
+            <div class="ui-panel-body">
+                <ul class="ui-list ui-list-text ui-list-active ui-border-tb">
+                    <li class="ui-border-t" v-for="item of data.contactors | limitBy data.contactors.limit" track-by="id">
+                        <div class="ui-list-info">
+                            <h4>{{* item.linkman + ' | ' + item.position }}</h4>
+                            <p>{{* item.cusname }}</p>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+            <div class="ui-panel-footer" v-if="data.contactors.folded">
+                <p v-on:click="showMore('contactor', data.contactors, $els.contactorsPanel)">查看更多</p>
+            </div>
+        </div>
+        <!-- users -->
+        <div class="ui-panel ui-panel-group" v-el:users-panel v-if="visibles.indexOf('usersPanel')>-1">
+            <div class="ui-panel-header">
+                <div class="ui-whitespace">员工</div>
+            </div>
+            <div class="ui-panel-body">
+                <ul class="ui-list ui-list-text ui-list-active ui-border-tb">
+                    <li class="ui-border-t" v-on:click.stop="openProfile(item)"
+                        v-for="item of data.users | limitBy data.users.limit" track-by="id">
+                        <div class="ui-list-info">
+                            <h4>{{* item.realname }} | {{* item.position | positionStringify }}</h4>
+                            <p>{{* item.path }}</p>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+            <div class="ui-panel-footer" v-if="data.users.folded">
+                <p v-on:click="showMore('contactor', data.users, $els.contactorsPanel)">查看更多</p>
+            </div>
+        </div>
+        <!-- noresult -->
+        <div class="ui-panel ui-panel-group" v-el:maycreate-panel v-if="visibles.indexOf('noresultPanel')>-1">
+            <div class="ui-center">
+                <p><small>未找到相关信息</small></p>
+            </div>
+        </div>
+        <!-- maycreate -->
+        <div class="ui-panel ui-panel-group" v-el:maycreate-panel v-if="visibles.indexOf('maycreatePanel')>-1">
+            <div class="ui-first-notice">
+                <p>恭喜你，做第一个吃螃蟹的人</p>
+                <div class="ui-first-btn">
+                    <button class="ui-btn" v-on:click="newCustomerBy">立即添加</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+<script src="js/lib/zepto.min.js"></script>
+<script src="js/lib/frozen.min.js"></script>
+<script src="js/lib/dingtalk.min.js"></script>
+<script src="js/lib/vue.min.js"></script>
+<script src="js/lib/moment.min.js"></script>
+<script src="js/lib/ddbanner.js"></script>
+<script src="js/lib/apiList.js"></script>
+<script src="js/config.js"></script>
+<script src="js/common.js"></script>
+<script src="js/login.js"></script>
+<script src="js/globalSearch.js"></script>
+</body>
+</html>

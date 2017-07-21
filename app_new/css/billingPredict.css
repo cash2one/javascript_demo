@@ -1,0 +1,295 @@
+body {
+    background: #f5f5f6;
+    font-family: 'PingFang SC', 'Helvetica Neue', 'Helvetica', 'STHeitiSC-Light', 'Arial', sans-serif;
+
+}
+::-webkit-input-placeholder  {
+    color: #aaaec3;
+}
+input{
+    -webkit-appearance:none;
+}
+/*申报回款预测页面*/ 
+#barTotal {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    height: 2.4rem;
+    width:15.3rem;
+    line-height: 2.4rem;
+    font-size: 0.75rem;
+    color: #333;
+    padding-left: 0.7rem;
+    background: #fff;
+    font-weight: 300;
+}
+#totalCount {
+    margin-left: 0.85rem;
+}
+.submit-predict {
+    width: 6rem;
+    height: 100%;
+    float:right;
+    background: #ec564d;
+    color: #fff;
+    border: none;
+    border-radius: 0;
+}
+.predict-list {
+    margin-top: 0.5rem;
+    background: #fff;
+    width: 100%;
+}
+.predict-list>li {
+    border-bottom: 0.025rem solid #d9dcea;
+    margin: 0 0 0 0.7rem;
+    padding: 1.1rem 0;
+}
+.predict-list>li.android,.data-list>li.android,.area-list>li.android,.detail-list>li.android {
+    border-bottom: 1px solid #d9dcea;
+}
+.predict-list>li:last-child {
+    border: 0;
+}
+.predict-detail li.company {
+    font-size: 0.75rem;
+    color: #333;
+}
+.predict-detail li {
+    font-size: 0.7rem;
+    color: #666;
+    line-height: 110%;
+    margin-bottom: 0.6rem;
+}
+.predict-detail li:last-child {
+    margin-bottom: 0;
+}
+.predict-detail li span {
+    display: inline-block;
+    vertical-align: middle;
+}
+.predict-detail li span:first-child {
+    width: 3.2rem;
+    margin-right: 1.15rem;
+    font-weight: 300;
+}
+.predict-detail li span:last-child {
+    max-width: 10.8rem;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    font-weight: 300;
+}
+.predict-zero {
+    position: absolute;
+    font-size: 0.75rem;
+    line-height: 110%;
+    color: #333;
+    top: 8.4rem;
+    margin: auto;
+    left: 0;
+    right: 0;
+    text-align: center;
+}
+/*数据上报*/ 
+.data-list, .area-list {
+    margin-top: 0.5rem;
+    background: #fff;
+}
+.data-list li , .area-list li {
+    height: 2.4rem;
+    line-height: 2.4rem;
+    font-size: 0.7rem;
+    color: #333;
+    border-bottom: 0.025rem solid #d9dcea;
+    margin-left: 0.75rem;
+    padding-right: 0.75rem;
+    position: relative;
+}
+.area-list li:active, .detail-list li:active, .data-list li:active{
+    background: none!important;
+}
+
+.data-list li:last-child ,.area-list li:last-child {
+    border: 0;
+}
+.area-list li span{
+    display: inline-block;
+    vertical-align: middle;
+}
+.area-list li span:first-child{
+    max-width: 10rem;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow:ellipsis;
+    margin-right: 1.25rem;
+}
+.area-list li span:nth-child(2){
+    max-width: 3.5rem;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow:ellipsis;
+    font-weight: 300;
+}
+.area-list li i {
+    width: 0.7rem;
+    height: 0.7rem;
+    color: #aaaec3;
+    font-size: 0.7rem;
+    line-height: 110%;
+    margin-top: 0.85rem;
+    display: inline-block;
+    float: right;
+    vertical-align: middle;
+}
+.data-list span {
+    display: inline-block;
+    vertical-align: middle;
+}
+.data-list span:first-child {
+    width: 4.4rem;
+    height: 100%;
+    white-space: nowrap;
+    margin-right: 1.25rem;
+    overflow: hidden;
+}
+.data-list span:nth-child(3) {
+    width: 1rem;
+    float: right;
+    position: absolute;
+    top: 0;
+    right: 0.75rem;
+}
+.data-list span input {
+    width: 6rem;
+    font-size:0.7rem;
+    border: none;
+    height: 1rem;
+    line-height: 110%;
+    margin-top: 0.7rem;
+    font-weight: 300;
+    position: absolute;
+    top: 0;
+    left: 5.65rem
+}
+.data-submit-btn {
+    width: 14.5rem;
+    height: 2.2rem;
+    background: #ec564d;
+    font-size:0.7rem;
+    border-radius: 0.2rem;
+    border: 0;
+    margin-top: 1.4rem;
+    margin-left: 0.75rem;
+    color: #fff;
+}
+/*预测详情*/ 
+.detail-list {
+    margin-top: 0.5rem;
+    background: #fff;
+}
+.detail-list li {
+    height: 2.4rem;
+    line-height: 2.4rem;
+    font-size: 0.7rem;
+    color: #333;
+    border-bottom: 0.025rem solid #d9dcea;
+    margin-left: 0.75rem;
+    padding-right: 0.75rem;
+}
+.detail-list li:last-child {
+    border: 0;
+}
+.detail-list li i {
+    width: 0.7rem;
+    height: 0.7rem;
+    color: #aaaec3;
+    font-size: 0.7rem;
+    display: inline-block;
+    float: right;
+    vertical-align: middle;
+}
+.detail-list span {
+    display: inline-block;
+    vertical-align: middle;
+}
+.detail-list span:first-child {
+    width: 2.8rem;
+    margin-right: 1.25rem;
+    overflow: hidden;
+}
+.detail-list span:nth-child(2) {
+    color: #666;
+    max-width: 10rem;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow:ellipsis;
+    font-weight: 300;
+}
+.detail-description li {
+    min-height:0.75rem;
+    height: auto;
+}
+.detail-list span.detail-desc {
+    width: 10rem;
+    line-height:1.25rem;
+    margin: 0.575rem 0;
+    overflow:visible;
+    white-space: normal;
+
+}
+
+/*预测点击浮层*/
+.pop-box{
+    width: 100%;
+    height: 100%;
+    position: fixed;
+    left: 0;
+    top: 0;
+    z-index: 10;
+    display: none;
+}
+.pop-bg{
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0,0,0,0.7);
+}
+.pop-container{
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform:translate(-50%,-50%);
+    width: 89%;
+    z-index: 2;
+    max-height: 19.2rem;
+    border-radius: 8px;
+    overflow: scroll;
+}
+.pop-container ul{
+    overflow: hidden;
+}
+
+.pop-container ul li {
+    width:100%;
+    height: 2.4rem;
+    line-height: 2.4rem;
+    background: #fff;
+    border-bottom: 1px solid #d9dcea;
+    font-size: 14px;
+    padding: 0 0.5rem;
+    color: #333;
+    text-align: center;
+    box-sizing: border-box;
+}
+ul li:active{
+    background: #f5f5f5;
+}
+ul li:last-child{
+    border: 0;
+}
+.iosBorder{
+    border-bottom: 0.5px solid #d9dcea;
+}

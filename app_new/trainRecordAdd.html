@@ -1,0 +1,223 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>记录培训</title>
+    <meta name="viewport" content="width=device-width,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no">
+    <link href="css/frozen.css" rel="stylesheet" type="text/css">
+    <link href="css/main.css" rel="stylesheet" type="text/css">
+    <style>
+        #question_div .list .del-btn span,
+        #question_div .list .add-btn span {
+            margin-left: 5px;
+            color: #999;
+            font-size: 15px;
+        }
+        #question_div .list .del-btn .ui-icon,
+        #question_div .list .add-btn .ui-icon {
+            display:inline-block;
+            vertical-align: top;
+            color:#ec564d;
+            font-size:15px;
+        }
+        #question_div .list .add-btn .ui-icon-list_creat {
+            font-size:13px;
+        }
+        #question_div .list .list-item .ui-form-item-blank {
+            background-color: #f5f5f6;
+        }
+        #question_div .list .list-item:first-child .ui-form-item-blank{
+            display: none;
+        }
+    </style>
+</head>
+<body style="background-color:#f5f5f6;">
+
+<form id="myform" class="ui-container" name="form" novalidate onsubmit="return false;">
+    <input type="hidden" name="vid" value="">
+    <div class="ui-panel">
+        <div class="ui-form ui-form-gap ui-border-b">
+            <div class="ui-form-item ui-border-b">
+                <label>客户</label>
+                <input id="cusname" name="cusname" type="text">
+            </div>
+        </div>
+    </div>
+    <div class="ui-panel">
+        <div class="ui-form ui-form-gap ui-form-auto ui-border-b">
+            <div class="ui-form-item ui-border-b">
+                <label>结束地址</label>
+                <div id="end_address" style="padding-left:95px;"></div>
+            </div>
+        </div>
+    </div>
+    <div class="ui-panel">
+        <div class="ui-form ui-form-gap ui-border-tb">
+            <div class="ui-form-item ui-border-b">
+                <label>培训对象</label>
+                <div class="ui-select">
+                    <select id="training_target" name="training_object[obj][]" multiple>
+                        <option value="1">业务员</option>
+                        <option value="2">平台管理员</option>
+                        <option value="3">老板</option>
+                    </select>
+                </div>
+            </div>
+            <div class="ui-form-item ui-border-b">
+                <label>老板缺席</label>
+                <div class="ui-select">
+                    <select id="boss_reason" name="training_object[boss_reason]" >
+                        <option value="0">请选择</option>
+                        <option value="1">没约到</option>
+                        <option value="2">不重视</option>
+                        <option value="3">其他</option>
+                    </select>
+                </div>
+            </div>
+            <div class="ui-form-item ui-border-b">
+                <label>培训内容</label>
+                <div class="ui-select">
+                    <select id="content_items" name="training_content[]" multiple>
+                        <option value="1">工作(APP)</option>
+                        <option value="2">拜访(APP)</option>
+                        <option value="3">客户(APP)</option>
+                        <option value="4">沟通(APP)</option>
+                        <option value="5">报表(APP)</option>
+                        <option value="6">个人中心(APP)</option>
+                        <option value="7">基础数据(平台)</option>
+                        <option value="8">待办业务(平台)</option>
+                        <option value="9">报表中心(平台)</option>
+                        <option value="10">人员管理价值</option>
+                        <option value="11">客户管理价值</option>
+                        <option value="12">效率提升价值</option>
+                        <option value="13">数据分析价值</option>
+                        <option value="14">互联网思维</option>
+                    </select>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="ui-panel">
+        <div class="ui-form ui-form-gap ui-border-tb">
+            <div class="ui-form-item ui-form-item-switch ui-border-b">
+                <p>有增值需求</p>
+                <label for="" class="ui-switch">
+                    <input id="is_need" name="is_need_add[status]" type="checkbox" value="1">
+                </label>
+            </div>
+            <div class="ui-form-item ui-border-b">
+                <label for="">无需求原因</label>
+                <div class="ui-select">
+                    <select id="is_need_no" name="is_need_add[no_need_reason][]" multiple>
+                        <option value="1">功能不匹配</option>
+                        <option value="2">产品使用不熟</option>
+                    </select>
+                </div>
+            </div>
+            <div class="ui-form-item ui-form-item-pure ui-form-item-textarea ui-border-b">
+                <textarea id="is_need_content" name="is_need_add[need_content]"
+                    rows="5" style="width: 100%;" placeholder="需求描述（请输入）"></textarea>
+            </div>
+        </div>
+    </div>
+
+    <div class="ui-panel">
+        <div class="ui-form ui-form-gap ui-border-tb">
+            <div class="ui-form-item ui-form-item-switch ui-border-b">
+                <p>有续签可能</p>
+                <label for="" class="ui-switch">
+                    <input id="is_renew" name="is_renew" type="checkbox" checked value="1">
+                </label>
+            </div>
+            <div class="ui-form-item ui-border-b">
+                <label for="">不续签原因</label>
+                <div class="ui-select">
+                    <select id="is_renew_no" name="no_renew_reason[]" multiple>
+                        <option value="1">产品没到期</option>
+                        <option value="2">功能不满足</option>
+                        <option value="3">客情关系不够</option>
+                        <option value="4">非决策人</option>
+                    </select>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="question_div" class="ui-panel">
+        <script type="x-template" id="question_item_tpl">
+            <div class="list-item ui-form ui-form-gap ui-border-tb">
+                <div class="ui-form-item-blank"></div>
+                <div class="ui-form-item ui-form-item-icon ui-border-b">
+                    <label>问题类型</label>
+                    <div class="ui-select">
+                        <select name="question_cate[]">
+                            <option value="0">请选择</option>
+                            <option value="2">服务</option>
+                            <option value="1">产品技术</option>
+                        </select>
+                    </div>
+                    <!--<i class="ui-icon-delete del-btn" style="background-color:#fff;top:1px;bottom:1px;"></i>-->
+                </div>
+                <div tabindex="-1" class="ui-form-camera">
+                    <div class="ui-form-item ui-form-item-icon ui-border-b">
+                        <label>问题图片</label>
+                        <input type="hidden" name="question_images[]">
+                        <input type="hidden" name="question_urls[]">
+                        <input type="text" readonly placeholder="请上传（非必选，最多5张）">
+                        <i class="img-add-btn ui-icon ui-icon-thumb">
+                            <input type="file" name="files" accept="image/*" style="position:absolute;left:0;top:0;opacity:0;">
+                        </i>
+                    </div>
+                    <ul class="ui-form-camera-list ui-whitespace ui-border-b clearfix" style="display:none;">
+                    </ul>
+                </div>
+                <div class="ui-form-item ui-form-item-pure ui-form-item-textarea ui-border-b">
+                    <textarea rows="5" style="width: 100%;" name="question_content[]" placeholder="问题内容（请输入）"></textarea>
+                </div>
+                <div class="ui-form-item">
+                    <div class="pull-left del-btn">
+                        <i class="ui-icon ui-icon-list_delete"></i><span>删除</span>
+                    </div>
+                    <div class="pull-right add-btn">
+                        <i class="ui-icon ui-icon-list_creat"></i><span>添加问题</span>
+                    </div>
+                </div>
+            </div>
+        </script>
+        <div class="list"></div>
+        <div class="first_div bg-white ui-arrowlink ui-border-tb">
+            <h3 class="first-add-btn">添加问题（未解决）</h3>
+        </div><!--
+        <div class="more_div bg-white ui-whitespace ui-border-tb" style="display:none;">
+            <p class="add-btn" style="text-align:right">
+                <i class="ui-icon-list_creat" style="display:inline-block;font-size: 12px;color: #ec564d"></i>
+                <span style="color:#999">添加问题</span></p>
+        </div> -->
+    </div>
+
+    <div class="ui-panel">
+        <div class="ui-form ui-form-gap ui-border-tb">
+            <div class="ui-form-item ui-form-item-pure ui-form-item-textarea ui-border-b">
+                <textarea id="remark" name="remark"
+                    rows="5" style="width: 100%;" placeholder="请填写培训备注"></textarea>
+            </div>
+        </div>
+    </div>
+
+</form>
+
+<script src="js/lib/dingtalk.min.js"></script>
+<script src="js/lib/zepto.min.js"></script>
+<script src="js/lib/fastclick.min.js"></script>
+<script src="js/lib/zeptoAjaxFileUpload.js"></script>
+<script src="js/lib/ddbanner.js"></script>
+<script src="js/lib/apiList.js"></script>
+<script src="js/config.js"></script>
+<script src="js/common.js"></script>
+<script src="js/login.js"></script>
+<script src="js/draftwork.js"></script>
+<script src="js/trainRecordAdd.js"></script>
+
+</body>
+</html>

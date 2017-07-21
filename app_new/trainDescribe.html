@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>培训详情</title>
+    <meta name="viewport" content="width=device-width,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no">
+    <meta name="format-detection" content="telephone=no">
+    <link href="css/frozen.css" rel="stylesheet" type="text/css">
+    <link href="css/main.css" rel="stylesheet" type="text/css">
+    <link href="css/visitDescribe.css" rel="stylesheet" type="text/css">
+</head>
+<body>
+<article class="visitDescribeContainer">
+
+    <header class="visitDescribeHead ui-panel">
+        <div class="ui-row-flex ui-whitespace">
+            <!--
+            <div class="ui-avatar">
+                <span style="background-image:url(http://placeholder.qiniudn.com/100x100)"></span>
+            </div> -->
+            <div class="ui-col">
+                <h4 data-model="training_username">---</h4>
+                <p data-model="create_time">--/--/-- --:--</p>
+            </div>
+        </div>
+    </header>
+
+    <div class="ui-panel">
+        <div class="ui-form ui-form-gap ui-form-auto ui-border-tb">
+            <div class="ui-form-item ui-border-b">
+                <label>客户名称</label>
+                <input type="text" readonly data-model="cusname">
+            </div>
+            <div class="ui-form-item ui-border-b">
+                <label>拜访时间</label>
+                <input type="text" readonly data-model="visit_time">
+            </div>
+            <div class="ui-form-item ui-border-b">
+                <label>培训时长</label>
+                <input type="text" readonly data-model="last_time">
+            </div>
+            <div class="ui-form-item ui-border-b">
+                <label>开始定位</label>
+                <p data-model="start_address"></p>
+            </div>
+            <div class="ui-form-item ui-border-b">
+                <label>结束定位</label>
+                <p data-model="end_address"></p>
+            </div>
+        </div>
+    </div>
+
+    <div class="ui-panel">
+        <div class="ui-form ui-form-gap ui-form-auto ui-border-tb">
+            <div class="ui-form-item ui-border-b">
+                <label>培训对象</label>
+                <input type="text" readonly data-model="training_object">
+            </div>
+            <div class="ui-form-item ui-border-b">
+                <label>老板缺席</label>
+                <input type="text" readonly data-model="boss_reason">
+            </div>
+            <div class="ui-form-item ui-border-b">
+                <label>培训内容</label>
+                <p data-model="training_content"></p>
+            </div>
+            <div class="ui-form-item ui-border-b">
+                <label>增值需求</label>
+                <input type="text" readonly data-model="state">
+            </div>
+            <div class="ui-form-item ui-border-b">
+                <label>需求描述</label>
+                <p data-model="need_content"></p>
+            </div>
+            <div class="ui-form-item ui-border-b">
+                <label>无需求原因</label>
+                <input type="text" readonly data-model="no_need_reason">
+            </div>
+            <div class="ui-form-item ui-border-b">
+                <label>续签可能</label>
+                <input type="text" readonly data-model="is_renew">
+            </div>
+            <div class="ui-form-item ui-border-b">
+                <label>不续签原因</label>
+                <input type="text" readonly data-model="no_renew_reason">
+            </div>
+        </div>
+    </div>
+
+    <div id="traind_que_wraper" class="ui-panel" style="display:none;">
+        <div class="ui-panel-legend ui-whitespace">存在问题</div>
+        <script id="train-que-repeator" type="text/x-template">
+            <div class="ui-simple-panel">
+                <div class="ui-form ui-form-gap ui-form-auto ui-border-tb">
+                    <div class="ui-form-item ui-border-b">
+                        <label>问题类型</label>
+                        <input type="text" value="${cate}" readonly>
+                    </div>
+                    <div class="ui-form-item ui-border-b">
+                        <label>问题内容</label>
+                        <p>${content}</p>
+                    </div>
+                    {@if images && images.length}
+                    <div tabindex="-1" class="ui-form-camera">
+                        <ul class="ui-form-camera-list ui-whitespace ui-border-b clearfix">
+                            {@each images as img}
+                            <li class="ui-form-camera-item">
+                                <img src="${img|thumbnail}" ori-src="${img|previewurl}" alt="X">
+                            </li>
+                            {@/each}
+                        </ul>
+                    </div>
+                    {@/if}
+                </div>
+            </div>
+        </script>
+        <div class="list"></div>
+    </div>
+
+    <div class="ui-panel">
+        <div class="ui-form ui-form-gap ui-form-auto ui-border-tb">
+            <div class="ui-form-item ui-border-b">
+                <label>培训纪要</label>
+                <p data-model="remark"></p>
+            </div>
+        </div>
+    </div>
+
+</article>
+
+<script src="js/lib/zepto.min.js"></script>
+<script src="js/lib/dingtalk.min.js"></script>
+<script src="js/lib/juicer.min.js"></script>
+<script src="js/lib/ddbanner.js"></script>
+<script src="js/lib/apiList.js"></script>
+<script src="js/config.js"></script>
+<script src="js/common.js"></script>
+<script src="js/login.js"></script>
+<script src="js/trainDescribe.js"></script>
+
+</body>
+</html>

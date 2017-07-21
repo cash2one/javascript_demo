@@ -1,0 +1,146 @@
+html {
+    font-size: 62.5%;
+}
+
+html,
+body {
+    height: 100%;
+    overflow: hidden;
+}
+
+body {
+    position: relative;
+}
+
+#navBar {
+    display: block;
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 5;
+}
+
+#navBar .ui-searchbar-wrap {
+    height: 4rem;
+    background-color: #F6F7F8;
+}
+
+#sList {
+    position: relative;
+    padding-top: 4rem;
+    box-sizing: border-box;
+    height: 100%;
+    overflow: hidden;
+    background-color: #fff;
+    display: none;
+}
+
+#sList.activated {
+    display: block;
+}
+
+.tips {
+    position: absolute;
+    top: 10rem;
+    left: 0;
+    width: 100%;
+    text-align: center;
+    color: #ccc;
+    font-size: 1.4rem;
+    display: none;
+    z-index: 10;
+}
+
+.tips.activated {
+    display: block;
+}
+
+#cList {
+    position: relative;
+    padding-top: 4rem;
+    box-sizing: border-box;
+    height: 100%;
+    overflow: hidden;
+    background-color: #fff;
+    display: none;
+}
+
+#cList.activated {
+    display: block;
+}
+
+#ribbon {
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: 4rem;
+    z-index: 1;
+}
+
+#cList header,
+#ribbon {
+    padding: 0 1.5rem;
+    background-color: #f5f5f5;
+    font-size: 1.2rem;
+}
+
+#ribbonvalue {
+    outline: none;
+    line-height: 100%;
+    font-size: 1.2rem;
+    border: none;
+    background: none;
+    color: #ccc;
+}
+
+.cuslist ul div.col1 {
+    width: 85%;
+}
+
+.cuslist ul div.col2 {
+    width: 15%;
+}
+
+.cuslist ul li.item {
+    padding: 0.8rem 0rem 0.8rem 1.5rem;
+    background-color: #FEFFFF;
+}
+
+.cuslist ul li.item:first-child,
+.cuslist ul li.item:last-child {
+    background: none;
+    background-color: #FEFFFF;
+}
+
+.cuslist ul li.item p {
+    line-height: 100%;
+}
+
+.cuslist ul li.item p.title {
+    color: #666;
+    font-size: 1.6rem;
+}
+
+.cuslist ul li.item p.intro {
+    margin-top: 1rem;
+    color: #AAABAC;
+    font-size: 1.2rem;
+}
+
+.cuslist ul li.item p.intro span {
+    margin: 0 0.5rem;
+}
+
+.cuslist ul li.item i.ui-icon-phone-2 {
+    color: #E94A3B;
+    font-size: 2.4rem;
+    transform: rotate(245deg)
+}
+
+#mainScroller,
+#resScroller {
+    height: 100%;
+    overflow: hidden;
+    box-sizing: border-box;
+}

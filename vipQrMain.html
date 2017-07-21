@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html>
+
+    <head>
+        <title>生成优惠分享码</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, height=device-height, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no">
+        <meta name="format-detection" content="telephone=no">
+        <link href="css/frozen.css" rel="stylesheet" type="text/css">
+        <link href="css/index.css" rel="stylesheet" type="text/css">
+        <link href="css/vipService.css" rel="stylesheet" type="text/css">
+        <script type="text/javascript">
+            function resize() {
+                var remFontSize = +document.documentElement.clientWidth / 16;
+                document.documentElement.style.fontSize = remFontSize + "px";
+            }
+            var b = null;
+            window.addEventListener("resize", function() {
+                clearTimeout(b),
+                b = setTimeout(resize, 300)
+            }, !1);
+            resize();
+        </script>
+    </head>
+
+    <body>
+        <div class="container">
+            <div class="ui-form vip-qr-main">
+                <div class="vip-main-img" id="qrCode" style="text-align:center">
+                    <div class="dotted-line"></div>
+                </div>
+                <div class="save_toolbar" id="save_toolbar">
+                    <div class="save_toolbar-block" id="save_qr">
+                        <i class="ui-icon-generate_content_qr_icon_Preservation"></i>
+                        保存二维码
+                    </div>
+                    <div class="save_toolbar-block" id="copy_qr">
+                        <i class="ui-icon-generate_content_qr_icon_link"></i>
+                        复制链接
+                    </div>
+                </div>
+            </div>
+            <div class="vip-wave">
+
+            </div>
+            <div class="payment_toolbar" id="payment_toolbar">
+                <div class="payment_toolbar-block">
+                    <button type="button" name="payment_btn" id="payment_btn" class="ui-btn payment-btn">刷新支付状态</button>
+                </div>
+                <div class="manual-pay" id="manual_open">
+                    已收现金付款？手动开通服务
+                </div>
+            </div>
+
+            <div class="ui-dialog vip-nonauto-pay vip-dialog" id="vip_nonauto_pay">
+                <div class="ui-dialog-cnt">
+                    <div class="form-close">
+                        <i class="ui-icon-dialog_close" id="vip_nonauto_pay_close"></i>
+                    </div>
+                    <div class="header">
+                        手动开通服务
+                    </div>
+                    <div class="ui-form" style="border-bottom-left-radius: 4px;border-bottom-right-radius: 4px;">
+                        <form action="#" style="position:relative; text-align:center;">
+                            <div class="vip-dialog-center">
+
+                              <div class="ui-form-item ui-form-item-show vip-dialog-block">
+                                  <label for="#" class="vip-dialog-label">客户电话</label>
+                                  <input type="tel" name="phone" id="phone" placeholder="请输入客户电话">
+                              </div>
+
+                              <div class="ui-form-item ui-form-item-show vip-dialog-block">
+                                  <label for="#" class="vip-dialog-label">企业代码</label>
+                                  <input type="tel" name="entCode" id="entCode" placeholder="请输入企业代码">
+                              </div>
+                              <div class="ui-form-item ui-form-item-show vip-dialog-block">
+                                  <label for="#" class="vip-dialog-label">支付金额</label>
+                                  <input type="tel" name="payment_mount" id="payment_mount" style="width:121px;" placeholder="请输入支付金额">
+                                  <label for="#" style="margin-left:10px;line-height:48px; color:#333;font-size:13px;">元</label>
+                              </div>
+                              <div class="ui-form-item ui-form-item-show vip-dialog-block">
+                                  <label for="#" class="vip-dialog-label">开通时长</label>
+                                  <div class="manu-container">
+                                      <div class="manu-container-minus" id="manu-container-minus">
+                                          -
+                                      </div>
+                                      <!-- <div class="manu-container-num" id="manu-container-num"> -->
+                                      <input type="tel" name="payment_mount" class="manu-container-num" id="manu-container-num" value="12">
+                                      <!-- </div> -->
+                                      <div class="manu-container-plus" id="manu-container-plus">
+                                        +
+                                      </div>
+                                      <div class="manu-container-tag">
+                                          月
+                                      </div>
+                                  </div>
+                              </div>
+
+
+                            </div>
+
+                            <div class="ui-form-item ui-form-item-show vip-dialog-btn">
+                                <button type="button" id="nonautoOpen">确定</button>
+                            </div>
+                        </form>
+                    </div>
+                    <!-- <div class="ui-dialog-ft ui-btn-group">
+                        <button type="button" data-role="button"  class="select" id="dialogButton<%=i%>">关闭</button>
+                    </div> -->
+                </div>
+            </div>
+
+            <div class="ui-dialog vip-pay-finish vip-dialog" id="vip_pay_finish">
+                <div class="ui-dialog-cnt" style="background-color:#fff">
+                    <div class="form-close">
+                        <i class="ui-icon-dialog_close" id="vip_pay_finish_close"></i>
+                    </div>
+                    <div class="header">
+
+                    </div>
+                    <div class="header1">
+                        服务开通成功
+                    </div>
+                    <div id="vip_successfully">
+
+                    </div>
+                    <div class="ui-dialog-ft vip-dialog-ft">
+                        <button type="button" id="vip_pay_success">确定</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <script src="js/lib/zepto.min.js"></script>
+        <script src="js/lib/frozen.min.js"></script>
+        <script src="js/lib/dingtalk.min.js"></script>
+        <script src="js/lib/fastclick.min.js"></script>
+        <script src="js/lib/ddbanner.js"></script>
+        <script src="js/lib/iscroll.min.js"></script>
+        <script src="js/lib/lodash.js"></script>
+        <script src="js/lib/apiList.js"></script>
+        <script src="js/login.js"></script>
+        <script src="js/config.js"></script>
+        <script src="js/scroll-index.js"></script>
+        <script src="js/vipQrMain.js"></script>
+
+        <!-- <script src="js/index.js"></script> -->
+    </body>
+
+</html>

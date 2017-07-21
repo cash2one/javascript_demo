@@ -1,0 +1,246 @@
+
+#cusFoot {
+    height:50px;
+    -webkit-user-select:initial;
+    background-color: #fff;
+    font-size:15px;
+}
+
+.ui-hecom-ft {
+	background-color:#f9f9f9;
+	border-top-color:#dad8de;
+}
+.ui-hecom-ftspan {
+	vertical-align:middle;
+	padding-top:6px;
+}
+.ui-hecom-ftspan i{
+	font-size:22px;
+	color:#8b8b8b;
+	line-height:14px;
+}
+.ui-hecom-ftspan font{
+	color:#8b8b8b;
+	font-size:11px;
+}
+.focused i{
+	color:#e15151;
+}
+.red{
+	color:#e15151 !important;
+}
+.focused font{
+	color:#e15151;
+}
+#hecom-tab {
+	height:40px;
+	// position:fixed;
+	z-index:9;
+	background-color: #fff;
+}
+#hecom-tab .current {
+	background-color: #fff;
+	// color: #e15151;
+	// border-bottom: 2px #e15151 solid;
+}
+.ui-tab-content {
+    margin-top: 51px;
+}
+.ui-list-date {
+	position: relative;
+    width: 100px;
+    display: inline-block;
+    top: 8px;
+    font-size: 14px;
+    color: #777;
+    text-align: right;
+}
+.ui-list-status {
+	position: absolute;
+    top: 35px;
+    display: inline-block;
+    right: 15px;
+    font-size: 13px;
+	color: #777;
+}
+#tasklist .ui-list>li {
+    padding:0 15px;
+	margin-left:0;
+}
+#cusWidget_result li {
+    padding-left:15px;
+	margin-left:0;
+}
+
+.listiem {
+ padding-left:15px;
+}
+
+#taskInfoPhoto img {
+	height:55px;
+	width:55px;
+	margin-right:10px;
+	border-radius:3px;
+	margin-bottom:10px;
+}
+#taskInfoPhoto span {
+	height:55px;
+	width:55px;
+	line-height:55px;
+	float:left;
+	display:block;
+	margin-bottom:10px;
+}
+
+.linkcus {
+	position: absolute;
+	top: 50%;
+	right: 35px;
+	margin-top: -9px;
+	color: #777;
+	font-size: 13px;
+}
+.biuld{
+	height: 15px;
+	position: relative;
+	top: 2px;
+}
+.delTaskBtn{
+	border: 2px solid #e15151;
+	display: block;
+	width: 290px;
+	margin: auto;
+	position: fixed;
+	left: 50%;
+	margin-left: -145px;
+	top: 180px;
+	text-align: center;
+	border-radius: 5px;
+	padding: 8px 0;
+	color: #e15151;
+}
+.apprmenu{
+	position: fixed;
+	top: 7px;
+	right: 4px;
+	z-index: 10;
+	box-shadow: 2px 2px 2px #f0f0f0;
+	border-radius: 4px;
+}
+.apprmenu p{
+	padding-right:30px;
+	color:#fff;
+}
+.apprmenu i{
+	display: inline;
+	color: #FFF;
+	font-size:22px;
+	line-height:25px;
+	margin-right:10px;
+}
+
+.meanlessbtn{
+    display: inline-block;
+    height: 52px;
+    width: 30%;
+    float: left;
+    text-align: center;
+	padding-top:8px;
+}
+.apptimebtn {
+    display: inline-block;
+    height: 50px;
+    width: 70%;
+    line-height: 25px;
+    padding-top: 8px;
+}
+.ui-avatar img {
+	height:50px;
+	width:50px;
+}
+.flineB{
+	height: 15px;
+	border-left: 1px solid #777;
+	margin-left: 35px !important;
+}
+
+.pItem {
+	margin-right:15px;
+	background-color:#FFFFFF;
+}
+.pItem .ui-avatar-s{
+	margin:0;
+}
+.pItem h4 {
+	text-align:left;
+}
+.pItem .ptime {
+	line-height:40px;
+	padding-right:10px;
+	font-size:13px;
+	color:#e0e0e0;
+}
+
+.pItem-gray span{
+	display: inline-block;
+	height: 26px;
+	line-height: 26px;
+	background-color: #999;
+	padding: 0 20px 0 30px;
+	color: #fff;
+	border-radius:2px;
+	font-size:12px;
+}
+.pItem-gray font{
+	font-size: 50px;
+	position: absolute;
+	left: 15px;
+	top: -15px;
+}
+.ui-avatar-s img {
+	height:40px; width:40px;
+}
+.appicon i {
+	color:#FFFFFF;
+	line-height:50px;
+}
+.arrow-up {
+    width: 0;
+    height: 0;
+    border-left: 7px solid transparent;
+    border-right: 7px solid transparent;
+    border-bottom: 7px solid #000;
+    font-size: 0;
+    line-height: 0;
+    position:fixed;
+    top:0;
+    right:18px;
+    filter:alpha(opacity=70);
+    -moz-opacity:0.7;
+    -khtml-opacity: 0.7;
+    opacity: 0.7;
+}
+.bg-white {
+    background-color: #fff;
+}
+
+.pull-left {
+    float: left;
+}
+
+.pull-right {
+    float: right;
+}
+
+.txt-left {
+    text-align: left;
+}
+
+.txt-right {
+    text-align: right;
+}
+
+.txt-center {
+    text-align: center;
+}
+

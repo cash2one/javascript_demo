@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <title>日报</title>
+        <meta name="viewport" content="width=device-width, height=device-height, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no">
+        <meta name="format-detection" content="telephone=no">
+        <link href="css/frozen.css" rel="stylesheet" type="text/css">
+        <link href="css/dailyReport.css" rel="stylesheet" type="text/css">
+
+        <script type="text/javascript">
+            function resize() {
+                var remFontSize = +document.documentElement.clientWidth / 16;
+                document.documentElement.style.fontSize = remFontSize + "px";
+            }
+            var b = null;
+            window.addEventListener("resize", function() {
+                clearTimeout(b),
+                b = setTimeout(resize, 300)
+            }, !1);
+            resize();
+        </script>
+    </head>
+    <body>
+        <header>
+            <div id="reportHeaderPrivate" style="display:none;" class="reportHeader">
+
+            </div>
+        </header>
+        <section id="empty">
+            <div class="emptyIcon"><img src="img/lidanIcon.png" /></div>
+            <p>导航每日工作，拥抱更好的自己！<p>
+        </section>
+
+        <section id="wrapper">
+            <div class="scroller">
+                <ul class="report-list" id="privateReportList">
+
+                </ul>
+            </div>
+        </section>
+
+        <header>
+            <div id="reportHeaderSale" style="display:none;" class="reportHeader">
+
+            </div>
+        </header>
+        <section id="wrapper">
+            <div class="scroller">
+                <ul class="report-list" id="SaleReportList">
+
+                </ul>
+            </div>
+        </section>
+        <script src="js/lib/zepto.min.js"></script>
+        <script src="js/lib/dingtalk.min.js"></script>
+        <script src="js/lib/ddbanner.js"></script>
+        <script src="js/lib/iscroll.min.js"></script>
+        <script src="js/lib/apiList.js"></script>
+        <script src="js/lib/md5.min.js"></script>
+
+        <script src="js/login.js"></script>
+        <script src="js/config.js"></script>
+        <script src="js/scroll-index.js"></script>
+        <script src="js/goldAgeCommon.js"></script>
+
+        <script src="js/dailyReport.js"></script>
+    </body>
+</html>

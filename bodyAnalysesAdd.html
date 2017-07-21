@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>体成份分析</title>
+    <meta name="viewport" content="width=device-width, height=device-height, initial-scale=1, maximum-scale=1, user-scalable=no">
+    <meta name="format-detection" content="telephone=no">
+    <link rel="stylesheet" href="css/frozen.css">
+    <link rel="stylesheet" href="css/contract.css">
+    <style>
+        [v-cloak] {
+          display: none;
+        }
+    </style>
+</head>
+<body class="contract-form--body" v-cloak>
+    <article id="main-body" class="ui-container">
+        <form id="form" name="form" class="contract-form" novalidate>
+            <fieldset>
+                <legend class="ui-whitespace">客户信息</legend>
+                <div class="ui-form ui-form-gap">
+                    <div class="ui-form-item ui-form-item-icon ui-border-b">
+                        <label for="">私教</label>
+                        <input type="hidden" v-model="contract.code" value="">
+                        <input type="text" readonly placeholder="请选择" v-model="contract.realname" value=""
+                               v-on:click="chosenCustomer">
+                        <i class="ui-icon-arrow" v-on:click="chosenCustomer" v-if="!customer"></i>
+                    </div>
+                </div>
+            </fieldset>
+            <fieldset>
+                <legend class="ui-whitespace">拍照</legend>
+                <div class="ui-form ui-form-gap">
+                    <div tabindex="-1" class="ui-form-camera">
+                        <div class="ui-form-item ui-form-item-icon ui-border-b">
+                            <label>拍照</label>
+                            <input type="text" readonly placeholder="请上传照片（最多9张）">
+                            <i id="_file_btn" class="ui-icon-list_upload" style="overflow:hidden">
+                                <input id="_file_input" type="file" name="files" accept="image/*"
+                                    style="position:absolute;left:0;top:0;opacity:0;">
+                            </i>
+                        </div>
+                        <ul class="ui-form-camera-list ui-whitespace clearfix" v-if="contract.images&&contract.images.length">
+                            <li class="ui-form-camera-item" v-for="image in contract.images">
+                                <template v-if="image.imgurl !=undefined">
+                                    <i class="ui-tag-toremove" v-on:tap="removeImage(image)"></i>
+                                    <img v-bind:src="image.imgurl | thumb" v-on:tap="previewImages(image)">
+                                </template>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </fieldset>
+            <fieldset>
+                <legend class="ui-whitespace">备注</legend>
+                <div class="ui-form ui-form-gap form-group ui-form-auto">
+                    <div class="ui-form-item ui-form-item-textarea">
+                        <textarea novalidate="" v-model="contract.remark" rows="3" placeholder="备注"></textarea>
+                    </div>
+                </div>
+            </fieldset>
+        </form>
+    </article>
+
+<script src="js/lib/dingtalk.min.js"></script>
+<script src="js/lib/zepto.min.js"></script>
+<script src="js/lib/fastclick.min.js"></script>
+<script src="js/lib/vue.min.js"></script>
+<script src="js/lib/moment.min.js"></script>
+<script src="js/lib/zeptoAjaxFileUpload.js"></script>
+<script src="js/lib/ddbanner.js"></script>
+<script src="js/lib/apiList.js"></script>
+<script src="js/lib/md5.min.js"></script>
+<script src="js/config.js"></script>
+<script src="js/common.js"></script>
+<script src="js/login.js"></script>
+<script src="js/goldAgeCommon.js"></script>
+<script src="js/coachSel.js"></script>
+<script src="js/customerContact.js"></script>
+<script src="js/draftwork.js"></script>
+<script src="js/customerFollow.js"></script>
+</body>
+</html>

@@ -1,0 +1,260 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta content="initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
+<meta content="telephone=no" name="format-detection">
+<title>销售阶梯图</title>
+<link href="css/frozen.css" rel="stylesheet" type="text/css">
+<link href="css/main.css" rel="stylesheet" type="text/css">
+<link rel="stylesheet" href="css/team.css" />
+<link rel="stylesheet" href="css/data-decision.css" />
+<style>
+.tdspan {width:100px!important;}
+#sales_ladder_toggle {padding-top:0;}
+</style>
+</head>
+<body>
+<section>
+	<div class="ui-container" style="background: #F8F8F8;">
+		<div class="chart-panel  hide" style="height: 10px;">
+			<div class="show-btn toggle-btn">
+				<span class="ui-icon-arrow ligth-green"></span>
+			</div>
+		</div>
+		<div class="chart-panel" id="chart-container">
+			<ul class="ui-list ui-list-pure">
+				<li>
+					<div id="sales_ladder_toggle" class="ui-btn-wrap">
+						<button class="ui-btn-s" data-chart-type="money">金额</button>
+						<button class="ui-btn-s" data-chart-type="customers">客户数</button>
+					</div>
+					<div id="sales_ladder" class="chart-container">
+						<div class="ui-loading-wrap text-center">
+							<p>图表加载中</p>
+							<i class="ui-loading"></i>
+						</div>
+					</div>
+				</li>
+			</ul>
+			<div class="hide-btn toggle-btn">
+				<span class="ui-icon-arrow ligth-green"></span>
+			</div>
+		</div>
+
+		<div style="margin-top: 20px;">
+			<div id="biao" class="table-container fo_fix">
+				<div class="ui-whitespace inner-container">
+					<div id="headertable-wrap" class="table-header">
+						<div class="table-fixed">
+							<table>
+								<tr>
+									<th style="max-width:100px;" class="table-title">城市</th>
+								</tr>
+							</table>
+						</div>
+						<table id="headertable" class="table-head">
+							<thead>
+								<tr>
+									<th class="table-title">城市</th>
+									<th id="leader_title" style="max-width:100px;min-width:100px;">Leader</th>
+									<th>已签已回</th>
+									<th>已签未回</th>
+									<th>重点跟进</th>
+									<th>能签能回</th>
+									<th>冲击客户</th>
+									<th>推进中</th>
+									<th>已死客户</th>
+								</tr>
+							</thead>
+						</table>
+					</div>
+					<table id="lefttable" class="table-col">
+						<tbody></tbody>
+					</table>
+					<div id="bodytable-wrap" class="table-body">
+						<h3 id="table-tip" class="tb-tip" style="display:none;"></h3>
+						<table id="bodytable" class="table-content">
+							<tbody></tbody>
+						</table>
+					</div>
+				</div>
+			</div>
+
+		</div>
+
+	</div>
+</section>
+<script type="text/javascript" src="js/lib/fastclick.min.js"></script>
+<script type="text/javascript" src="js/lib/jquery.min.js"></script>
+<script type="text/javascript" src="js/lib/highcharts.js"></script>
+<script type="text/javascript" src="js/lib/highcharts-more.js"></script>
+<script src="js/lib/dingtalk.min.js"></script>
+<script src="js/lib/ddbanner.js"></script>
+<script src="js/lib/apiList.js"></script>
+<script src="js/login.js"></script>
+<script src="js/config.js"></script>
+<script src="js/common.js"></script>
+<script type="text/javascript" src="js/team.js"></script>
+<script>
+	var loudouStatData = null; //漏斗统计数据
+
+	$(document).ready(function() {
+		FastClick.attach(document.body);
+		setTableTitle(team.user.position);
+		scrollTable();
+		var level = getUrlParam('level');
+		var orgid = getUrlParam('orgid');
+		var issub = getUrlParam('issub');
+		if (!level) {
+			getLoudouData(0, 0, 0);
+		} else {
+			getLoudouData(level, orgid, issub);
+		}
+
+		$('#sales_ladder_toggle').on('click', 'button', function(){
+			var $this = $(this), type = $this.data('chart-type');
+			$this.siblings().attr('disabled', null);
+			$this.attr('disabled', 'disabled');
+			if(loudouStatData){
+				var stat = loudouStatData
+				if(type=='customers'){
+					setLadderChart(stat.countData.slice(1), undefined, undefined, '', 'customers');
+				}else{
+					setLadderChart(stat.chartData.slice(1), stat.target, stat.access, '', 'money');
+				}
+			}
+		});
+	});
+
+	function getLoudouData(level, orgid, issub) {
+		team.postData.level = level;
+		team.postData.orgid = orgid;
+		team.postData.issub = issub;
+		return $.ajax({
+			type: "post",
+			url: oms_config.apiUrl + oms_apiList.getLoudouData,
+			data: team.postData,
+			dataType: 'json',
+			cache: false,
+			success: function(rs) {
+				// console.log(JSON.stringify(rs));
+				if (rs.res == 1) {
+					loudouStatData = rs.data;
+					renderLadderData(loudouStatData);
+					getTargetData(level, orgid, issub).always(function() {
+						$('#sales_ladder_toggle>button:first-child').trigger('click');
+					});
+				} else {
+					console.log(JSON.stringify(rs));
+				}
+			},
+			error: function(e) {
+				console.log(JSON.stringify(e));
+			}
+		});
+	}
+
+	function getTargetData(level, orgid, issub) {
+		team.postData.level = level;
+		team.postData.orgid = orgid;
+		team.postData.issub = issub;
+		return $.ajax({
+			type: "post",
+			url: oms_config.apiUrl + 'apiTeam/getTargetAccess',
+			data: team.postData,
+			dataType: 'json',
+			cache: false,
+			success: function(rs) {
+				if (rs.res == 1) {
+					loudouStatData = loudouStatData || {};
+					loudouStatData.target = rs.data.target;
+					loudouStatData.access = rs.data.access;
+				} else {
+					console.log(JSON.stringify(rs));
+				}
+			},
+			error: function(e) {
+				console.log(JSON.stringify(e));
+			}
+		});
+	}
+
+	function renderLadderData(data) {
+		setTableTitle2(data.level);
+
+		var tableData = data.tableData;
+		if(tableData[0].level < 5){
+				$("#leader_title").show();
+		}else{
+				$("#leader_title").hide();
+		}
+		var lefttable = "";
+		var tablecolumn = "";
+		lefttable += '<tr><td style="max-width:100px;">总计</td></tr>';
+		tablecolumn += '<tr class="' + trClass + '" >\
+							<td style="max-width:100px;min-width:100px;" >总计</td>';
+		if(tableData[0].level < 5){
+			tablecolumn += '<td class="text-center" style="max-width:100px;min-width:100px;">--</td>';
+		}
+		tablecolumn +=	'<td class="text-center">' + data.chartData[1]+'/'+data.countData[1] + '</td>\
+							<td class="text-center">' + data.chartData[2]+'/'+data.countData[2] + '</td>\
+							<td class="text-center">' + data.chartData[3]+'/'+data.countData[3] + '</td>\
+							<td class="text-center">' + data.chartData[4]+'/'+data.countData[4] + '</td>\
+							<td class="text-center">' + data.chartData[5]+'/'+data.countData[5] + '</td>\
+							<td class="text-center">' + data.chartData[6]+'/'+data.countData[6] + '</td>\
+							<td class="text-center">' + data.chartData[7]+'/'+data.countData[7] + '</td>\
+						</tr>';
+
+		var tablecolumnDataIndex = [1,6,2,3,4,7,5];
+		for (var i in tableData) {
+			var trClass = 'odd';
+			if (i % 2 == 0) {
+				trClass = 'even';
+			}
+			var dept = tableData[i].name;
+			var issub = 1;
+			if (tableData[i].isClick == 1) {
+				dept = '<a href="teamSalesLadder.html?level=' + tableData[i].level + '&orgid=' + tableData[i].id + '&issub=1" >' + dept + '</a>';
+			}
+			if (tableData[i].level == 5) {
+				dept = '<a href="profile.html?id=' + tableData[i].id + '&do=0" >' + dept + '</a>';
+			}
+			// var donerate = '0.00%';
+			// if (tableData[i].target) {
+			//     donerate = ((tableData[i].done / tableData[i].target) * 100).toFixed(2) + '%';
+			// }
+			var ldd = tableData[i].loudouData, lddcolumns = [];
+			lefttable += '<tr><td style="max-width:100px;" >'+dept+'</td></tr>';
+			if(tableData[0].level < 5){
+					tablecolumn += '<tr class="'+trClass+'" ><td style="max-width:100px;min-width:100px;">'+dept+'</td>\
+													<td class="text-center" style="max-width:100px;min-width:100px;">'+(team.leaderInfo[tableData[i].id]?team.leaderInfo[tableData[i].id]:'--')+'</td>';
+			}else{
+					tablecolumn += '<tr class="'+trClass+'" ><td style="max-width:100px;min-width:100px;">'+dept+'</td>';
+			}
+
+			for(var kj in tablecolumnDataIndex){
+				var j = tablecolumnDataIndex[kj];
+				var lddtext = ldd.lists[j]+'/'+ldd.count[j];
+				if(ldd.lists[j]==0 && ldd.count[j]==0){
+					lddtext = '--';
+				}else{
+					if(j == 7){
+						j = 17;
+					}
+					if(tableData[i].isClick==1 || tableData[i].level==5){
+						lddtext = '<a href="teamCusList.html?t='+j+'&s=+'+tableData[i].level+'&id='+tableData[i].id+'">'+lddtext+'</a>';
+					}
+				}
+				lddcolumns.push('<td class="text-center">'+lddtext+'</td>');
+			}
+			tablecolumn += lddcolumns.join('')+'</tr>';
+		}
+		$("#lefttable tbody").html(lefttable);
+		$("#bodytable tbody").html(tablecolumn);
+		scrollTable();
+	}
+
+</script>
+</body>
+</html>

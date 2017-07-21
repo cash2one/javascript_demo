@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>新增计划</title>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, height=device-height, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no">
+	<meta name="format-detection" content="telephone=no">
+	<link href="css/frozen.css" rel="stylesheet" type="text/css">
+	<link href="css/main.css" rel="stylesheet" type="text/css">
+	<link href="css/font-awesome.min.css" rel="stylesheet" type="text/css">
+	<link href="css/planadd.css" rel="stylesheet" type="text/css">
+</head>
+
+
+<body id="body">
+<section class="ui-container" id="index">
+	<div class="main-body">
+		<form id="form-plan">
+			<!--<div id="goods-form" class="form-goods">-->
+				<!--<div id="goods-mod2" class="form-goods" style="margin-bottom:0;">-->
+					<!--<div class="ui-form " style="margin-bottom:10px;margin-top:10px;">-->
+						<!--<div class="ui-form-item ui-form-item-show ">-->
+							<!--<label>客户</label>-->
+							<!--<input type="text" name="name" class="customer cus" readonly required-->
+								   <!--style="width:80%;" placeholder="请选择工作类型">-->
+							<!--<input type="hidden" name="code" id="code" value="0" />-->
+							<!--<span class="form-act-btn cus">-->
+								<!--<i class="ui-icon-list_arrow_right"-->
+								   <!--style="font-size:12px;color:#999999;"></i>-->
+							<!--</span>-->
+						<!--</div>-->
+					<!--</div>-->
+				<!--</div>-->
+			<!--</div>-->
+
+			<div id="goods-form" class="form-goods">
+				<div id="goods-mod" class="form-goods" style="margin-bottom:0;">
+					<div class="ui-form " >
+						<div class="ui-form-item ui-form-item-show ui-border-b">
+							<label for="goods_num">工作类型</label>
+							<input type="text" name="work_type" class="work_style"
+								   value="" readonly
+								   id="work_type"
+								   placeholder="请选择工作类型" style="width:92%;">
+                            <input type="hidden" name="type" id="type" value="0" />
+							<span class="form-act-btn work_style">
+								<i class="ui-icon-list_arrow_right"
+								   style="font-size:12px;color:#999999;"></i>
+							</span>
+						</div>
+						<div class="ui-form-item ui-form-item-show ui-border-b">
+							<label for="goods_num">详情/客户</label>
+							<input type="text" name="title" value="" id="title"
+								   required
+								   placeholder="手工输入详情或客户姓名，非必输项" style="width:91%;" />
+						</div>
+						<div class="ui-form-item ui-form-item-show ui-border-b">
+							<label for="goods_num" >开始时间</label>
+							<input type="text" name="startTime" value="" readonly id="startTime" required
+								   class="_date_start"
+								   placeholder="" style="width:91%;" >
+							<span>
+							<i class="ui-icon-list_calendar _date_" data-key="startTime"
+							   style="font-size:24px;color:#999999;"></i>
+							</span>
+						</div>
+						<div class="ui-form-item ui-form-item-show ui-border-b">
+							<label for="goods_num" >截止时间</label>
+							<input type="text" name="endTime" value="" readonly id="endTime" required
+								   class="_date_end"
+								   placeholder="" style="width:91%;" >
+							<span>
+							<i class="ui-icon-list_calendar _date_" data-key="endTime"
+							   style="font-size:24px;color:#999999;"></i>
+							</span>
+						</div>
+						<div class="ui-form-item ui-form-item-pure ui-form-item-textarea ui-border-b">
+                			<textarea id="remark" name="remark" rows="5" style="width: 100%;" placeholder="请填写备注"></textarea>
+						</div>
+					</div>
+				</div>
+			</div>
+		</form>
+	</div>
+</section>
+
+<div class="fliterbox" style="display:none;">
+	<section class="ui-container2 rightmain">
+		<!--<div class="tab-nav" >
+			<ul class="ui-row">
+				<li class="ui-col ui-col-25 text-left">
+					<i class="red" id="leftBtn"><span>取消</span></i>
+				</li>
+				<li class="ui-col ui-col-50 text-center">
+					<h2 id="title">选择客户</h2>
+				</li>
+			</ul>
+		</div>-->
+		<div class="ui-searchbar-wrap " style="display:none;" id="searchwrap">
+			<div class="ui-searchbar " style="border-radius:18px;margin:0 8px;" >
+				<i class="ui-icon-searcha" id="ui-icon-s"
+				   ></i>
+				<div class="ui-searchbar-text" >搜索</div>
+				<div class="ui-searchbar-input">
+					<input value="" type="text" placeholder="搜索" autocapitalize="off">
+				</div>
+				<i class="ui-icon-close">
+
+				</i>
+			</div>
+			<button class="ui-searchbar-cancel" style="padding:4px 0 4px 0;color:#666666;">取消
+			</button>
+		</div>
+		<div id="filterbody" style=" padding-bottom:105px;heigh:auto;">
+
+
+		</div>
+
+	</section>
+</div>
+<script type="text/javascript" src="js/lib/zepto.min.js" ></script>
+<script type="text/javascript" src="js/lib/frozen.min.js" ></script>
+<script src="js/zepto.touchSwipe.min.js"></script>
+<script src="js/lib/dingtalk.min.js"></script>
+<script src="js/lib/ddbanner.js"></script>
+<script src="js/lib/md5.min.js"></script>
+<script src="js/lib/apiList.js"></script>
+<script src="js/lib/lodash.js"></script>
+<script src="js/login.js"></script>
+<script src="js/config.js"></script>
+<script src="js/common.js"></script>
+<script src="js/goldAgeCommon.js"></script>
+<script src="js/hccalendar.js" ></script>
+<script src="js/workPlanAdd.js"></script>
+
+<script>
+	Date.prototype.Format = function(fmt) { //author: meizz
+		var o = {
+			"M+": this.getMonth() + 1, //月份
+			"d+": this.getDate(), //日
+			"h+": this.getHours(), //小时
+			"m+": this.getMinutes(), //分
+			"s+": this.getSeconds(), //秒
+			"q+": Math.floor((this.getMonth() + 3) / 3), //季度
+			"S": this.getMilliseconds() //毫秒
+		};
+		if (/(y+)/.test(fmt))
+			fmt = fmt.replace(RegExp.$1, (this.getFullYear() + "").substr(4 - RegExp.$1.length));
+		for (var k in o)
+			if (new RegExp("(" + k + ")").test(fmt))
+				fmt = fmt.replace(RegExp.$1, (RegExp.$1.length == 1) ? (o[k]) : (("00" + o[k]).substr(("" + o[k]).length)));
+		return fmt;
+	}
+
+	var hacctime = decodeURIComponent(getUrlParam('hacctime'));
+	var hacctime1 = new Date(hacctime).Format("yyyy-MM-dd hh:mm:ss");
+	var today = getToday(1);
+	if (hacctime1 < today){
+		hacctime1 = getToday(1)+" "+ hcalendar.usehourms;
+	}
+	if (hacctime == "undefined") {
+		hacctime1 = getToday(1)+" "+ hcalendar.usehourms;
+	}
+
+	$("#date_start").val(hacctime1);
+
+	$(".paisheng li:last-child").removeClass("filterpli");
+	$("#goods-mod .ui-form div:last-child").removeClass("ui-border-b");
+</script>
+</body>
+</html>

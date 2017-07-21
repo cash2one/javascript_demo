@@ -1,0 +1,226 @@
+body {
+  background-color: #f5f5f6;
+}
+.diagnose-info {
+  color: #999;
+  font-size: 0.9em;
+  text-align: left;
+}
+.diagnose-info i {
+  font-size: 1.2em;
+  line-height: 1.2em;
+}
+.diagnose-info.warning {
+  padding: 20px 15px;
+}
+.diagnose-info.warning i {
+  color: #3aa3f5;
+  margin-right: 7px;
+}
+.diagnose-info.warning i.ui-icon {
+  display: inline-block;
+}
+.diag-config-ctn a {
+  color: #2167B2;
+}
+.diag-config-ctn .ui-tab {
+  margin-bottom: 55px;
+}
+.diag-config-ctn .ui-icon {
+  font-size: 1.2em;
+  display: inline-block;
+  line-height: 1.2em;
+  margin-right: 5px;
+}
+.diag-config-ctn .table-body td {
+  border-bottom: 0;
+}
+.diag-config-ctn .table-content td:first-child {
+  width: 115px;
+  min-width: 95px;
+  padding-left: 5px;
+  text-align: left;
+}
+.diag-config-ctn .ui-tab-nav {
+  background-color: #fff;
+}
+.diag-config-ctn .ui-tab-nav li {
+  height: 40px;
+  line-height: 40px;
+  color: #333;
+  font-size: 13px;
+  border-bottom: 2px solid inherit;
+}
+.diag-config-ctn .ui-tab-nav li.current {
+  border-bottom-width: 2px;
+  border-bottom-color: #ec564d;
+}
+.diag-config-ctn .ui-tab-content {
+  width: 100%;
+  margin-top: 0;
+}
+.diag-config-ctn .ui-tab-content li {
+  display: none;
+}
+.diag-config-ctn .ui-tab-content li.current {
+  display: list-item;
+}
+.diag-config-ctn .ui-tab-content .content-range .table-body td {
+  line-height: 1.2em;
+  padding-top: 1.2em;
+  padding-bottom: 1.2em;
+}
+.diag-config-ctn .ui-tab-content .content-rule .table-head th {
+  width: 33%;
+  padding: 0 1.2em;
+}
+.diag-config-ctn .ui-tab-content .content-rule .table-head th:first-child {
+  min-width: 80px;
+}
+.diag-config-ctn .ui-tab-content .content-rule .table-body td {
+  line-height: 1.2em;
+  padding: 1.2em;
+  text-align: left;
+  vertical-align: top;
+  width: 33%;
+}
+.diag-config-ctn .ui-tab-content .content-rule .table-body td:first-child {
+  min-width: 80px;
+}
+.diag-config-ctn .ui-tab-content .rule-title {
+  width: calc(100% - 20px);
+}
+.diag-config-ctn .diagnose-add {
+  background-color: #FFF;
+  color: #333;
+}
+.diag-config-ctn .diagnose-add span {
+  font-size: 14px;
+}
+.body-diagnose .ui-form-item {
+  padding: 0;
+  margin-left: 15px;
+}
+.body-diagnose .btn-del {
+  width: 25%;
+  background-color: #FFF;
+  color: #f75549;
+}
+.body-diagnose .btn-save {
+  width: 75%;
+  background-color: #f75549;
+  color: #FFF;
+}
+.body-diagnose .table-body td {
+  line-height: 1;
+  padding: 15px 0;
+}
+.body-diagnose .diag-input {
+  margin-left: 95px;
+  display: inline-block;
+  padding-left: 14px;
+}
+.body-diagnose .diag-input input {
+  width: auto;
+  padding-left: 0;
+}
+.main-range {
+  margin: 20px 0 55px;
+}
+.main-range .diagnose-info {
+  margin-bottom: 55px;
+}
+.main-range input,
+.main-range textarea,
+.main-range keygen,
+.main-range select,
+.main-range button {
+  margin: 0em;
+  font: normal normal normal normal 11px / normal '.HelveticaNeueDeskInterface-Regular';
+  text-rendering: auto;
+  color: #222222;
+  font-size: 15px;
+  letter-spacing: normal;
+  word-spacing: normal;
+  text-transform: none;
+  text-indent: 0px;
+  text-shadow: none;
+  display: inline-block;
+  text-align: start;
+}
+.main-range .ui-form-item .cat-title {
+  top: 50%;
+}
+.main-range .ui-form-item .cat-title-s {
+  text-indent: -9999px;
+}
+.main-range .ui-form-item .ui-select {
+  padding-left: 10px;
+  margin-right: 0;
+}
+.main-range .ui-form-item .ui-select select {
+  padding-right: 0 !important;
+  color: #333;
+}
+.main-range .ui-form-item .ui-select select option[default] {
+  color: #aaaec3;
+}
+.main-range .ui-form-item .ui-select:after {
+  position: absolute;
+  top: 20.5px;
+  background-image: url(../img/list_arrow_right.png);
+  background-repeat: no-repeat;
+  background-size: 6px auto;
+  background-position: center;
+  width: 6px;
+  height: 11px;
+  border: none !important;
+  visibility: hidden;
+}
+.main-range .ui-form-item .ui-select i {
+  font-size: 15px !important;
+  position: absolute;
+  top: 0;
+  right: 15px;
+}
+.main-range .ui-form-item .diag-input input {
+  width: calc(100% - 60px);
+}
+.main-rule {
+  margin: 20px 0 55px;
+}
+.main-rule .diagnose-info {
+  margin-right: 10px;
+}
+.main-rule .ui-icon {
+  color: #f75549;
+  display: inline-block;
+  font-size: 1.2em;
+}
+.main-rule .ui-select-group {
+  margin-left: 30px;
+}
+.main-rule .ui-select-group i {
+  font-size: 15px !important;
+  position: absolute;
+  top: 0;
+  right: 15px;
+}
+.main-rule .ui-select-group span {
+  width: 30%;
+  display: inline-block;
+}
+.main-rule .ui-form-spec {
+  margin-top: 10px;
+}
+.main-rule .ui-form-spec .ui-form-item {
+  height: auto;
+}
+.main-rule .ui-form-spec textarea {
+  color: #333;
+  padding-top: 15px;
+}
+.main-rule .diag-input input {
+  width: calc((100% - 3em)/2);
+  text-align: center;
+}

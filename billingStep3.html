@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+
+<head>
+    <meta charset="UTF-8">
+    <title>回款申报</title>
+    <meta name="viewport" content="width=device-width, height=device-height, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no">
+    <meta name="format-detection" content="telephone=no">
+    <link href="css/frozen.css" rel="stylesheet" type="text/css">
+    <link href="css/billing.css" rel="stylesheet" type="text/css">
+</head>
+
+<body>
+    <div id="b-frame" class="step3">
+        <div class="b-group ui-form">
+            <form>
+                <div class="ui-form-item ui-form-item-show">
+                    <label>客户名称</label>
+                    <input name="textinput-cuname" type="text" readonly>
+                </div>
+            </form>
+        </div>
+        <div class="b-group ui-form">
+            <form>
+                <div class="ui-form-item ui-form-item-show ui-form-item-link ui-border-b disabled" data-role="radiogroup" data-target="radiogroup-contract">
+                    <label>合同编号</label>
+                    <input name="radiogroup-contract" type="text" placeholder="请选择" readonly>
+                </div>
+                <div class="ui-form-item ui-border-b">
+                    <label>
+                        新增回款
+                    </label>
+                    <input class="calnums" name="textinput-pay1" type="number" placeholder="请填写">
+                    <a class="ui-icon-yuan"></a>
+                </div>
+                <div class="ui-form-item ui-border-b">
+                    <label>
+                        续费回款
+                    </label>
+                    <input class="calnums" name="textinput-pay2" type="number" placeholder="请填写">
+                    <a class="ui-icon-yuan"></a>
+                </div>
+                <div class="ui-form-item ui-border-b">
+                    <label>
+                        设备回款
+                    </label>
+                    <input class="calnums" name="textinput-pay3" type="number" placeholder="请填写">
+                    <a class="ui-icon-yuan"></a>
+                </div>
+                <div class="ui-form-item">
+                    <label>
+                        总计回款
+                    </label>
+                    <input name="textinput-total" type="text" readonly placeholder="自动计算">
+                    <a class="ui-icon-yuan"></a>
+                </div>
+            </form>
+        </div>
+        <!-- end .b-group -->
+        <div class="b-group ui-form">
+            <div class="ui-form-item ui-border-b">
+                <label class="large">
+                    汇款账户名称
+                </label>
+                <input class="large" name="textinput-accname" type="text" placeholder="请填写">
+            </div>
+            <div class="ui-form-item ui-border-b">
+                <label class="large">
+                    汇款账户号
+                </label>
+                <input class="large" name="textinput-accid" type="text" placeholder="请填写">
+                </a>
+            </div>
+            <div class="ui-form-item ui-border-b" data-role="datepicker" data-target="datepicker-date">
+                <label>
+                    汇款时间
+                </label>
+                <input name="datepicker-date" type="datetime" placeholder="请选择" readonly>
+                <a class="ui-icon-list_calendar"></a>
+            </div>
+            <div class="ui-form-item freeheight" data-role="photopicker" data-target="photopicker-pic">
+                <label>
+                    汇款照片
+                </label>
+                <input name="photopicker-pic" type="file" accept="image/*" placeholder="请选择" readonly>
+                <a class="ui-icon-list_addimg photopicker-pic-btn"></a>
+            </div>
+        </div>
+        <!-- end .b-group -->
+        <div class="b-group ui-form ui-border-t">
+            <textarea id="textarea-comments" placeholder="回款说明" rows="3"></textarea>
+        </div>
+        <!-- end .b-group -->
+        <div class="footer">
+            <button id="gohistory" class="ui-btn-lg dsn">
+                申报历史
+            </button>
+        </div>
+        <div id="b-expand" class="ui-scroller ui-trans-left">
+            <div class="content">
+                <script id="tpl-step3-history" type="text/template">
+                    {@each res as item}
+                    <div class="b-group ui-form ui-border-t ui-border-b">
+                        <header class="ui-border-b ui-justify-flex ui-whitespace">
+                            <div>
+                                <span class="name">${item.follower}</span><span class="title">${item.title}</span>
+                            </div>
+                            <div><span class="day">${item.date}</span></div>
+                        </header>
+                        <section class="ui-list ui-list-pure">
+                            <li class="ui-border-b">
+                                <p class="ui-txt-info">合同编号：${item.contract}</p>
+                                <p class="ui-txt-info">新增回款：${item.pay1|priceFormat}</p>
+                                <p class="ui-txt-info">续费回款：${item.pay2|priceFormat}</p>
+                                <p class="ui-txt-info">设备回款：${item.pay3|priceFormat}</p>
+                                <p class="ui-txt-info">汇款账户名称：${item.accname}</p>
+                                <p class="ui-txt-info">汇款账号：${item.accid}</p>
+                                <p class="ui-txt-info">汇款日期：${item.recdate}</p>
+                                <p class="ui-txt-info">审核状态：${item.state}</p>
+                            </li>
+                            <li>
+                                <p class="ui-txt-info">${item.comments}</p>
+                            </li>
+                        </section>
+                    </div>
+                    {@/each}
+                </script>
+            </div>
+            <!-- end .content -->
+        </div>
+        <div id="step3-selector" class="ui-trans-left">
+            <ul class="b-selector ui-list ui-list-pure" data-bind="radiogroup-contract">
+                <script id="tpl-radiogroup-contract" type="text/template">
+                    {@each contracts as item}
+                    <li class="ui-border-t" data-value="${item}" data-label="${item}">
+                        <h4>${item}</h4>
+                    </li>
+                    {@/each}
+                </script>
+            </ul>
+        </div>
+    </div>
+    <script src="js/lib/zepto.min.js"></script>
+    <script src="js/lib/dingtalk.min.js"></script>
+    <script src="js/lib/juicer.min.js"></script>
+    <script src="js/lib/fastclick.min.js"></script>
+    <script src="js/lib/frozen.min.js"></script>
+    <script src="js/lib/apiList.js"></script>
+    <script src="js/config.js"></script>
+    <script src="js/login.js"></script>
+    <script src="js/billingCommon.js"></script>
+    <script src="js/billingStep3.js"></script>
+</body>
+
+</html>

@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>所在区域</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no" />
+<link href="css/frozen.css" rel="stylesheet" type="text/css">
+<link href="css/main.css" rel="stylesheet" type="text/css">
+</head>
+<body>
+
+<div class="ui-container">
+	<div id='areaWidget_div_text' class='ui-searchbar-wrap ui-border-b' style='background-color:#FFF;'>
+		<div class='ui-searchbar ui-border-radius'>
+			<i class='ui-icon-search'></i>
+			<div class='ui-searchbar-text'>搜索</div>
+			<div class='ui-searchbar-input'>
+
+				<form action='#'>
+					<input id='areaWidget_text' type='search' placeholder='搜索' autofocus autocapitalize='off'>
+				</form>
+			</div>
+		</div>
+		<button id='areaWidget_cancel_btn' class='ui-searchbar-cancel'>取消</button>
+	</div>
+
+	<div id='newSearch' style='display:none'>
+		<ul class='ui-list ui-list-link ui-border-tb'>
+			<li class='ui-border-t'>
+			 	<div><i class='ui-icon-search'></i></div>
+				<div class='ui-list-info'>
+					<h4 class='ui-nowrap'>搜索“<span id='newSearchContent' style='color:#e15151;'></span>”</h4>
+				</div>
+			</li>
+		</ul>
+	</div>
+	<ul class='ui-list ui-list-function ui-border-b' id='areaWidget_result'>
+	</ul>	
+</div>
+
+
+<script src="js/lib/zepto.min.js"></script>
+<script src="js/lib/frozen.min.js"></script>
+<script src="js/lib/dingtalk.min.js"></script>
+<script src="js/lib/fastclick.min.js"></script>
+<script src="js/lib/ddbanner.js"></script>
+<script src="js/lib/moment.min.js"></script>
+<script src="js/lib/apiList.js"></script>
+<script src="js/config.js"></script>
+<script src="js/common.js"></script>
+<script src="js/areas.js"></script>
+
+</body>
+</html>

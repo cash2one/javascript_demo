@@ -1,0 +1,609 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta content="initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
+<meta content="telephone=no" name="format-detection">
+<title>人均资料、电话、拜访量</title>
+<link href="css/frozen.css" rel="stylesheet" type="text/css">
+<link href="css/main.css" rel="stylesheet" type="text/css">
+<link rel="stylesheet" href="css/team.css" />
+<link rel="stylesheet" href="css/data-decision.css" />
+
+	<style>
+        .swipe-arrow-wrap{position:absolute;z-index:9;width:100%;display:none;}
+        .swipe-arrow-bd{position:absolute;height:222px;width:30px;}
+        .swipe-arrow-bd.prev{left:0;}
+        .swipe-arrow-bd.next{right:0;}
+        .swipe-arrow-bd .flagarea{position:relative;top:80px;width:20px;background:rgba(102,102,153,.5);}
+        .swipe-arrow-bd .flagarea i{color:#fff;font-size:20px;}
+        .upper-part-swipe{width:500%}
+        .upper-part-swipe li.chartTab{width:20%;}
+        .upper-part-swipe li.chartTab .chart-container{width:100%;}
+				.table-title-icon{
+					position: relative;
+				}
+				.table-title-icon i{
+					position: absolute;
+					font-size: 12px;
+					top: 0;
+					right: 0;
+					height: 45px;
+					line-height: 45px;
+					color: #333;
+				}
+	</style>
+</head>
+<body>
+<section>
+	<div class="ui-container" style="background: #F8F8F8;overflow: hidden;">
+		<div class="chart-panel hide" id="top-btn" style="height: 10px;">
+			<div class="show-btn  toggle-btn">
+				<span class="ui-icon-arrow ligth-green"></span>
+			</div>
+		</div>
+		<div class="chart-panel upper-part">
+            <div class="swipe-arrow-wrap">
+                <div class="swipe-arrow-bd prev">
+                    <div class="flagarea"><i class="ui-icon ui-icon-prev"></i></div>
+                </div>
+                <div class="swipe-arrow-bd next" dir="rtl">
+                    <div class="flagarea"><i class="ui-icon ui-icon-next"></i></div>
+                </div>
+            </div>
+						<div id="role_toggle" class="ui-btn-wrap">
+							<button class="ui-btn-s" data-chart-type="staff">业务员</button>
+							<button class="ui-btn-s" data-chart-type="leader">leader</button>
+						</div>
+            <ul class="ui-list ui-list-text upper-part-swipe">
+                <li class="chartTab">
+                    <div id="ave_phone_container1" class="chart-container" >
+                        <div class="ui-loading-wrap text-center">
+                            <div>图表加载中</div>
+                            <i class="ui-loading"></i>
+                        </div>
+                    </div>
+                </li>
+                <li class="chartTab">
+                    <div id="ave_files_container" class="chart-container" >
+                        <div class="ui-loading-wrap text-center">
+                            <div>图表加载中</div>
+                            <i class="ui-loading"></i>
+                        </div>
+                    </div>
+                </li>
+                <li class="chartTab">
+                    <div id="ave_visit_container" class="chart-container" >
+                        <div class="ui-loading-wrap text-center">
+                            <div>图表加载中</div>
+                            <i class="ui-loading"></i>
+                        </div>
+                    </div>
+                </li>
+                <li class="chartTab">
+                    <div id="ave_phone_container" class="chart-container" >
+                        <div class="ui-loading-wrap text-center">
+                            <div>图表加载中</div>
+                            <i class="ui-loading"></i>
+                        </div>
+                    </div>
+                </li>
+                <li class="chartTab">
+                    <div id="ave_files_container1" class="chart-container" >
+                        <div class="ui-loading-wrap text-center">
+                            <div>图表加载中</div>
+                            <i class="ui-loading"></i>
+                        </div>
+                    </div>
+                </li>
+			<!--	<li><p>aa</p></li>
+				<li><p>bb</p></li>-->
+            </ul>
+			<div id="slide-part">
+				<div id="slide-icon"></div>
+			</div>
+
+            <div class="hide-btn toggle-btn">
+                <span class="ui-icon-arrow ligth-green"></span>
+            </div>
+        </div>
+
+		<div style="margin-top: 20px;">
+			<div id="biao" class="table-container fo_fix" >
+	        	<div class="ui-whitespace inner-container">
+	            	<div id="headertable-wrap" class="table-header">
+	                	<div class="table-fixed">
+	                    <table>
+	                        <tr><th style="max-width:100px;"  class="table-title">城市</th></tr>
+	                    </table>
+	                	</div>
+	                <table id="headertable" class="table-head">
+	                	<thead>
+					<tr>
+						<th style="width:100px;" class="table-title">城市</th>
+						<th class="table-leader">Leader</th>
+						<th class="table-title-icon sort-class" style="min-width:120px;" id="files" data-sort="none" data-type="files"><span id="files_text">本月人均资料量</span><i class="ui-icon-paixu"></i></th>
+            <th class="table-title-icon sort-class" style="min-width:120px;" id="visit" data-sort="none" data-type="visit"><span id="visit_text">本月人均拜访量</span><i class="ui-icon-paixu"></i></th>
+            <th class="table-title-icon sort-class" style="min-width:120px;" id="phone" data-sort="none" data-type="phone"><span id="phone_text">本月人均电话量</span><i class="ui-icon-paixu"></i></th>
+					</tr>
+					</thead>
+	                </table>
+	            	</div>
+	            <table id="lefttable" class="table-col">
+	            <tbody></tbody>
+	            </table>
+	            	<div id="bodytable-wrap" class="table-body">
+	                <h3 id="table-tip" class="tb-tip" style="display:none;"></h3>
+	                <table id="bodytable" class="table-content">
+	                	<tbody></tbody>
+	                </table>
+	            	</div>
+	        	</div>
+	    	</div>
+		</div>
+	</div>
+</section>
+<script type="text/javascript" src="js/lib/fastclick.min.js" ></script>
+<script type="text/javascript" src="js/lib/jquery.min.js" ></script>
+<script type="text/javascript" src="js/lib/highcharts.js" ></script>
+<script type="text/javascript" src="js/lib/highcharts-more.js" ></script>
+<script src="js/lib/dingtalk.min.js"></script>
+<script src="js/lib/ddbanner.js"></script>
+<script src="js/lib/apiList.js"></script>
+<script src="js/lib/iscroll.min.js"></script>
+<script src="js/login.js"></script>
+<script src="js/config.js"></script>
+<script src="js/common.js"></script>
+<script src="js/scroll-index.js"></script>
+<script type="text/javascript" src="js/team.js" ></script>
+<script src="js/lib/lodash.js"></script>
+<script>
+
+var swidth;
+    swidth = $(window).width() - 40;
+    $(".chartTab").css("width",$(window).width());
+    $(".chartTab").css({paddingLeft: 20, paddingRight: 20});
+
+var cat = getUrlParam('cat');
+var role_type = getUrlParam('role') || 'staff';
+var reportData = {};
+var sort_type= cat;
+setDefaultSort();
+var navTitle='人均资料量',
+	   chartTitle="本月人均资料量",
+	   chartYName="人均资料量",
+	   index = 1;
+	if(cat=="files"){
+		navTitle='人均资料量',
+	   chartTitle="本月人均资料量",
+	   chartYName="人均资料量";
+	   index = 1;
+	}else if(cat =='visit'){
+		navTitle='人均拜访量',
+	   chartTitle="本月人均拜访量",
+	   chartYName="人均拜访量";
+	   index = 2;
+	}else if(cat=='phone'){
+		navTitle='人均电话量',
+	   chartTitle="本月人均电话量",
+	   chartYName="人均电话量";
+	   index = 3;
+	}
+$(document).ready(function() {
+	setTableTitle(team.user.position);
+	var level=getUrlParam('level');
+  var orgid=getUrlParam('orgid');
+  var issub=getUrlParam('issub');
+  slide.init();
+  slide.bindEvent();
+  var slidearrow=$('.swipe-arrow-wrap');
+  FastClick.attach(slidearrow[0]);
+  $('.prev').on('click', slidearrow, function(){
+      slide.moveTo(slide.index-1);
+  });
+  $('.next').on('click', slidearrow, function(){
+      slide.moveTo(slide.index+1);
+  });
+  var datapromise;
+  if(level>=4){
+      $('<style>.table-leader{display:none!important;}</style>').appendTo($('head'));
+  }
+  team.leaderInfo_promise.always(function(){
+      if(!level){
+          datapromise=getColumnData(0,0,0);
+      }else{
+          datapromise=getColumnData(level,orgid,issub);
+      }
+      datapromise.then(function(){
+          slidearrow.show();
+      });
+  });
+
+	$('#role_toggle').on('click', 'button', function(){
+		var $this = $(this), type = $this.data('chart-type');
+		$this.siblings().attr('disabled', null);
+		$this.attr('disabled', 'disabled');
+		if(reportData){
+				if(type == 'leader'){
+					role_type = 'leader';
+				}else{
+					role_type = 'staff';
+				}
+				if(!level){
+	          datapromise=getColumnData(0,0,0);
+	      }else{
+	          datapromise=getColumnData(level,orgid,issub);
+	      }
+		}
+	});
+
+	$(".sort-class").on('click',function(event) {
+		var sort = $(this).data('sort');
+		var type = $(this).data('type');
+		if(sort == 'none' || sort == 'asc'){
+			$(this).data('sort','desc');
+			if($(this).find("i").hasClass('ui-icon-paixu')){
+					$(this).find("i").removeClass('ui-icon-paixu');
+					$(this).find("i").addClass('ui-icon-index_data_down');
+			}
+			if($(this).find("i").hasClass('ui-icon-index_data_up')){
+					$(this).find("i").removeClass('ui-icon-index_data_up');
+					$(this).find("i").addClass('ui-icon-index_data_down');
+			}
+		}
+		if(sort == 'desc'){
+			$(this).data('sort','asc');
+			if($(this).find("i").hasClass('ui-icon-index_data_down')){
+					$(this).find("i").removeClass('ui-icon-index_data_down');
+					$(this).find("i").addClass('ui-icon-index_data_up');
+			}
+		}
+
+		$(this).siblings('.sort-class').children('i').removeClass('.ui-icon-index_data_down');
+		$(this).siblings('.sort-class').children('i').removeClass('.ui-icon-index_data_up');
+		$(this).siblings('.sort-class').children('i').removeClass('.ui-icon-paixu');
+		$(this).siblings('.sort-class').children('i').addClass('ui-icon-paixu');
+		$(this).siblings('.sort-class').data('sort','none');
+		sort_type = type;
+		setTable(level,orgid,issub);
+		event.stopPropagation();
+	})
+});
+
+function setDefaultSort(){
+		$('#'+cat).data('sort','desc');
+		$('#'+cat).find("i").removeClass('ui-icon-paixu');
+		$('#'+cat).find("i").addClass('ui-icon-index_data_down');
+		if(role_type=='staff'){
+			$('#role_toggle>button:first-child').attr('disabled','disabled');
+		}else{
+			$('#role_toggle>button:nth-child(2)').attr('disabled','disabled');
+		}
+}
+
+function setUpperHtml(){
+	var slideSize = 4;
+	touchSlide($('.upper-part-swipe'),
+			function(e){ upperSwipe("right"); },
+			function(e){ upperSwipe("left"); }
+	);
+}
+var touchSlide = function(el, lfn, rfn, cfn){
+	var startX = 0, startY = 0, endX = 0, endY = 0;
+	function startHandle(e){
+		console.log(e);
+		e.preventDefault();
+		startX = e.changedTouches[0].clientX;
+		console.log(startX);
+		startY = e.changedTouches[0].clientY;
+	}
+
+
+	function endHandle(e) {
+		e.preventDefault();
+		endX = e.changedTouches[0].clientX;
+		endY = e.changedTouches[0].clientY;
+
+		if (Math.abs(endX - startX) < 5 && Math.abs(endY - startY) < 5) {
+			typeof cfn === 'function' && cfn.call(this, e);
+		}
+		else if(endX - startX > 5 && Math.abs(endY - startY) < 50){
+			typeof rfn === 'function' && rfn.call(this, e);
+		}
+		else if(endX - startX < -5 && Math.abs(endY - startY) < 50){
+			typeof lfn === 'function' && lfn.call(this, e);
+		}
+	}
+
+	el.off('touchstart', startHandle);
+	el.off('touchend', endHandle);
+	el.on('touchstart', startHandle);
+	el.on('touchend', endHandle);
+};
+var offsetX = 0;
+var upperSwipe = function(type){
+	var maxSize = 4,
+			index = 0,
+			rest = Math.abs(offsetX) % maxSize;
+
+	if(type == "left" && rest === 0){
+		$(".upper-part-swipe").css({"margin-left": (offsetX/maxSize - 1) * maxSize * 100 + "%"});
+	}
+	else if( type == "right" && rest === 0){
+		$(".upper-part-swipe").css({"margin-left": offsetX * 100 + "%"});
+	}
+
+	if(type == "left")
+		offsetX--;
+	else
+		offsetX++;
+
+	if((offsetX % maxSize) < 0)
+		index = offsetX % maxSize + (maxSize + 1);
+	else
+		index = offsetX % maxSize + 1;
+
+	$(".upper-part #slide-icon span").removeClass("isSlided");
+	$(".upper-part #slide-icon span:nth-child(" + index + ")").addClass("isSlided");
+
+	if($(".upper-part-swipe")[0].style["transform"])
+		$(".upper-part-swipe").css({"transform": "translateX(" + (-1) * offsetX * 100 + "%)"});
+	else
+		$(".upper-part-swipe").css({"-webkit-transform": "translateX(" + (-1) * offsetX * 100 + "%)"});
+}
+function autoSlide(isStop) {
+	var slideTime = 3000;
+	if(this.isSliding) clearInterval(this.isSliding);
+	if(!isStop) {
+		this.isSliding = setInterval(function(){
+			upperSwipe("right");
+		}, slideTime);
+	}
+}
+
+
+function getColumnData(level,orgid,issub){
+	team.postData.cat=cat;
+	team.postData.level=level;
+	team.postData.orgid=orgid;
+	team.postData.issub=issub;
+	team.postData.range=role_type;
+	return $.ajax({
+		type:"post",
+		url:oms_config.apiUrl+"apiTeam/columnData",
+		async:true,
+		data:team.postData,
+		dataType:'json',
+		success:function(rs){
+			if(rs.res==1){
+				reportData = rs;
+				setTable(level,orgid,issub);
+			}
+		},
+		error:function(e){
+			console.log(JSON.stringify(e));
+		}
+	});
+}
+
+function setTable(level,orgid,issub){
+	var colarrFiles = [],namearr = [];
+	var colarrPhone = [];
+	var colarrVisit = [];
+	var tableData=reportData.data.tableData;
+	var chartData=reportData.data.chartData;
+	var sortMethod = $('#'+sort_type).data('sort');
+	if(sortMethod == 'none' || sortMethod == 'asc'){
+		tableData = _.sortBy(tableData,sort_type);
+		chartData = _.sortBy(chartData,sort_type);
+	}
+	if(sortMethod == 'desc'){
+		tableData =_.sortBy(tableData,sort_type).reverse();
+		chartData =_.sortBy(chartData,sort_type).reverse();
+	}
+
+	/*
+	rs.data.chartData.sort(function(a,b){
+	return b.files-a.files;
+	});
+	tableData.sort(function(a,b){
+		return b.files-a.files;
+	});
+	*/
+	for(var i in chartData){
+		var obj = chartData[i];
+		colarrFiles.push(obj.files);
+		colarrPhone.push(obj.phone);
+		colarrVisit.push(obj.visit);
+		namearr.push(obj.name);
+	}
+	setAveColumnChart({
+		title:level>=4?"本月资料量":"本月人均资料量",
+		categories: namearr,
+		data: colarrFiles,
+		yName: null,
+		containerId: 'ave_files_container1',
+	});
+	setAveColumnChart({
+		title:level>=4?"本月资料量":"本月人均资料量",
+		categories: namearr,
+		data: colarrFiles,
+		yName: null,
+		containerId: 'ave_files_container',
+	});
+	setAveColumnChart({
+		title:level>=4?"本月拜访量":"本月人均拜访量",
+		categories: namearr,
+		data: colarrVisit,
+		yName: null,
+		containerId: 'ave_visit_container',
+	});
+	setAveColumnChart({
+		title:level>=4?"本月电话量":"本月人均电话量",
+		categories: namearr,
+		data: colarrPhone,
+		yName: null,
+		containerId: 'ave_phone_container',
+	});
+	setAveColumnChart({
+		title:level>=4?"本月电话量":"本月人均电话量",
+		categories: namearr,
+		data: colarrPhone,
+		yName: null,
+		containerId: 'ave_phone_container1',
+	});
+
+	setTableTitle2(reportData.data.level);
+
+	var tableColumn="";
+	var lefttable="";
+
+	for(var i in tableData){
+		var trClass='odd';
+		if(i%2==0){
+			trClass='even';
+		}
+		var dept=tableData[i].name;
+		var files = tableData[i].files;
+		var visit = tableData[i].visit;
+		var phone = tableData[i].phone;
+		if(tableData[i].isClick==1){
+		dept='<a href="teamAve.html?level='+tableData[i].level+'&orgid='+tableData[i].id+'&issub=1&cat='+cat+'&role='+role_type+'" >'+dept+'</a>';
+		}
+		if (tableData[i].level == 5){
+			dept='<a href="profile.html?id='+tableData[i].id+'&do=0" >'+dept+'</a>';
+			if(parseInt(files)>0){
+				files = '<a href="teamCusList.html?s='+tableData[i].level+'&id='+tableData[i].id+'&t=16">'+files+'</a>';
+			}
+			if(parseInt(visit)>0){
+				visit = '<a href="teamCusList.html?s='+tableData[i].level+'&id='+tableData[i].id+'&t=9">'+visit+'</a>';
+			}
+			if(parseInt(phone)>0){
+				phone = '<a href="teamCusList.html?s='+tableData[i].level+'&id='+tableData[i].id+'&t=8&flag=avgs">'+phone+'</a>';
+			}
+			$('#files_text').text('本月资料量');
+			$("#visit_text").text("本月拜访量");
+			$("#phone_text").text("本月电话量");
+		}
+
+		lefttable += '<tr><td style="max-width:100px;" ><span class="ui-nowrap ui-whitespace tdspan">'+dept+'</span></td></tr>';
+
+		tableColumn +='  <tr class="'+trClass+'" >\
+														<td style="max-width:100px;min-width:100px;"><span class="ui-nowrap ui-whitespace tdspan">'+dept+'</span></td>\
+														<td class="text-center table-leader">'+(team.leaderInfo[tableData[i].id]||'--')+'</td>\
+														<td class="text-center" style="min-width:120px;max-width:120px;">'+files+'</td>\
+														<td class="text-center" style="min-width:120px;max-width:120px;">'+visit+'</td>\
+														<td class="text-center" style="min-width:120px;max-width:120px;">'+phone+'</td>\
+												</tr>';
+		}
+		$("#lefttable tbody").html(lefttable);
+		$("#bodytable tbody").html(tableColumn);
+		// 获取当前显示图表
+		$("#bodytable tr td").eq(0).on("click", function(e){
+			e.preventDefault();
+			window.location.href = $(this).attr("href")+"&cat="+cat;
+		})
+		scrollTable();
+}
+function comparesort(a,b){
+    if (a[1] < b[1]) return 1;
+    if (a[1] > b[1]) return -1;
+    return 0;
+}
+var slide = {
+	index:index,
+	NUM:3,
+	w:$(window).width(),
+	box:$(".upper-part-swipe"),
+	startX:0,
+	startY:0,
+	endX:0,
+	endY:0,
+	startTime:new Date(),
+	init:function(){
+		this.box.css("-webkit-transform", "translate(-"+parseInt(this.index)*20+"%,0)");
+	},
+	loop:function(){
+
+		if(slide.index==0){
+			slide.index=3;
+		}else if(slide.index==4){
+			slide.index=1;
+		}
+		$(".upper-part-swipe").removeClass("trans").css("-webkit-transform", "translateX(-"+(parseInt(slide.index)*slide.w)+"px)");
+	},
+    moveTo:function(toindex){
+        toindex=isNaN(+toindex)?1:+toindex;
+        if(toindex<0||toindex>4){
+            slide.index=0;
+        }else{
+            slide.index=toindex;
+        }
+        $(".upper-part-swipe").addClass("trans").css("-webkit-transform", "translateX(-"+(parseInt(slide.index)*slide.w)+"px)");
+    },
+	startHandle:function(e){
+		e.preventDefault();
+
+        startX = e.originalEvent.targetTouches[0].clientX;
+        startY = e.originalEvent.targetTouches[0].clientY;
+	},
+	moveHandle:function(e){
+		e.preventDefault();
+
+        var touch = e.originalEvent.targetTouches[0],
+            x = touch.pageX - startX;
+        //计算位移距离，ul设置translatex值
+        $(".upper-part-swipe").removeClass("trans").css("-webkit-transform", "translateX(-"+(parseInt(slide.index)*slide.w-x)+"px)");
+
+
+	},
+	endHandle:function(e){
+		e.preventDefault();
+
+        endX = e.originalEvent.changedTouches[0].clientX;
+        endY = e.originalEvent.changedTouches[0].clientY;
+
+        if(endX - startX > 15 && Math.abs(endY - startY) < 150){
+            slide.index--;
+
+        }
+        else if(endX - startX < -15 && Math.abs(endY - startY) < 150){
+            slide.index++;
+        }
+        slide.getCat(slide.index);
+
+        $(".upper-part-swipe").addClass("trans").css("-webkit-transform","translateX(-"+parseInt(slide.index)*slide.w+"px)");
+
+	},
+	bindEvent:function(){
+		this.box.off("touchstart", slide.startHandle);
+		this.box.off("touchmove", slide.moveHandle);
+		this.box.off("touchcancel touchend", slide.endHandle);
+		this.box.on("touchstart", slide.startHandle);
+		this.box.on("touchmove", slide.moveHandle);
+		this.box.on("touchcancel touchend", slide.endHandle);
+		this.box.on("webkitTransitionEnd",function(){
+			slide.loop();
+		});
+	},
+	getCat:function(num){
+		var a=num%3;
+		switch(a){
+			case 0:
+				cat="phone";
+			break;
+			case 1:
+				cat = "files";
+			break;
+			case 2:
+				cat = "visit";
+			break;
+			default:
+			break;
+		}
+	}
+}
+</script>
+
+</body>
+</html>

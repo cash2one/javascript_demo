@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html>
+
+    <head>
+        <title>优惠购买</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, height=device-height, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no">
+        <meta name="format-detection" content="telephone=no">
+        <link href="css/frozen.css" rel="stylesheet" type="text/css">
+        <link href="css/index.css" rel="stylesheet" type="text/css">
+        <link href="css/vipService.css" rel="stylesheet" type="text/css">
+        <script type="text/javascript">
+            function resize() {
+                var remFontSize = +document.documentElement.clientWidth / 16;
+                document.documentElement.style.fontSize = remFontSize + "px";
+            }
+            var b = null;
+            window.addEventListener("resize", function() {
+                clearTimeout(b),
+                b = setTimeout(resize, 300)
+            }, !1);
+            resize();
+        </script>
+    </head>
+
+    <body>
+        <div class="container">
+            <div id="step_1" style="display:none">
+                <h4 class="vip-share-title">10秒注册/登录，体验企业高效办公</h4>
+                <div class="ui-form ui-border-t">
+                    <form action="#" style="position:relative;">
+                        <div class="ui-form-item ui-form-item-show ui-border-b">
+                            <label for="#">手机号</label>
+                            <input type="tel" name="phone" id="phone" placeholder="请填写手机号">
+                        </div>
+                        <div class="ui-form-item ui-form-item-show ui-border-b">
+                            <label for="#">验证码</label>
+                            <input type="text" id="authCode" placeholder="请填写验证码">
+                        </div>
+                        <button type="button" onclick="vipPay.getAuthCode();" id="sendAuth" class="ui-btn-inline auth-btn auth-before">获取验证码</button>
+                    </form>
+                </div>
+                <div class="vip-next-block">
+                    <button type="button" name="button" id="next" class="ui-btn-inline next-btn">下一步</button>
+                </div>
+            </div>
+            <div id="step_2" style="display:none">
+                <h4 class="vip-share-title">填写企业信息以完成注册</h4>
+                <div class="ui-form ui-border-t">
+                    <form action="#" style="position:relative;">
+                        <div class="ui-form-item ui-form-item-show ui-border-b">
+                            <label for="#">姓名</label>
+                            <input type="text" name="cusname" id="cusname" placeholder="请填写您的真实姓名">
+                        </div>
+                        <div class="ui-form-item ui-form-item-show ui-border-b">
+                            <label for="#">企业名称</label>
+                            <input type="text" name="entname" id="entname" placeholder="请填写企业名称，以邀请同事加入">
+                        </div>
+                        <div class="ui-form-item ui-form-item-show ui-border-b">
+                            <label for="#">邮箱</label>
+                            <input type="email" name="email" id="email" placeholder="选填，以接收电子发票">
+                        </div>
+                    </form>
+                </div>
+                <div class="vip-next-block">
+                    <button type="button" name="button" id="step2_finish" class="ui-btn-inline next-btn">完成</button>
+                </div>
+            </div>
+            <div id="step_3a" class="step_3a" style="display:none">
+                <div class="vip-addSuccess-title">
+                    <div class="vip-ast1">
+                    </div>
+                    <div class="vip-ast2">
+                        恭喜您，您的企业已成功注册！
+                    </div>
+                    <div class="vip-ast2">
+                        请点击底部按钮购买正式服务
+                    </div>
+                    <div class="vip-ast3" id="vip_entCode">
+                    </div>
+                </div>
+            </div>
+            <div id="step_3b" class="step_3b" style="display:none">
+                <div class="vip-addSuccess-title">
+                    <div class="vip-ast1">
+                    </div>
+                    <div class="vip-ast2">
+                        恭喜您，您的企业已成功注册！
+                    </div>
+                    <div class="vip-ast2">
+                        请点击底部按钮购买正式服务
+                    </div>
+                    <div class="vip-ast3" id="vip_entCode">
+                    </div>
+                </div>
+            </div>
+
+            <div id="step_4" class="step_4" style="display: none">
+                <div class="vip-step4-title">
+                    <div class="vip-sp4-ast1">
+                    </div>
+                    <div class="vip-sp4-ast2">
+                        服务开通成功！
+                    </div>
+                    <div id="step-4-info">
+
+                    </div>
+                    <div class="vip-download-btn">
+                        <button type="button" name="button" class="download-btn" onclick="window.location.href='http://app.hecom.cn/mm'">
+                            <img src="img/vipService/vip_hongquan.png" alt="" width="16px" style="vertical-align:middle;padding-right:8px;"/>下载红圈通
+                        </button>
+                    </div>
+                </div>
+            </div>
+            <div class="vip-share-block" id="vip-share-block" style="display: none">
+                <div class="vip-share-content" >
+                    <div class="vip-main-img" id="vip_pay_content">
+                        <div class="dotted-line"></div>
+                    </div>
+                    <div class="vip-share-brief">
+                        <div class="vip-share-logo"></div>
+                        <div class="vip-share-title1">
+                            红圈通企业级服务
+                        </div>
+                        <div class="vip-share-title2">
+                            协作效率，数据报表，审批管理
+                        </div>
+                        <ul>
+                            <li>管理团队，多人协作日程</li>
+                            <li>多维度的企业管理数据展现</li>
+                            <li>完整的客户关系管理体系</li>
+                            <li>团队沟通、工作汇报、工作提醒</li>
+                            <li>考勤、日报、审批，移动化办公</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <div class="step_3a step_3b vip-fixed-btn" style="display:none;">
+                <div id="vip_set" class="vip-share-set-block">
+                </div>
+            </div>
+
+            <div id="payment_form" class="scroll-wrapper" style="display:none">
+            </div>
+
+            <div class="ui-dialog vip-pay-finish" id="error_info">
+                <div class="ui-dialog-cnt" style="background-color:#fff">
+
+                    <div class="info" id="error_area" style="padding-top:20px;">
+
+                    </div>
+
+                    <div class="ui-dialog-ft vip-dialog-ft">
+                        <button type="button" data-role="button" id="vip_pay_success">确定</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- <div class="ui-dialog" id="error_info">
+                <div class="ui-dialog-cnt" style="background-color:#fff">
+                    <div id="error_area">
+                    </div>
+                    <div class="ui-dialog-ft vip-dialog-ft">
+                        <button type="button" data-role="button" id="vip_pay_success">确定</button>
+                    </div>
+                </div>
+            </div> -->
+            <!-- <form id='alipaysubmit' name='alipaysubmit' action='https://mapi.alipay.com/gateway.do?_input_charset=utf-8' method='get'>
+              <input type='hidden' name='_input_charset' value='utf-8'/>
+              <input type='hidden' name='body' value='开通红圈管理12个月'/>
+              <input type='hidden' name='notify_url' value='http://ptest.hecom.cn/oms4/apiVipcustomer/addorder_donotify'/>
+              <input type='hidden' name='out_trade_no' value='20160725175054200000018'/>
+              <input type='hidden' name='partner' value='2088811260504573'/>
+              <input type='hidden' name='payment_type' value='1'/>
+              <input type='hidden' name='return_url' value='http://ptest.hecom.cn/oms4/apiVipcustomer/addorder_doreturn'/>
+              <input type='hidden' name='seller_id' value='2088811260504573'/>
+              <input type='hidden' name='service' value='alipay.wap.create.direct.pay.by.user'/>
+              <input type='hidden' name='show_url' value='http://ptest.hecom.cn/omsmobile/app/vip_payment.html?_c=MTU=&_token=dD0xNDY5NDE4MTM1JnM9NjIyOA=='/>
+              <input type='hidden' name='subject' value='开通红圈管理12个月'/><input type='hidden' name='total_fee' value='0.01'/><input type='hidden' name='sign' value='a52d0978f3a11ee3c0c498cb564f1fb1'/>
+              <input type='hidden' name='sign_type' value='MD5'/><input type='submit'  value='确认' style='display:none;'></form>
+              <script>document.forms['alipaysubmit'].submit();</script>
+            <a href="http://ptest.hecom.cn/oms4/apiVipcustomer/addOrder2?orderid=5">123</a> -->
+        </div>
+        <script src="js/lib/zepto.min.js"></script>
+        <script src="js/lib/frozen.min.js"></script>
+        <script src="js/lib/dingtalk.min.js"></script>
+        <script src="js/lib/fastclick.min.js"></script>
+        <script src="js/lib/ddbanner.js"></script>
+        <script src="js/lib/iscroll.min.js"></script>
+        <script src="js/lib/lodash.js"></script>
+        <script src="js/lib/apiList.js"></script>
+        <script src="js/login.js"></script>
+        <script src="js/config.js"></script>
+        <script src="js/scroll-index.js"></script>
+        <script src="js/vip_payment.js"></script>
+
+        <!-- <script src="js/index.js"></script> -->
+    </body>
+
+</html>

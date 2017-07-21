@@ -1,0 +1,445 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta content="initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
+<meta content="telephone=no" name="format-detection">
+<title>零灭率</title>
+<link href="css/frozen.css" rel="stylesheet" type="text/css">
+<link href="css/main.css" rel="stylesheet" type="text/css">
+<link rel="stylesheet" href="css/team.css" />
+<link rel="stylesheet" href="css/data-decision.css" />
+<style>
+.tdspan {width:100px!important;}
+#sales_killZero_toggle {padding-top:0;}
+</style>
+</head>
+<body>
+<section>
+	<div class="ui-container" style="background: #F8F8F8;">
+		<div class="chart-panel  hide" style="height: 10px;">
+			<div class="show-btn toggle-btn">
+				<span class="ui-icon-arrow ligth-green"></span>
+			</div>
+		</div>
+
+		<div class="chart-panel"  id="chart-container">
+			<ul class="ui-list ui-list-pure">
+				<li>
+					<div id="sales_killZero_toggle" class="ui-btn-wrap">
+						<button class="ui-btn-s" data-chart-type="customers">按部门</button>
+						<button class="ui-btn-s" data-chart-type="money">按期数</button>
+					</div>
+					<div id="killZero" class="chart-container">
+						<div class="ui-loading-wrap text-center">
+							<p>图表加载中</p><i class="ui-loading"></i>
+						</div>
+					</div>
+				</li>
+			</ul>
+			<div class="hide-btn toggle-btn">
+				<span class="ui-icon-arrow ligth-green"></span>
+			</div>
+		</div>
+
+    <div style="margin-top: 20px;">
+
+		    <div id="biao" class="table-container fo_fix" >
+	        <div class="ui-whitespace inner-container">
+	            <div id="headertable-wrap" class="table-header">
+	                <div class="table-fixed">
+	                    <table>
+	                        <tr><th class="table-title">部门</th></tr>
+	                    </table>
+	                </div>
+	                <table id="headertable" class="table-head">
+	                	<thead>
+					<tr>
+            <th  style="max-width:100px;"  class="table-title">部门</th>
+						<th id="leader_title" style="max-width:100px;min-width:100px;">Leader</th>
+            <th >月均人数</th>
+            <th >灭零人数</th>
+            <th >未灭零人数</th>
+            <th >灭零率</th>
+            <th >本月人次</th>
+            <th >离职人次</th>
+						<th style="min-width:100px;">在职销售人数</th>
+						<th style="min-width:100px;">在职销售灭零人</th>
+						<th style="min-width:100px;">在职销售未灭零人</th>
+					</tr>
+					</thead>
+	                </table>
+	            </div>
+	            <table id="lefttable" class="table-col">
+	            <tbody></tbody>
+	            </table>
+	            <div id="bodytable-wrap" class="table-body">
+	                <h3 id="table-tip" class="tb-tip" style="display:none;"></h3>
+	                <table id="bodytable" class="table-content">
+	                	<tbody></tbody>
+	                </table>
+	            </div>
+	        </div>
+	    </div>
+		</div>
+	</div>
+</section>
+<input style="position:fixed;top:0;right:0;height:2px;opacity:0;" type="month" id="smonth" value="" />
+<script type="text/javascript" src="js/lib/fastclick.min.js" ></script>
+<script type="text/javascript" src="js/lib/jquery.min.js" ></script>
+<script type="text/javascript" src="js/lib/highcharts.js" ></script>
+<script type="text/javascript" src="js/lib/highcharts-more.js" ></script>
+<script src="js/lib/dingtalk.min.js"></script>
+<script src="js/lib/ddbanner.js"></script>
+<script src="js/lib/apiList.js"></script>
+<script src="js/login.js"></script>
+<script src="js/config.js"></script>
+<script src="js/common.js"></script>
+<script type="text/javascript" src="js/team.js" ></script>
+<script>
+$(document).ready(function() {
+	FastClick.attach(document.body);
+	setTableTitle(team.user.position);
+	scrollTable();
+	var level=getUrlParam('level');
+	var orgid=getUrlParam('orgid');
+	var issub=getUrlParam('issub');
+
+	if(!level){
+		getKillZeroRate(0,0,0);
+	}else{
+		getKillZeroRateByDpt(level,orgid,issub);
+	}
+	dd.ready(function(){
+		var defaultValue = new Date().getFullYear() + '-' + (new Date().getMonth()+1);
+		dd.biz.navigation.setTitle({
+			title: '灭零率'
+		});
+		dd.biz.navigation.setRight({
+			show: false,
+			control: false,
+			text: '',
+			onSuccess : function(result) {},
+			onFail : function(err) {
+				console.log(err);
+			}
+		});
+	});
+
+	$('#sales_killZero_toggle').on('click', 'button', function(){
+		var $this = $(this), type = $this.data('chart-type');
+		$this.siblings().attr('disabled', null);
+		$this.attr('disabled', 'disabled');
+    if(killZeroStatData){
+      var stat = killZeroStatData
+      if(type=='customers'){
+        getKillZeroRateByDpt(level,orgid,issub);
+      }else{
+        getKillZeroRate();
+      }
+    }
+
+
+	});
+
+	$("#smonth").off('input').on('input',function(res){
+		var month = $("#smonth").val();
+		getKillZeroRateByDpt(level,orgid,issub,month);
+	});
+});
+
+var killZeroStatData = null; //漏斗统计数据
+function getLeadersInfo(){
+  $.ajax({
+		type:"post",
+		url:oms_config.apiUrl+oms_apiList.getLeadersInfo,
+		async:true,
+		data:{omsuid:team.user.id,token:team.user.token},
+		dataType:'json',
+		success:function(rs){
+			if(rs.res == 1){
+				leaderInfo = rs.data;
+			}else{
+				console.log(JSON.stringify(rs));
+			}
+		},
+		error:function(e){
+			console.log(JSON.stringify(e));
+		}
+	});
+}
+
+function getKillZeroRate(){
+  $.ajax({
+		type:"post",
+		url:oms_config.apiUrl+oms_apiList.getKillZeroRate,
+		async:true,
+		data:team.postData,
+		dataType:'json',
+		success:function(rs){
+			if(rs.res == 1){
+				killZeroStatData = rs.data;
+        $('#sales_killZero_toggle>button:nth-child(2)').attr('disabled','disabled');
+        renderKillZeroRateData(killZeroStatData);
+			}else{
+				console.log(JSON.stringify(rs));
+			}
+		},
+		error:function(e){
+			console.log(JSON.stringify(e));
+		}
+	});
+}
+function getKillZeroRateByDpt(level,orgid,issub,month){
+	if(level != 0){
+		team.postData.level = level;
+	}
+
+	team.postData.orgid = orgid;
+	team.postData.issub = issub;
+	<!-- team.postData.month = month == undefined ? "" : month; -->
+	<!-- console.log(JSON.stringify(team.postData)); -->
+	$.ajax({
+		type:"post",
+		url:oms_config.apiUrl+oms_apiList.getKillZeroRateByDpt,
+		async:true,
+		data:team.postData,
+		dataType:'json',
+		success:function(rs){
+			if(rs.res == 1){
+				killZeroStatData = rs.data;
+        $('#sales_killZero_toggle>button:first-child').attr('disabled','disabled');
+				renderKillZeroData(killZeroStatData);
+			}else{
+				console.log(JSON.stringify(rs));
+			}
+		},
+		error:function(e){
+			console.log(JSON.stringify(e));
+		}
+	});
+}
+
+function renderKillZeroRateData(data){
+	setKillZeroChart(data);
+	setTableTitle('4');
+	$("#leader_title").hide();
+  var tableData=data;
+  var tableColumn="";
+  var lefttable='<tr><td style="max-width:100px;" class="fix-column"><span class="ui-nowrap tdspan">汇总</span></td></tr>';
+	var total_month_num = 0, total_order_num=0,total_none_num=0, total_job_num=0, total_leave_num=0, total_on_job_num=0, total_on_job_order_num=0, total_on_job_none_num=0;
+	for(var i in tableData){
+		total_month_num = parseInt(total_month_num)+parseInt(tableData[i].month_num);
+		total_order_num = parseInt(total_order_num)+parseInt(tableData[i].order_num);
+		total_none_num = parseInt(total_none_num)+parseInt(tableData[i].none_num);
+		total_job_num = parseInt(total_job_num)+parseInt(tableData[i].job_num);
+		total_leave_num = parseInt(total_leave_num)+parseInt(tableData[i].leave_num);
+		total_on_job_num = parseInt(total_on_job_num)+parseInt(tableData[i].on_job_num);
+		total_on_job_order_num = parseInt(total_on_job_order_num)+parseInt(tableData[i].on_job_order_num);
+		total_on_job_none_num = parseInt(total_on_job_none_num)+parseInt(tableData[i].on_job_none_num);
+    var trClass='odd';
+    if(i%2==0){
+      trClass='even';
+    }
+    var dept=tableData[i].name;
+    var issub = 1;
+    var torder_num = tableData[i].order_num;
+    var tnone_num = tableData[i].none_num;
+		var ton_job_order_num = tableData[i].on_job_order_num;
+		var ton_job_none_num = tableData[i].on_job_none_num;
+    if (tableData[i].level == 5){
+      dept='<a href="profile.html?id='+tableData[i].id+'&do=0" >'+dept+'</a>';
+    }
+
+    if(tableData[i].order_num > 0){
+        torder_num = '<a href="teamKillZeroOrder.html?periods='+tableData[i].id+'&type=1">' + tableData[i].order_num + '</a>'
+    }
+
+    if(tableData[i].none_num > 0){
+        tnone_num = '<a href="teamKillZeroNone.html?periods='+tableData[i].id+'&type=1">' + tableData[i].none_num + '</a>'
+    }
+
+		if(tableData[i].on_job_order_num > 0){
+        ton_job_order_num = '<a href="teamKillZeroOrder.html?periods='+tableData[i].id+'&type=1&sales=1">' + tableData[i].on_job_order_num + '</a>'
+    }
+
+		if(tableData[i].on_job_none_num > 0){
+        ton_job_none_num = '<a href="teamKillZeroNone.html?periods='+tableData[i].id+'&type=1&sales=1">' + tableData[i].on_job_none_num + '</a>'
+    }
+
+
+
+    lefttable += '<tr><td style="max-width:100px;" class="fix-column"><span class="ui-nowrap tdspan">'+dept+'</span></td></tr>';
+    if(tableData[i].isclick=='1') {
+      var links = '&s=' + tableData[i].level + '&id=' + tableData[i].id;
+      tableColumn += '  <tr class="' + trClass + '" >\
+                      <td style="max-width:100px;min-width:100px;" class="fix-column" ><span class="ui-nowrap tdspan">' + dept + '</span></td>\
+                      <td class="text-center">' + tableData[i].month_num + '</td>\
+                      <td class="text-center">' + torder_num + '</td>\
+                      <td class="text-center">' + tnone_num + '</td>\
+                      <td class="text-center">' + tableData[i].order_rate + '</td>\
+                      <td class="text-center">' + tableData[i].job_num + '</td>\
+                      <td class="text-center">' + tableData[i].leave_num + '</td>\
+											<td class="text-center" style="min-width:100px">' + tableData[i].on_job_num + '</td>\
+											<td class="text-center" style="min-width:100px">' + ton_job_order_num + '</td>\
+											<td class="text-center" style="min-width:100px">' + ton_job_none_num + '</td>\
+                  </tr>';
+    }else {
+      tableColumn += '  <tr class="' + trClass + '" >\
+                      <td style="max-width:100px;min-width:100px;" class="fix-column" ><span class="ui-nowrap tdspan">' + dept + '</span></td>\
+                      <td class="text-center">' + tableData[i].month_num + '</td>\
+                      <td class="text-center">' + tableData[i].order_num + '</td>\
+                      <td class="text-center">' + tableData[i].none_num + '</td>\
+                      <td class="text-center">' + tableData[i].order_rate + '</td>\
+                      <td class="text-center">' + tableData[i].job_num + '</td>\
+                      <td class="text-center">' + tableData[i].leave_num + '</td>\
+											<td class="text-center" style="min-width:100px">' + tableData[i].on_job_num + '</td>\
+											<td class="text-center" style="min-width:100px">' + tableData[i].on_job_order_num + '</td>\
+											<td class="text-center" style="min-width:100px">' + tableData[i].on_job_none_num + '</td>\
+                  </tr>';
+    }
+  }
+
+	tableColumn = '<tr class="' + trClass + '" >\
+									<td style="max-width:100px;min-width:100px;" class="fix-column" ><span class="ui-nowrap tdspan"></span></td>\
+									<td class="text-center">' + total_month_num + '</td>\
+									<td class="text-center">' + total_order_num + '</td>\
+									<td class="text-center">' + total_none_num + '</td>\
+									<td class="text-center">' + ((total_order_num/total_month_num)*100).toFixed(2)+'%</td>\
+									<td class="text-center">' + total_job_num + '</td>\
+									<td class="text-center">' + total_leave_num + '</td>\
+									<td class="text-center" style="min-width:100px">' + total_on_job_num + '</td>\
+									<td class="text-center" style="min-width:100px">' + total_on_job_order_num + '</td>\
+									<td class="text-center" style="min-width:100px">' + total_on_job_none_num + '</td>\
+							</tr>' + tableColumn;
+  $("#lefttable tbody").html(lefttable);
+  $("#bodytable tbody").html(tableColumn);
+  scrollTable();
+}
+
+function renderKillZeroData(data){
+	setKillZeroChart(data);
+	if(data[0].level < 5){
+			setTableTitle2(data[0].level);
+			$("#leader_title").show();
+	}else{
+			setTableTitle2('4');
+			$("#leader_title").hide();
+	}
+
+  var tableData=data;
+  var tableColumn="";
+	var lefttable='<tr><td style="max-width:100px;" class="fix-column"><span class="ui-nowrap tdspan">汇总</span></td></tr>';
+	var total_month_num = 0, total_order_num=0,total_none_num=0, total_job_num=0, total_leave_num=0, total_on_job_num=0, total_on_job_order_num=0, total_on_job_none_num=0;
+  for(var i in tableData){
+		total_month_num = parseInt(total_month_num)+parseInt(tableData[i].month_num);
+		total_order_num = parseInt(total_order_num)+parseInt(tableData[i].order_num);
+		total_none_num = parseInt(total_none_num)+parseInt(tableData[i].none_num);
+		total_job_num = parseInt(total_job_num)+parseInt(tableData[i].job_num);
+		total_leave_num = parseInt(total_leave_num)+parseInt(tableData[i].leave_num);
+		total_on_job_num = parseInt(total_on_job_num)+parseInt(tableData[i].on_job_num);
+		total_on_job_order_num = parseInt(total_on_job_order_num)+parseInt(tableData[i].on_job_order_num);
+		total_on_job_none_num = parseInt(total_on_job_none_num)+parseInt(tableData[i].on_job_none_num);
+    var trClass='odd';
+    if(i%2==0){
+      trClass='even';
+    }
+    var dept=tableData[i].name;
+    var issub = 1;
+
+    var torder_num = tableData[i].order_num;
+    var tnone_num = tableData[i].none_num;
+		var ton_job_order_num = tableData[i].on_job_order_num;
+		var ton_job_none_num = tableData[i].on_job_none_num;
+    if(tableData[i].isClick=='1'){
+      if(tableData[i].level != 4){
+          dept='<a href="teamKillZero.html?level='+tableData[i].level+'&orgid='+tableData[i].id+'&issub=1" >'+dept+'</a>';
+      }else{
+        dept = dept;
+      }
+    }
+    if (tableData[i].level == 5){
+      dept='<a href="profile.html?id='+tableData[i].id+'&do=0" >'+dept+'</a>';
+    }
+
+
+    if(tableData[i].order_num > 0){
+        torder_num = '<a href="teamKillZeroOrder.html?level='+tableData[i].level+'&orgid='+tableData[i].id+'&issub=0">' + tableData[i].order_num + '</a>'
+    }
+
+    if(tableData[i].none_num > 0){
+        tnone_num = '<a href="teamKillZeroNone.html?level='+tableData[i].level+'&orgid='+tableData[i].id+'&issub=0">' + tableData[i].none_num + '</a>'
+    }
+
+		if(tableData[i].on_job_order_num > 0){
+        ton_job_order_num = '<a href="teamKillZeroOrder.html?level='+tableData[i].level+'&orgid='+tableData[i].id+'&issub=0&sales=1">' + tableData[i].on_job_order_num + '</a>'
+    }
+
+    if(tableData[i].on_job_none_num > 0){
+        ton_job_none_num = '<a href="teamKillZeroNone.html?level='+tableData[i].level+'&orgid='+tableData[i].id+'&issub=0&sales=1">' + tableData[i].on_job_none_num + '</a>'
+    }
+
+    lefttable += '<tr><td style="max-width:100px;" class="fix-column"><span class="ui-nowrap tdspan">'+dept+'</span></td></tr>';
+    if(tableData[i].isClick=='1' || tableData[i].level=='5' ) {
+      var links = '&s=' + tableData[i].level + '&id=' + tableData[i].id;
+      tableColumn += '  <tr class="' + trClass + '" >\
+                      <td style="max-width:100px;min-width:100px;" class="fix-column" ><span class="ui-nowrap tdspan">' + dept + '</span></td>';
+			if(tableData[i].level < 5){
+					tableColumn += '<td class="text-center" style="max-width:100px;min-width:100px;">'+(team.leaderInfo[tableData[i].id]?team.leaderInfo[tableData[i].id]:'--')+'</td>';
+			}
+			tableColumn +=	'<td class="text-center">' + tableData[i].month_num + '</td>\
+                      <td class="text-center">' + torder_num + '</td>\
+                      <td class="text-center">' + tnone_num + '</td>\
+                      <td class="text-center">' + (tableData[i].order_rate*100).toFixed(2) + '%</td>\
+                      <td class="text-center">' + tableData[i].job_num + '</td>\
+                      <td class="text-center">' + tableData[i].leave_num + '</td>\
+											<td class="text-center"  style="min-width:100px">' + tableData[i].on_job_num + '</td>\
+											<td class="text-center"  style="min-width:100px">' + ton_job_order_num + '</td>\
+											<td class="text-center"  style="min-width:100px">' + ton_job_none_num + '</td>\
+                  </tr>';
+    }else {
+      tableColumn += '  <tr class="' + trClass + '" >\
+                      <td style="max-width:100px;min-width:100px;" class="fix-column" ><span class="ui-nowrap tdspan">' + dept + '</span></td>';
+			if(tableData[i].level < 5){
+					tableColumn += '<td class="text-center" style="max-width:100px;min-width:100px;">'+(team.leaderInfo[tableData[i].id]?team.leaderInfo[tableData[i].id]:'--')+'</td>';
+			}
+      tableColumn += '<td class="text-center">' + tableData[i].month_num + '</td>\
+                      <td class="text-center">' + tableData[i].order_num + '</td>\
+                      <td class="text-center">' + tableData[i].none_num + '</td>\
+                      <td class="text-center">' + (tableData[i].order_rate*100).toFixed(2) + '%</td>\
+                      <td class="text-center">' + tableData[i].job_num + '</td>\
+                      <td class="text-center">' + tableData[i].leave_num + '</td>\
+											<td class="text-center"  style="min-width:100px">' + tableData[i].on_job_num + '</td>\
+											<td class="text-center"  style="min-width:100px">' + tableData[i].on_job_order_num + '</td>\
+											<td class="text-center"  style="min-width:100px">' + tableData[i].on_job_none_num + '</td>\
+                  </tr>';
+    }
+  }
+
+	var tableColumn1 = '';
+	tableColumn1 = '<tr class="' + trClass + '" >\
+									<td style="max-width:100px;min-width:100px;" class="fix-column" ><span class="ui-nowrap tdspan"></span></td>'
+	if(tableData[i].level < 5){
+			tableColumn1 += '<td class="text-center" style="max-width:100px;min-width:100px;">--</td>'
+	}
+
+	tableColumn1+=	'<td class="text-center">' + total_month_num + '</td>\
+									<td class="text-center">' + total_order_num + '</td>\
+									<td class="text-center">' + total_none_num + '</td>\
+									<td class="text-center">' + ((total_order_num/total_month_num)*100).toFixed(2)+'%</td>\
+									<td class="text-center">' + total_job_num + '</td>\
+									<td class="text-center">' + total_leave_num + '</td>\
+									<td class="text-center"  style="min-width:100px">' + total_on_job_num + '</td>\
+									<td class="text-center"  style="min-width:100px">' + total_on_job_order_num + '</td>\
+									<td class="text-center" style="min-width:100px">' + total_on_job_none_num + '</td>\
+							</tr>';
+	tableColumn = tableColumn1+tableColumn;
+
+  $("#lefttable tbody").html(lefttable);
+  $("#bodytable tbody").html(tableColumn);
+  scrollTable();
+}
+
+</script>
+</body>
+</html>

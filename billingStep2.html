@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+
+<head>
+    <meta charset="UTF-8">
+    <title>填报预测</title>
+    <meta name="viewport" content="width=device-width, height=device-height, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no">
+    <meta name="format-detection" content="telephone=no">
+    <link href="css/frozen.css" rel="stylesheet" type="text/css">
+    <link href="css/billing.css" rel="stylesheet" type="text/css">
+</head>
+
+<body>
+    <div id="b-frame" class="step2">
+        <div class="b-group ui-form">
+            <form>
+                <div class="ui-form-item ui-form-item-show">
+                    <label>客户名称</label>
+                    <input name="textinput-cuname" type="text" readonly>
+                </div>
+            </form>
+        </div>
+        <!-- end .b-group -->
+        <div class="b-group ui-form">
+            <form>
+                <div class="ui-form-item ui-border-b" data-target="textinput-pay">
+                    <label>
+                        预计回款
+                    </label>
+                    <input name="textinput-pay" type="number" placeholder="请填写">
+                    <a class="ui-icon-yuan"></a>
+                </div>
+                <div class="ui-form-item" data-role="datepicker" data-target="datepicker-paytime">
+                    <label class="large">
+                        预计回款时间
+                    </label>
+                    <input class="large" name="datepicker-paytime" type="text" placeholder="请选择" readonly>
+                    <a class="ui-icon-list_calendar"></a>
+                </div>
+            </form>
+        </div>
+        <!-- end .b-group -->
+        <div class="b-group ui-form">
+            <textarea id="textarea-commnets" name="textarea-comments" rows="6" placeholder="跟进情况（必填)"></textarea>
+        </div>
+        <!-- end .b-group -->
+        <div class="footer">
+            <button id="gohistory" class="ui-btn-lg">
+                预测记录
+            </button>
+        </div>
+    </div>
+    <div id="b-expand" class="ui-scroller ui-trans-left">
+        <div class="content">
+            <script id="tpl-step2-history" type="text/template">
+                {@each res as item}
+                <div class="b-group ui-form ui-border-t ui-border-b">
+                    <header class="ui-border-b ui-justify-flex">
+                        <div>
+                            <span class="name">${item.follower}</span><span class="title">${item.title}</span>
+                        </div>
+                        <div><span class="day">${item.date}</span></div>
+                    </header>
+                    <section class="ui-list ui-list-pure">
+                        <li class="ui-border-b">
+                            <p class="ui-txt-info">预计回款日期：${item.predate}</p>
+                            <p class="ui-txt-info">预计回款金额：${item.pay|priceFormat}</p>
+                        </li>
+                        <li>
+                            <p class="ui-txt-info">${item.comments}</p>
+                        </li>
+                    </section>
+                </div>
+                {@/each}
+            </script>
+        </div>
+    </div>
+    <script src="js/lib/zepto.min.js"></script>
+    <script src="js/lib/dingtalk.min.js"></script>
+    <script src="js/lib/juicer.min.js"></script>
+    <script src="js/lib/fastclick.min.js"></script>
+    <script src="js/lib/frozen.min.js"></script>
+    <script src="js/lib/apiList.js"></script>
+    <script src="js/config.js"></script>
+    <script src="js/billingCommon.js"></script>
+    <script src="js/billingStep2.js"></script>
+</body>
+</html>

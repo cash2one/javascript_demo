@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>数据上报（Review）</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, height=device-height, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no">
+    <meta name="format-detection" content="telephone=no">
+    <link href="css/frozen.css" rel="stylesheet" type="text/css">
+    <link href="css/billingPredict.css" rel="stylesheet" type="text/css">
+<script type="text/javascript">
+    function resize() {
+        var remFontSize = +document.documentElement.clientWidth / 16;
+        document.documentElement.style.fontSize = remFontSize + "px";
+    }
+    var b = null;
+    window.addEventListener("resize", function() {
+        clearTimeout(b),
+        b = setTimeout(resize, 300)
+    }, !1);
+    resize();
+</script>
+</head>
+
+<body>
+    <section id="data">
+        <ul id="dataOwner" class="area-list">
+            <li>
+                <span><!-- 北京新签一战区 --></span>
+                <span><!-- 顾华风 --></span>
+                <i class="ui-icon ui-icon-index_arrow_right"></i>
+            </li>
+        </ul>
+
+        <ul id="dataFixed" class="data-list">
+            <!-- <li>
+                <span>今日预测</span>
+                <span><input type="number" placeholder="请输入水单金额"></span>
+                <span>元</span>
+                         </li>
+                         <li>
+                <span>今日水单</span>
+                <span><input type="number" placeholder="请输入水单金额"></span>
+                <span>元</span>
+                         </li>
+                         <li>
+                <span>本月累计回款</span>
+                <span><input type="number" placeholder="请输入水单金额"></span>
+                <span>元</span>
+                         </li>
+                         <li>
+                <span>本月累计水单</span>
+                <span><input type="number" placeholder="请输入水单金额"></span>
+                <span>元</span>
+                         </li> -->
+        </ul>
+
+        <ul id="dataCustom" class="data-list">
+            <!-- <li>
+                <span>review上午</span>
+                <span><input type="number" placeholder="填写"></span>
+            </li>
+            <li>
+                <span>review下午</span>
+                <span><input type="number" placeholder="填写"></span>
+            </li>
+            <li>
+                <span>后台定义</span>
+                <span><input type="number" placeholder="填写"></span>
+            </li> -->
+        </ul>
+        
+        <input type="button" value="提交数据" id="saveData" style="display: none;" class="data-submit-btn">
+        
+    </section>
+    <div class="pop-box" style="display: none;">
+        <div class="pop-container">
+            <ul>
+                <li>北京新签一战区 顾华风</li>
+                <li>北京新签二战区 顾华风</li>
+            </ul>
+        </div>
+        <div class="pop-bg"></div>
+    </div>
+    <script src="js/lib/dingtalk.min.js"></script>
+    <script src="js/lib/zepto.min.js"></script>
+    <script src="js/lib/frozen.min.js"></script>
+    <script src="js/lib/fastclick.min.js"></script>
+    <script src="js/lib/apiList.js"></script>
+    <script src="js/config.js"></script>
+    <script src="js/billingCommon.js"></script>
+    <script src="js/billingPredict.js"></script>
+</body>
+
+</html>

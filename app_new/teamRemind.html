@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta content="initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
+<meta content="telephone=no" name="format-detection">
+<title>提醒review</title>
+<link href="css/frozen.css" rel="stylesheet" type="text/css">
+<link href="css/main.css" rel="stylesheet" type="text/css">
+<link rel="stylesheet" href="css/team.css" />
+<link rel="stylesheet" href="css/data-decision.css" />
+<link rel="stylesheet" href="css/teamTodayPayment.css" />
+<script type="text/javascript">
+        function resize() {
+            var remFontSize = +document.documentElement.clientWidth / 16;
+            document.documentElement.style.fontSize = remFontSize + "px";
+        }
+        var b = null;
+        window.addEventListener("resize", function() {
+            clearTimeout(b),
+            b = setTimeout(resize, 300)
+        }, !1);
+        resize();
+    </script>
+
+</head>
+<body>
+<section>
+    <div class="ui-container team-remind" style="background: #f5f5f6;">
+        <p><span id="total"></span>人未提交</p>
+        <ul class="remind-list">
+            <!-- <li>
+                <span class="warzone">北京新签一战区北京新签一战区北京新签一战区北京新签一战区</span>
+                <span class="area-leader">顾华风</span>
+            </li> -->
+        </ul>
+        <input type="button" value="发送Ding" style="display: none;" id="sendDD" class="sendDD"></input>
+    </div>
+</section>
+<script type="text/javascript" src="js/lib/fastclick.min.js" ></script>
+<script type="text/javascript" src="js/lib/jquery.min.js" ></script>
+<script type="text/javascript" src="js/lib/highcharts.js" ></script>
+<script type="text/javascript" src="js/lib/highcharts-more.js" ></script>
+<script src="js/lib/dingtalk.min.js"></script>
+<script src="js/lib/ddbanner.js"></script>
+<script src="js/lib/apiList.js"></script>
+<script src="js/lib/iscroll.min.js"></script>
+<script src="js/login.js"></script>
+<script src="js/config.js"></script>
+<script src="js/common.js"></script>
+<script src="js/scroll-index.js"></script>
+<script>
+$(function(){
+    var OMS = {
+        user:{},
+        pageType:"",
+        postData:{},
+        getTitle:function(){
+            var type = getUrlParam("type"), title;
+            if(type == 0){
+                title = "提醒review";
+                this.pageType = "review";
+            }else{
+                title = "提醒明日预测";
+                this.pageType = "day";
+            }
+            $("title").text(title);
+        },
+        getRemindData: function(){
+            var type = getUrlParam("type");
+            OMS.postData.omsuid = OMS.user.id;
+            OMS.postData.token = OMS.user.token;
+            OMS.postData.type = OMS.pageType;
+            $.ajax({
+                type: 'POST',
+                url: oms_config.apiUrl+"apiForecast/remindList",
+                data: OMS.postData,
+                cache: false,
+                success: function(data) {
+                    var response = JSON.parse(data);
+                    // console.log(data);
+
+                    if (response.res == 1) {
+                        OMS.initPage(response);
+                    } else {
+                        dd.device.notification.toast({
+                            icon: 'error',
+                            text: response.msg,
+                            duration: 1,
+                            onSuccess: function(result) {},
+                            onFail: function(err) {}
+                        });
+                    }
+
+                },
+                error: function(xhr, type) {
+                    console.log('ajax error!');
+                }
+            });
+        },
+        sendDing:function(ids){
+            dd.biz.ding.post({
+                users : ids,//用户列表，工号
+                corpId: oms_config.corpId, //加密的企业id
+                alertType: 2,
+                text: '', //消息体
+                onSuccess : function() {
+                    console.log("ding已发送成功");
+                },
+                onFail : function() {
+                    console.log("fail");
+                }
+            });
+        },
+        initPage:function(res){
+            var html = "", self = this;
+
+            $("#total").text(res.data.total);
+            $(res.data.list).each(function(){
+                html += '<li data-uid="'+this.uid+'" data-id="'+this.vwar_id+'" data-ddid="'+this.dt_userid+'"';
+                if(!dd.ios){
+                    html += ' class="androidBorder"';
+                }                
+                html += '><span class="warzone">'+this.vwar_name+'</span>';
+                html += '<span class="area-leader">'+(this.realname!=null?this.realname:'无')+'</span></li>';
+            });
+            if(html){
+                $(".remind-list").append(html);
+            }else{
+                $(".remind-list").css("height", $(window).height()-$(".team-remind p").height());
+                $(".remind-list").css("margin-bottom",0);
+            }
+            
+
+            if(res.data.list.length>0){
+                var ids = [], i, id;
+                // 发钉绑定事件
+                $("#sendDD").bind('click',function(){
+                    for(i=0; i<$(".remind-list li").length; i++){
+                        id = $(".remind-list li").eq(i).attr("data-ddid");
+                        ids.push(id);
+                    }
+                    console.log(ids);
+                    self.sendDing(ids);
+                });
+            }else{
+                $("#sendDD").css("background","#ccc");
+            }    
+                
+        },
+        init: function(){
+            dd.ready(function() {
+                //DDCtrl.setRightBtn(" ", function() {}, false);
+                dd.biz.navigation.setLeft({
+                    control: true,
+                    show:  true,
+                    text: "返回",
+                    onSuccess: function(result) {
+                        history.back(-1);
+                    },
+                    onFail: function(err) {}
+                });
+            });
+            //设置标题
+            this.getTitle();
+
+            this.getRemindData();
+        }
+    }
+
+    //免登验证
+    $.fn.OMS = function(settings) { $.extend(OMS, settings || {}); };
+    $.fn.ready(function() {
+        var omsUser = getCookie('omsUser');
+        if (omsUser) omsUser = JSON.parse(omsUser);
+
+        if (omsUser.res === 1) {
+            if (omsUser.role === -1) {
+                dd.device.notification.alert({
+                    message: omsUser.msg,
+                    title: "提示",
+                    buttonName: "确定",
+                    onSuccess: function() {
+                        dd.biz.navigation.close({
+                            onSuccess: function(result) {},
+                            onFail: function(err) {}
+                        });
+                    },
+                    onFail: function(err) {}
+                });
+            } else {
+                OMS.user = omsUser;
+                OMS.init();
+            }
+        } else {
+            dd.device.notification.alert({
+                message: "登录失败",
+                title: "提示",
+                buttonName: "离开",
+                onSuccess: function() {
+                    dd.biz.navigation.close({
+                        onSuccess: function(result) {},
+                        onFail: function(err) {}
+                    });
+                },
+                onFail: function(err) {}
+            });
+        }
+    });
+})
+</script>
+
+</body>
+</html>

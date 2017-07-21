@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+
+<head>
+    <meta charset="UTF-8">
+    <title>智能诊断配置</title>
+    <meta name="viewport" content="width=device-width, height=device-height, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no">
+    <meta name="format-detection" content="telephone=no">
+    <link href="css/frozen.css" rel="stylesheet" type="text/css">
+    <link rel="stylesheet" href="css/main.css" type="text/css">
+    <link href="css/teamDiagnoseConfig.css" rel="stylesheet" type="text/css">
+    <link rel="stylesheet" href="css/iosSelect.css" type="text/css">
+</head>
+
+<body>
+    <setcion class="body-diagnose main-rule">
+        <section class="main-rule">
+            <section class="ui-form">
+                <div class="ui-form-item ui-border-b">
+                    <label>红灯数量</label>
+                    <span class="diag-input">
+                        <input type="number" id="rMin" placeholder="最小数值" class="light-num min"/> — 
+                        <input type="number" id="rMax" placeholder="最大数值" class="light-num max"/>
+                    </span>
+                    
+                </div>
+                <div class="ui-form-item ui-border-b">
+                    <label>黄灯数量</label>
+                    <span class="diag-input">
+                        <input type="number" id="yMin" placeholder="最小数值" class="light-num min"/> —
+                        <input type="number" id="yMax" placeholder="最大数值" class="light-num max"/>
+                    </span>
+                </div>
+                <div class="ui-form-item ui-border-b">
+                    <label>绿灯数量</label>
+                    <span class="diag-input">
+                        <input type="number" id="gMin" placeholder="最小数值" class="light-num min"/> —
+                        <input type="number" id="gMax" placeholder="最大数值" class="light-num max"/>
+                    </span>
+                </div>
+            </section>
+            <section class="diagnose-info warning">
+                <i class="ui-icon ui-icon-warning_2"></i>
+                <span>灯总量不超过7，且与复选条件不冲突</span>
+            </section>
+            <section class="ui-form" id="ruleCtn">
+                <div class="ui-form-item txt-center" id="addCheckRule">
+                    <i class="ui-icon ui-icon-add diagnose-info"></i>高级复选条件
+                </div>
+            </section>
+            <section class="ui-form ui-form-spec">
+                <div class="ui-form-item">
+                    <label for="">诊断结果</label>
+                    <textarea id="res" rows="3" placeholder="请输入诊断结果"></textarea>
+                </div>
+            </section>
+            <section class="ui-form ui-form-spec">
+                <div class="ui-form-item">
+                    <label for="">工作建议</label>
+                    <textarea id="sug" rows="3" placeholder="请输入工作建议"></textarea>
+                </div>
+            </section>
+            
+        </section>
+        <footer class="ui-footer ui-footer-btn">
+            <ul class="ui-tiled">
+                <li class="btn-del ui-border-t" id="cancel">删除</li>
+                <li class="btn-save" id="save">保存</li>
+            </ul>
+        </footer>
+    </section>
+    <div style="display:none" id="ruleTmp">    
+        <div class="ui-form-item ui-border-b">
+            <i class="ui-icon ui-icon-subremove pull-left rule-delete"></i>
+            <div class="ui-select-group">
+                <span class="type-class" data-id="1">工作量</span>
+                <span class="type-work" data-id="21">资料量</span>
+                <span class="light" data-id="31">红灯</span>
+                <i class="ui-icon-list_arrow_right"></i>
+            </div>
+        </div>
+    </div>
+
+    <script src="js/lib/zepto.min.js"></script>
+    <script src="js/lib/frozen.min.js"></script>
+    <script src="js/lib/dingtalk.min.js"></script>
+    <script src="js/lib/juicer.min.js"></script>
+    <script src="js/lib/fastclick.min.js"></script>
+    <script src="js/lib/ddbanner.js"></script>
+    <script src="js/lib/apiList.js"></script>
+    <script src="js/config.js"></script>
+    <script src="js/common.js"></script>
+    <script src="js/lib/simSelect/iscroll.js"></script>
+    <script src="js/lib/simSelect/iosSelect.js"></script>
+    <script src="js/teamDiagnoseCommon.js"></script>
+    <script src="js/teamDiagnoseRuleAdd.js"></script>
+
+</body>
+
+</html>

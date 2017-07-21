@@ -1,0 +1,248 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1,maximum-scale=1,user-scalable=no">
+		<meta content="telephone=no" name="format-detection">
+		<title>团队</title>
+		<link href="css/frozen.css" rel="stylesheet" type="text/css">
+		<link href="css/main.css" rel="stylesheet" type="text/css">
+		<link rel="stylesheet" href="css/team.css" />
+		<style>
+		a{
+		color: #000000;	
+		width: 100%;
+	    display: block;
+	}
+		</style>
+	</head>
+
+	<body>
+		<section>
+			<div class="ui-container">
+				<ul class="ui-list ui-list-text">
+					<li class="">
+					<p class="sub-text">最后更新:今日 15:30</p>
+					</li>
+				</ul>
+				<ul class="ui-list ui-list-text ui-list-active ui-list-cover ui-border-tb ui-list-link">
+					<li class="ui-border-b">
+						<a href="teamMonthTarget.html">
+						<div id="month_target">
+							<p class="text-center">图表加载中...</p>
+						</div>
+						</a>
+					</li>
+
+					<li class="ui-border-b">
+						<a href="teamLoudou.html">
+						<div id="sales_loudou">
+							<p class="text-center">图表加载中...</p>
+						</div>
+						</a>
+					</li>
+					<!-- 月销售业绩对比-->
+					<li class="ui-border-b">
+						<a href="teamSalesComparsion.html">
+						<div id="sales_comparison">
+							<p class="text-center">图表加载中...</p>
+						</div>
+						</a>
+					</li>
+					<li class="ui-border-b">
+						<a href="teamAve.html?cat=files" style="width: 100%;">
+						<div style="width: 100%;">
+							<h4 class="text-center"> 人均资料量</h4>
+							<div class="ui-row-flex ui-whitespace">
+								<div class="ui-col ui-col text-center">
+									<p class="sub-text">本月人均资料量</p>
+									<p>200</p>
+								</div>
+								<div class="ui-col ui-col text-center">
+									<p class="sub-text">今日人均资料量</p>
+									<p>200</p>
+								</div>
+								<div class="ui-col ui-col text-center">
+									<p class="sub-text">我的城市排名</p>
+									<p>200</p>
+								</div>
+							</div>
+						</div>
+						</a>
+					</li>
+
+					<li class="ui-border-b">
+						
+						<a href=" teamComparsion.html?cat=files">
+						<div id="files_comparison">
+							<p class="text-center">图表加载中...</p>
+						</div>
+						</a>
+					</li>
+
+					<li class="ui-border-b">
+						<a href="teamAve.html?cat=phone" style="width: 100%;">
+						<div style="width: 100%;">
+							<h4 class="text-center"> 人均电话量</h4>
+							<div class="ui-row-flex ui-whitespace">
+								<div class="ui-col ui-col text-center">
+									<p class="sub-text">本月人均电话量</p>
+									<p>200</p>
+								</div>
+								<div class="ui-col ui-col text-center">
+									<p class="sub-text">今日人均电话量</p>
+									<p>200</p>
+								</div>
+								<div class="ui-col ui-col text-center">
+									<p class="sub-text">我的城市排名</p>
+									<p>200</p>
+								</div>
+							</div>
+						</div>
+						</a>
+					</li>
+
+					<li class="ui-border-b">
+						<a href=" teamComparsion.html?cat=phone">
+						<div id="phone_comparison">
+							<p class="text-center">图表加载中...</p>
+						</div>
+						</a>
+					</li>
+
+					<li class="ui-border-b">
+						<a href="teamAve.html?cat=visit" style="width: 100%;">
+						<div style="width: 100%;">
+							<h4 class="text-center"> 人均拜访量</h4>
+							<div class="ui-row-flex ui-whitespace">
+								<div class="ui-col ui-col text-center">
+									<p class="sub-text">本月人均拜访量</p>
+									<p>200</p>
+								</div>
+								<div class="ui-col ui-col text-center">
+									<p class="sub-text">今日人均拜访量</p>
+									<p>200</p>
+								</div>
+								<div class="ui-col ui-col text-center">
+									<p class="sub-text">我的城市排名</p>
+									<p>200</p>
+								</div>
+							</div>
+						</div>
+						</a>
+					</li>
+					<li class="ui-border-b">
+						<a href=" teamComparsion.html?cat=visit">
+						<div id="visit_comparison">
+							<p class="text-center">图表加载中...</p>
+						</div>
+						</a>
+					</li>
+
+				</ul>
+
+			</div>
+		</section>
+		<script type="text/javascript" src="js/lib/jquery-1.9.1.min.js"></script>
+		<script type="text/javascript" src="js/lib/dingtalk.min.js"></script>
+		<script type="text/javascript" src="js/lib/ddbanner.js"></script>
+		<script type="text/javascript" src="js/lib/apiList.js"></script>
+		<script type="text/javascript" src="js/login.js"></script>
+		<script type="text/javascript" src="js/config.js"></script>
+		<script type="text/javascript" src="js/common.js"></script>
+		<script type="text/javascript" src="js/lib/highcharts.js"></script>
+		<script type="text/javascript" src="js/lib/highcharts-more.js"></script>
+		<script type="text/javascript" src="js/team.js"></script>
+		<script>
+			var swidth;
+			$(function() {
+				ddbanner.changeBannerTitle('团队');
+				swidth = $(window).width() - 50;
+				
+				console.log(swidth);
+				$.ajax({
+					type:"post",
+					url:oms_config.apiUrl+oms_apiList.getMonthTargetData,
+					async:true,
+					data:team.postData,
+					dataType:'json',
+					success:function(rs){
+						console.log(JSON.stringify(rs));
+						alert(JSON.stringify(rs));
+					},
+					error:function(e){
+						console.log(JSON.stringify(e));
+					}
+				});
+				setTargetChart(2000000, 400000);
+				var list = [300, 100, 500, 200, 50, 30];
+				setLoudouChart(list, '月', "", 0, 'money');
+				SetComparsionChart({
+					bdata: randomData(),
+					bdataName: '2015年12月销售业绩',
+					udata: randomData(),
+					udataName: '上月业绩',
+					ndata: randomData(),
+					ndataName: '本月业绩',
+					lineu: [0, 20],
+					lineb: [0, 30],
+					linen: [0, 10],
+					lines: [0, 50],
+					title: '月销售业绩对比',
+					topTitle: '2015年12销售业绩对比',
+					containerId: 'sales_comparison',
+				});
+				SetComparsionChart({
+					bdata: randomData(),
+					bdataName: '2015年12月人均资料量',
+					udata: randomData(),
+					udataName: '上月人均资料量',
+					ndata: randomData(),
+					ndataName: '本月人均资料量',
+					lineu: [0, 20],
+					lineb: [0, 30],
+					linen: [0, 10],
+					lines: [0, 50],
+					title: '人均资料量对比',
+					topTitle: '2015年12销人均资料量对比',
+					containerId: 'files_comparison',
+				});
+				SetComparsionChart({
+					bdata: randomData(),
+					bdataName: '2015年12月人均电话量',
+					udata: randomData(),
+					udataName: '上月人均电话量',
+					ndata: randomData(),
+					ndataName: '本月人均电话量',
+					lineu: [0, 20],
+					lineb: [0, 30],
+					linen: [0, 10],
+					lines: [0, 50],
+					title: '人均电话量对比',
+					topTitle: '2015年12人均电话量对比',
+					containerId: 'phone_comparison',
+				});
+				SetComparsionChart({
+					bdata: randomData(),
+					bdataName: '2015年12月人均拜访量',
+					udata: randomData(),
+					udataName: '上月人均拜访量',
+					ndata: randomData(),
+					ndataName: '本月人均拜访量',
+					lineu: [0, 20],
+					lineb: [0, 30],
+					linen: [0, 10],
+					lines: [0, 50],
+					title: '人均拜访量对比',
+					topTitle: '2015年12人均拜访量对比',
+					containerId: 'visit_comparison',
+				});
+			});
+
+			
+		</script>
+
+	</body>
+
+</html>

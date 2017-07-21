@@ -1,0 +1,114 @@
+.visited{
+    background-image:url(../images/visited.png) !important; 
+    background-position:bottom right;
+    background-repeat:no-repeat;
+    background-size: 44px 42px;
+}
+.unvisited{
+    background-image:url(../images/un_visit.png) !important; 
+    background-position:bottom right;
+    background-repeat:no-repeat;
+    background-size: 44px 42px;
+}
+.tempvisited{
+    background-image:url(../images/visited_temporary.png) !important; 
+    background-position:bottom right;
+    background-repeat:no-repeat;
+    background-size: 44px 42px;
+}
+.unfinished{
+    background-image:url(../images/unfinished.png) !important; 
+    background-position:bottom right;
+    background-repeat:no-repeat;
+    background-size: 44px 42px;
+}
+.finished{
+    background-image:url(../images/finished.png) !important; 
+    background-position:bottom right;
+    background-repeat:no-repeat;
+    background-size: 44px 42px;
+}
+.tempunfinished{
+    background-image:url(../images/tempunfinished.png) !important; 
+    background-position:bottom right;
+    background-repeat:no-repeat;
+    background-size: 44px 42px;
+}
+
+.location{
+    background:url(../images/vlocation.png) no-repeat;
+    background-position: 0 2px;
+    background-size:100% 100%;
+    width:15px;
+    height:15px;
+    display:inline-block;
+}
+.ui-icon-localicon{
+    font-size:13px;
+    display:inline-block;
+    color:#858e99;
+    height: 20px;
+    line-height: 20px;
+}
+.bItem{
+    text-align: center;
+    padding:10px 0px 0px 0px;
+}
+.dbutton{
+  border: 1px solid #e15151;
+  color: #e15151;
+  font-size: 14px;
+  border-radius: 4px;
+  width: 100px;
+  height: 32px;
+  background: none;
+  margin-right: 5px;
+}
+.dbuttonNoPriv{
+  border: 1px solid #e0e0e0;
+  color: #c7c7c7;
+  font-size: 14px;
+  border-radius: 4px;
+  width: 100px;
+  height: 32px;
+  background: none;
+  margin-right: 5px;
+}
+.sbutton{
+  background-color: #e15151;
+  color: #fff;
+  width: 100px;
+  height: 32px;
+  font-size: 14px;
+  border-radius: 4px;
+  border: none;
+  background-image: none;
+}
+
+.hc-border-top{
+    border-top: 1px solid #e0e0e0;
+}
+.ui-list > li.hc-border-top:first-child{
+  border: none;
+}
+.hide{display: none;}
+
+.ui-icon-delete, .ui-icon-add_plan, .ui-icon-add_linway, .ui-icon-newsomething, .ui-icon-batch_control{
+    display: inline-block;
+    color:#008cee;
+    margin-right: 5px;
+    font-size: 20px;
+}
+.backtotop {
+	position:fixed;
+	right:0; 
+	padding-top:5px; 
+	padding-left:8px;
+	font-size:12px;
+	text-align:center;
+	bottom:75px;
+	color:#FFFFFF;
+	width:91px;
+	height:30px;
+	background:url(../img/Returns_2x.png) no-repeat;
+}

@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title></title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no" />
+<link href="css/frozen.css" rel="stylesheet" type="text/css">
+<link href="css/main.css" rel="stylesheet" type="text/css">
+<link href="css/addCustomer.css" rel="stylesheet" type="text/css">
+<link href="css/areas.css" rel="stylesheet" type="text/css">
+</head>
+<body>
+<section class="ui-container" id="main-body">
+	<form id="customer_form">
+		<div class="banner-label ui-flex  ui-flex-align-center">基本信息</div>
+
+		<div id="addcustomer" style="display:block;">
+			<div class="ui-form ui-form-gap ui-form-auto ui-border-tb">
+				<div id="v-container2" class="form-group">
+					<div class="ui-form-item ui-form-item-input-l ui-border-b">
+						<label>法人</label>
+						<input type="text" id="corp" name="corp" novalidate="" placeholder="请输入">
+					</div>
+					<div class="ui-form-item ui-form-item-input-l ui-border-b">
+						<input type="hidden">
+						<label>所在区域</label>
+						<input type="text" id="isareas" name="isareas" placeholder="请选择" readonly="">
+						<input type="hidden" id="isarea" name="isarea" value="">
+						<i class="ui-icon-list_arrow_right"></i>
+
+					</div>
+					<div class="ui-form-item ui-form-item-input-l ui-border-b">
+						<label>注册资本</label>
+						<input type="tel" novalidate="" placeholder="请输入" id="capital" name="capital">
+						<span class="ui-unit">万</span>
+					</div>
+					<div class="ui-form-item ui-form-item-input-l ui-border-b">
+						<label>外勤人数</label>
+						<input type="tel" novalidate="" placeholder="请输入" id="terminals" name="terminals">
+						<span class="ui-unit">人</span>
+					</div>
+
+					<div class="ui-form-item ui-form-item-icon ui-form-item-input-l ui-border-b">
+						<input type="hidden">
+						<label>行业</label>
+						<div class="ui-select">
+			                <select id="trade" name="trade">
+			                	<option value="">请选择</option>
+			                    <option value="1">食品</option>
+			                    <option value="2">农牧农业</option>
+			                    <option value="3">医药医疗</option>
+			                    <option value="4">汽配汽用</option>
+			                    <option value="5">服装服饰</option>
+			                    <option value="6">家装建材</option>
+			                    <option value="7">家电数码</option>
+			                    <option value="8">家居家纺</option>
+			                    <option value="9">美妆日化</option>
+			                    <option value="10">商务服务</option>
+			                    <option value="11">日用百货</option>
+			                    <option value="12">水暖电工</option>
+			                    <option value="13">童装母婴</option>
+			                    <option value="14">五金工具</option>
+			                    <option value="15">化工能源</option>
+			                    <option value="16">电子仪表</option>
+			                    <option value="17">包装印刷</option>
+			                    <option value="18">安防照明</option>
+			                    <option value="19">纺织皮革</option>
+			                    <option value="20">橡胶塑料</option>
+			                    <option value="21">酒店用品</option>
+			                    <option value="22">机械工业</option>
+			                    <option value="23">冶金钢材</option>
+			                    <option value="24">其它</option>
+			                </select>
+			                <i class="ui-icon-list_arrow_right"></i>
+			            </div>
+					</div>
+
+					<div class="ui-form-item ui-form-item-icon ui-form-item-input-l">
+						<input type="hidden">
+						<label>客户来源</label>
+						<div class="ui-select">
+	              <select id="customer_source" name="customer_source">
+	                  <option value="0">业务开发</option>
+	                  <option value="1">转介绍</option>
+	                  <option value="2">400客服</option>
+	                  <option value="3">线上渠道</option>
+	                  <option value="4">市场活动</option>
+	              </select>
+	              <i class="ui-icon-list_arrow_right"></i>
+			      </div>
+					</div>
+				</div>
+			</div>
+		</div>
+
+
+		<div class="banner-label ui-flex  ui-flex-align-center">
+			客户联系人
+		</div>
+
+		<div style="display:none;" id="showcontactlist"></div>
+		<div style="margin-top: 10px;display:none;" id="showcontactposren"></div>
+
+		<div id="addcontactperson" style="display:block;">
+			<div id="main" style="display:block;">
+				<div name="formdetail" id="formdetail" style="position: relative;">
+					<div class="ui-form ui-form-gap form-group" id="qfcontact1">
+						<div class="ui-form-item ui-form-item-l  ui-border-b">
+							<label>
+								联系人
+							</label>
+							<input type="text" name="name_1" id="name_1" placeholder="请输入">
+						</div>
+						<div class="ui-form-item ui-form-item-l  ui-border-b">
+							<label>
+								移动电话
+							</label>
+							<input type="tel" name="phone_1" id="phone_1" placeholder="请输入">
+						</div>
+
+						<div class="ui-form-item ui-form-item-l  ui-border-b">
+							<label>
+								职位
+							</label>
+							<div class="ui-select">
+								<select name="position_1" id="position_1" >
+									<option value="" default>请选择</option>
+									<option value="总经理">总经理</option>
+									<option value="副总经理">副总经理</option>
+									<option value="法人代表">法人代表</option>
+									<option value="前台">前台</option>
+									<option value="销售总监">销售总监</option>
+									<option value="人事">人事</option>
+									<option value="市场">市场</option>
+									<option value="财务">财务</option>
+									<option value="其他">其他</option>
+								</select>
+								<i class="ui-icon-list_arrow_right"></i>
+							</div>
+						</div>
+
+						<div class="ui-form-item ui-form-item-l  ui-border-b">
+							<label>
+								邮箱
+							</label>
+							<input type="text" name="mail_1" id="mail_1" placeholder="请输入">
+						</div>
+					</div>
+
+					<div style="display:block;" id="addcontactpersonmore">
+						<ul class="ui-list ui-list-text ui-list-cover ui-row-flex form-group">
+							<li class="ui-col ui-col ui-flex ui-flex-pack-end">
+								<i id="_add_relation_" class="ui-icon-add_relation" style="font-size: 14px;color: #ec564d"></i><div class="add-content">添加联系人</div>
+							</li>
+						</ul>
+					</div>
+				</div>
+			</div>
+			<input type="hidden" id="contact_count" value="1">
+		</div>
+
+		<div class="ui-form-item-blank" style="background-color: #f5f5f6; width: 100%"></div>
+
+		<div class="ui-form ui-form-gap form-group ui-form-auto">
+			<div class="ui-form-item ui-form-item-textarea">
+				<!-- <label></label> -->
+				<textarea novalidate="" id="remark" name="remark" rows="3" placeholder="备注"></textarea>
+			</div>
+		</div>
+		<div style="display:none;"><input type="button" id="losefocus" /></div>
+	</form>
+</section>
+
+<div class="ui-dialog" id="toPrivate">
+	<div class="ui-dialog-cnt">
+		<div class="ui-dialog-bd">
+            <h4>客户存在于公海/开放池</h4>
+        </div>
+		<div class="ui-dialog-ft">
+			<button type="button" style="color:#858e99;" id="pullCancel" data-role="button">取消</button>
+			<button type="button" style="color:#e15151;" id="pullConfirm" data-role="button">拉入</button>
+		</div>
+	</div>
+</div>
+
+<script src="js/lib/zepto.min.js"></script>
+<script src="js/lib/frozen.min.js"></script>
+<script src="js/lib/dingtalk.min.js"></script>
+<script src="js/lib/fastclick.min.js"></script>
+<script src="js/lib/ddbanner.js"></script>
+<script src="js/lib/apiList.js"></script>
+<script src="js/lib/lodash.js"></script>
+<script src="js/config.js"></script>
+<script src="js/common.js"></script>
+<script src="js/customers.js"></script>
+<script src="js/cusAddComplete.js"></script>
+<script src="js/areas.js"></script>
+<script src="js/draftwork.js"></script>
+</body>
+</html>

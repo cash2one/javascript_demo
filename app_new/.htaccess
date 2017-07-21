@@ -1,0 +1,44 @@
+Options -Indexes +FollowSymLinks
+
+#FileETag None
+#<IfModule mod_headers.c>
+#    Header unset ETag
+#    Header set Cache-Control "max-age=0, no-cache, no-store, must-revalidate"
+#    Header set Pragma "no-cache"
+#    Header set Expires "Wed, 11 Jan 1984 05:00:00 GMT"
+#</IfModule>
+
+#<FilesMatch "\.(html)$">
+#    FileETag None
+#    <IfModule mod_headers.c>
+#        Header unset ETag
+#        Header set Cache-Control "max-age=0, no-cache, no-store, must-revalidate"
+#        Header set Pragma "no-cache"
+#        Header set Expires "Wed, 11 Jan 1984 05:00:00 GMT"
+#    </IfModule>
+#</FilesMatch>
+
+<FilesMatch "\.(html|htm|js|css)$">
+    <IfModule mod_deflate.c>
+        AddOutputFilter DEFLATE html js css
+    </IfModule>
+</FilesMatch>
+
+<IfModule mod_rewrite.c>
+    RewriteEngine on
+    RewriteBase /oms/
+
+    # Don't rewrite files or directories
+    RewriteCond %{REQUEST_FILENAME} -f [OR]
+    RewriteCond %{REQUEST_FILENAME} -d
+    RewriteRule ^ - [L]
+
+    # Path /dist/ passthrough
+    RewriteRule ^dist/(.*) - [NC,L]
+
+    # Rewrite index.html to dist/[version]/index.html
+    RewriteRule ^index.html https://%{HTTP_HOST}/oms/dist/0.1.10/index.html [NC,R=301,L]
+</IfModule>
+
+# ErrorDocument
+ErrorDocument 404 /oms/404.html

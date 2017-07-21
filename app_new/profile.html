@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>个人资料</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, height=device-height, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no">
+    <meta name="format-detection" content="telephone=no">
+    <link href="css/frozen.css" rel="stylesheet" type="text/css">
+    <link href="css/billing.css" rel="stylesheet" type="text/css">
+
+     <style>
+        .listNav-title{
+            height: 160px;
+            background-color: #f9f9f9 !important;
+        }
+        .listNav-title ul>li{
+            width: 33.333333%;
+            padding-bottom: 7px;
+        }
+
+        .phone-call{
+            padding-top: 10px;
+            padding-bottom: 10px;
+            text-align: center;
+            height: 40px;
+            line-height: 40px;
+        }
+        .ui-icon-personal_infomation_phone{
+            color: #ec564d;
+            font-size: 40px;
+            line-height: 40px;
+        }
+        .ui-icon-personal_infomation_message{
+            color: #ec564d;
+            font-size: 40px;
+            line-height: 40px;
+        }
+
+        .ui-tiled >li{
+
+        }
+        #list{
+            padding-top: 160px !important;
+        }
+
+        .path{
+            height: 30px;
+            line-height: 30px;
+            text-align: center;
+            font-size: 12px;
+            color: #666;
+        }
+
+        .title-content{
+            font-size: 12px;
+            color: #666;
+        }
+
+        .data-content{
+            font-size: 30px;
+            color: #ec564d;
+        }
+     </style>
+</head>
+
+<body>
+    <nav id="listNav" class="listNav-title">
+        <div id="ios-tag" style="display:none">
+            <div class="phone-call" ><i class="ui-icon-personal_infomation_phone getCall" id="getCall" style="width:45%;float:left;text-align:right;"></i><i class="ui-icon-personal_infomation_message getSMS" id="getSMS" style="width:45%;float:right;text-align:left;"></i></div>
+        </div>
+        <div id="android-tag" style="display:none"><div class="phone-call" ><i class="ui-icon-personal_infomation_phone getCall" id="getCall"></i></div></div>
+        <!-- <div class="phone-call" id="getCall"><i class="ui-icon-phone"></i></div> -->
+        <ul class="ui-tiled ui-border-tb">
+            <li><p class="data-content" id="title_stuff"></p><p class="ui-border-t title-content">资料量</p></li>
+            <li ><p class="data-content" id="title_tel"></p><p class="ui-border-t title-content">电话量</p></li>
+            <li ><p class="data-content" id="title_visit"></p><p class="ui-border-t title-content">拜访量</p></li>
+        </ul>
+        <div class="path" id="region"></div>
+
+    </nav>
+    <section id="list">
+        <ul id="cuslist" class="cuslist ui-list ui-list-text ui-border-b ui-list-active">
+            <script id="tpl-cuslist" type="text/template">
+                {@each res as section,index}
+                <section data-role="tabs-panel" class="section">
+                    <h2 class="b-header ui-txt-default {@if index!=0 }ui-border-t{@/if}">
+                        <span>${section.name}</span>
+                        <div class="more ui-flex ui-flex-align-center ui-flex-pack-end">
+                            <span class="summary ui-txt-muted"><span data-role="paid"></span>/<span data-role="count"></span>个</span>
+                            <i class="ui-icon-arrow"></i>
+                        </div>
+                    </h2>
+                    <ul class="list ui-list ui-list-pure ui-border-t">
+                        {@each section.list as item}
+                        <li class="item ui-border-b" data-cid="${item.cid}" data-bid="${item.bid}">
+                            <h3 class="title">
+                                <span>${item.customer}</span>
+                                <div class="price">${item.price|priceFormat}</div>
+                                <div class="folltype">${item.followtype|getFollowType}</div>
+                            </h3>
+                            <p class="para ui-txt-info">
+                                ${item.level1}级&nbsp;|&nbsp;${item.level2}级
+                            </p>
+                            <p class="para ui-txt-info">
+                                ${item.structure}-${item.follower}
+                            </p>
+                        </li>
+                        {@/each}
+                    </ul>
+                </section>
+                {@/each}
+            </script>
+            <!-- end template script -->
+        </ul>
+    </section>
+    <script src="js/lib/dingtalk.min.js"></script>
+    <script src="js/lib/zepto.min.js"></script>
+    <script src="js/lib/frozen.min.js"></script>
+    <script src="js/lib/juicer.min.js"></script>
+    <script src="js/lib/fastclick.min.js"></script>
+    <script src="js/lib/apiList.js"></script>
+    <script src="js/config.js"></script>
+    <script src="js/common.js"></script>
+    <script src="js/billingCommon.js"></script>
+    <script src="js/profile.js"></script>
+    <script src="js/businessCall.js"></script>
+</body>
+
+</html>

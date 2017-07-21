@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta content="initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
+<meta content="telephone=no" name="format-detection">
+<title>评论</title>
+<link href="css/frozen.css" rel="stylesheet" type="text/css">
+<link rel="stylesheet" href="css/teamDiagnose.css" />
+
+</head>
+<body style='background-color: #f5f5f6'>
+<section>
+    <textarea class="commentText" placeholder="请输入评论内容" id="textContent"></textarea>
+    <div class="ui-dialog" id="return_dialog">
+    	<div class="ui-dialog-cnt">
+    		<div class="ui-dialog-bd">
+                <h4>点评还未保存，是否确定返回？</h4>
+                <!-- <div>真的确定扔到公海吗？</div> -->
+            </div>
+    		<div class="ui-dialog-ft">
+    			<button type="button" style="color:#858e99;" data-role="button">否</button>
+    			<button type="button" style="color:#858e99;" id="returnConfirm" data-role="button">是</button>
+    		</div>
+    	</div>
+    </div>
+
+    <footer class="ui-footer ui-footer-btn" id="save_footer">
+        <ul class="ui-tiled ui-border-t">
+            <li class="footItem" id="saveComment">
+                <div class="footer-font" id="save_comment">保存</div>
+            </li>
+        </ul>
+  	</footer>
+</section>
+<script src="js/lib/zepto.min.js"></script>
+<script src="js/lib/frozen.min.js"></script>
+<script src="js/lib/dingtalk.min.js"></script>
+<script src="js/lib/ddbanner.js"></script>
+<script src="js/lib/apiList.js"></script>
+<script src="js/login.js"></script>
+<script src="js/config.js"></script>
+<script src="js/common.js"></script>
+<script src="js/lib/lodash.js"></script>
+<script type="text/javascript" src="js/diagnoseComment.js" ></script>
+</body>
+</html>

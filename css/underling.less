@@ -1,0 +1,254 @@
+html,body {
+    font-family: 'STHeitiSC-Light', 'Heiti SC Light', 'Heiti SC';
+    background-color: #f5f5f6 !important;
+    min-height: 100%;
+}
+input::-webkit-search-cancel-button {display: none;}
+header {
+    .org-entrance {
+        display: -webkit-box;
+        -webkit-box-flex: 1;
+        padding: 0 15px;
+        height: 45px;
+        line-height: 45px;
+        background-color: #fff;
+        font-size: 14px;
+        div {
+            &:nth-child(1) {
+                -webkit-box-flex: 1;
+                color: #333;
+            }
+            &:nth-child(2) {
+                padding-right: 5px;
+                color: #999;
+            }
+        }
+        i {
+            font-size: 12px;
+            color: #999;
+            line-height: 45px;
+            -webkit-text-stroke-width: 0;
+        }
+    }
+}
+.org-page {
+    #wrapper {
+        top: 40px !important;
+    }
+}
+#wrapper {
+    position: absolute;
+    left: 0;
+    top: 85px;
+    bottom: 0;
+    width: 100%;
+    .ui-list {
+        min-height: 100%;
+        background-color: #f5f5f6;
+    }
+    #err-msg {
+        display: block;
+        position: absolute;
+        top: 50%;
+        padding: 0;
+        margin: -60px 0 0;
+        width: 100%;
+        font-size: 15px;
+        color: #333;
+        text-align: center;
+    }
+    #orgList {
+        li {
+            display: block;
+            padding: 0;
+            margin-left: 0;
+        }
+        #org-banner {
+            padding: 10px 15px;
+            font-size: 0;
+            display: none;
+            .org-banner-title, i {
+                height: 25px;
+                line-height: 25px;
+                display: inline-block;
+                vertical-align: middle;
+            }
+            .org-banner-title {
+                font-size: 14px;
+                color: #999;
+            }
+            i {
+                padding: 0 5px;
+                font-size: 12px;
+                color: #999;
+                -webkit-text-stroke-width: 0;
+            }
+            .clickable {
+                color: #e15151;
+            }
+        }
+        #org-content {
+            overflow: auto;
+            ul {
+                padding-left: 15px;
+                background-color: #fff;
+                li {
+                    display: block;
+                    position: relative;
+                    &:first-child {
+                        background: none;
+                    }
+                }
+                &:nth-child(1) {
+                    background-position: left bottom;
+                    background-image: -webkit-gradient(linear, left top, left bottom, color-stop(0.5, transparent), color-stop(0.5, #d9dcea), to(#d9dcea));
+                }
+                &:nth-child(2) {
+                    margin-top: 20px;
+                }
+            }
+            .org-content-orglist {}
+            .org-content-salerlist {}
+        }
+    }
+    #salerList {
+        li {
+            display: block;
+            margin: 0;
+            padding: 0;
+            .user-group {
+                padding: 10px 0 5px 15px;
+                line-height: 1;
+                font-size: 14px;
+                color: #333;
+            }
+            .user-group-cell {
+                padding-left: 15px;
+                background-color: #fff;
+                li {
+                    position: relative;
+                    &:first-child {
+                        background: none;
+                    }
+                }
+            }
+        }
+    }
+    .itemOrgContent {
+        height: 45px;
+        line-height: 45px;
+        font-size: 14px;
+        color: #333;
+    }
+    .itemSalerContent {
+        padding: 10px 0;
+    }
+    .itemName {
+        height: 24px;
+        line-height: 24px;
+        font-size: 14px;
+        color: #333;
+    }
+    .itemToggle {
+        height: 20px;
+        line-height: 20px;
+        font-size: 12px;
+        color: #666;
+    }
+    .itemSalerBtn, .itemOrgBtn {
+        position: absolute;
+        top: 0;
+        right: 0;
+    }
+    .ui-icon-list_arrow_right {
+        padding: 0 15px;
+        font-size: 12px;
+        color: #666;
+        line-height: 45px;
+        -webkit-text-stroke-width: 0px;
+    }
+    .ui-icon-phone-2 {
+        // display: inline-block;
+        padding: 0 15px;
+        font-size: 20px;
+        color: #ec564d;
+        line-height: 64px;
+        -webkit-text-stroke-width: 0px;
+    }
+}
+
+.scroller {
+    width:100%;
+    min-height: 100%;
+    padding:0;
+    -webkit-tap-highlight-color:rgba(0,0,0,0);
+}
+/**
+ *
+ * Pull down styles
+ *
+ */
+#pullDown, #pullUp {
+    //background: #e9f0f7;
+    text-align: center;
+    height: 45px;
+    line-height: 45px;
+    // padding: 5px 10px;
+    // border-bottom: 1px solid #e6e6e6;
+    font-weight: bold;
+    font-size: 14px;
+    color: #888;
+    vertical-align: middle;
+    // opacity: 0;
+}
+#pullDown .pullDownIcon, #pullUp .pullUpIcon  {
+    display: inline-block;
+    width: 40px;
+    height: 40px;
+    background:url(../img/pull-icon@2x.png) 0 0 no-repeat;
+    -webkit-background-size:40px 80px;
+    background-size:40px 80px;
+    -webkit-transition-property:-webkit-transform;
+    -webkit-transition-duration:250ms;
+    vertical-align: middle;
+}
+#pullDown .pullDownLabel,
+#pullUp .pullUpLabel {
+  display: inline-block;
+  vertical-align: middle;
+}
+#pullDown .pullDownIcon {
+    margin-top: -4px;
+    -webkit-transform:rotate(180deg) translateZ(0);
+}
+#pullUp .pullUpIcon  {
+    margin-top: 3px;
+    -webkit-transform:rotate(0deg) translateZ(0);
+}
+
+#pullDown.flip .pullDownIcon {
+    margin-top: 3px;
+    -webkit-transform:rotate(0deg) translateZ(0);
+}
+
+#pullUp.flip .pullUpIcon {
+    margin-top: -4px;
+    -webkit-transform:rotate(180deg) translateZ(0);
+}
+
+#pullDown.loading .pullDownIcon, #pullUp.loading .pullUpIcon {
+    margin-top: 0;
+    background-position:0 100%;
+    -webkit-transform:rotate(0deg) translateZ(0);
+    -webkit-transition-duration:0ms;
+
+    -webkit-animation-name:loading;
+    -webkit-animation-duration:2s;
+    -webkit-animation-iteration-count:infinite;
+    -webkit-animation-timing-function:linear;
+}
+
+@-webkit-keyframes loading {
+    from { -webkit-transform:rotate(0deg) translateZ(0); }
+    to { -webkit-transform:rotate(360deg) translateZ(0); }
+}

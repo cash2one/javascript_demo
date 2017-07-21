@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>更多</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, height=device-height, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no">
+    <meta name="format-detection" content="telephone=no">
+    <link href="css/frozen.css" rel="stylesheet" type="text/css">
+    <link href="css/index.css" rel="stylesheet" type="text/css">
+    <link href="css/vipService.css" rel="stylesheet" type="text/css">
+
+    <script type="text/javascript">
+        function resize() {
+            var remFontSize = +document.documentElement.clientWidth / 16;
+            document.documentElement.style.fontSize = remFontSize + "px";
+        }
+        var b = null;
+        window.addEventListener("resize", function() {
+            clearTimeout(b),
+                b = setTimeout(resize, 300)
+        }, !1);
+        resize();
+    </script>
+</head>
+
+<body>
+    <div class="container">
+        <ul class="ui-list ui-list-link vip-list">
+            <li id="sale_tool" style="display:none;">
+                <div>
+                    <i class="ui-icon-personal_list_tool_icon" style="font-size:24px; color:#fc6a56"></i>
+                </div>
+                <h4 class="vip-list-title" style="padding-left: 12px;">销售工具</h4>
+            </li>
+            <li id="change_postion" style="display:none;" class="ui-border-t">
+                <div>
+                    <i class="ui-icon-personal_list_switch_icon" style="font-size:24px; color:#00d4b0"></i>
+                </div>
+                <h4 class="vip-list-title" style="padding-left: 12px;">切换职务</h4>
+                <h4 class="vip-list-title" style="position:absolute; right:35px" id="current_position"></h4>
+            </li>
+            <li id="change_account" style="display:none;" class="ui-border-t">
+                <div>
+                    <i class="ui-icon-personal_list_company_icon" style="font-size:24px; color:#bc9df4"></i>
+                </div>
+                <h4 class="vip-list-title" style="padding-left: 12px;">切换企业</h4>
+            </li>
+        </ul>
+
+        <!--<ul class="ui-list ui-list-link vip-list">-->
+            <!--<li id="draft_work">-->
+                <!--<i class="ui-icon-personal_list_draft_icon" style="font-size:24px;color:#f6b720"></i>-->
+                <!--<h4 class="vip-list-title" style="padding-left: 12px;">草稿</h4>-->
+                <!--<h4 class="vip-list-title" style="position:absolute; right:35px" id="draft_num"></h4>-->
+            <!--</li>-->
+        <!--</ul>-->
+
+        <ul class="ui-list ui-list-link vip-list">
+            <li id="diagConfig" style="display: none">
+                <i class="ui-icon-personal_list_setwork_icon" style="font-size:24px;color:#74a2ff"></i>
+                <h4 class="vip-list-title" style="padding-left: 12px;">智能诊断配置</h4>
+                <h4 class="vip-list-title" style="position:absolute; right:35px" id="draft_num"></h4>
+            </li>
+        </ul>
+
+        <ul class="vip-list">
+            <li id="log_out">
+                <div class="vip-list-title vip-center">退出登录</div>
+            </li>
+        </ul>
+    </div>
+
+    <script src="js/lib/zepto.min.js"></script>
+    <script src="js/lib/frozen.min.js"></script>
+    <script src="js/lib/dingtalk.min.js"></script>
+    <script src="js/lib/fastclick.min.js"></script>
+    <script src="js/lib/ddbanner.js"></script>
+
+    <script src="js/lib/apiList.js"></script>
+    <script src="js/config.js"></script>
+    <script src="js/draftwork.js"></script>
+    <script src="js/oms_sale.js"></script>
+</body>
+
+</html>

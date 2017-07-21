@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, height=device-height, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no">
+    	<meta name="format-detection" content="telephone=no">
+        <title>下属</title>
+        <link href="css/underling.css" rel="stylesheet" type="text/css">
+        <link href="css/frozen.css" rel="stylesheet" type="text/css">
+    </head>
+    <body>
+        <header>
+            <div class="ui-searchbar-wrap ui-border-b" id="searchwrap">
+                <div class="ui-searchbar">
+                    <i class="ui-icon-search"></i>
+                    <div class="ui-searchbar-text">搜索</div>
+                    <div class="ui-searchbar-input">
+                        <form action="javascript:void(0)" onsubmit="openSearch();">
+                            <input value="" type="search" placeholder="搜索" autocapitalize="off">
+                        </form>
+                    </div>
+                    <i class="ui-icon-close"></i>
+                </div>
+                <button class="ui-searchbar-cancel">取消</button>
+            </div>
+            <div class="org-entrance ui-border-b">
+                <div>查找员工</div>
+                <div>按组织架构</div>
+                <i class="ui-icon-list_arrow_right"></i>
+            </div>
+        </header>
+        <seaction id="wrapper">
+            <div class="scroller">
+                <ul class="ui-list ui-list-text" id="salerList"></ul>
+                <ul class="ui-list ui-list-text" id="orgList" style="display: none">
+                    <li id="org-banner" class="ui-border-b"></li>
+                    <li id="org-content"></li>
+                </ul>
+            </div>
+        </section>
+        <!-- js 模块 -->
+        <script src="js/lib/zepto.min.js"></script>
+        <!-- <script src="js/lib/frozen.min.js"></script> -->
+        <script src="js/lib/dingtalk.min.js"></script>
+        <script src="js/lib/iscroll.min.js"></script>
+        <script src="js/scroll-index.js"></script>
+
+        <script src="js/lib/apiList.js"></script>
+        <script src="js/login.js"></script>
+        <script src="js/config.js"></script>
+        <script src="js/underling.js"></script>
+    </body>
+</html>

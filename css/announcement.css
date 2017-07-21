@@ -1,0 +1,26 @@
+body {
+  font-family: 'STHeitiSC-Light', 'Heiti SC Light', 'Heiti SC';
+  background-color: #f7f9fe !important;
+  padding: 0;
+  margin: 0;
+}
+.wrapper {
+  width: 100%;
+  padding-top: 1.5rem;
+}
+.wrapper .container {
+  position: relative;
+  margin: 0 auto;
+  padding: 3.675rem 0.575rem 0;
+  width: 13.85rem;
+  height: 13.5rem;
+  background-image: url(../img/announce_icon_bg.png);
+  background-repeat: no-repeat;
+  background-size: 15rem auto;
+  background-position: center;
+  text-align: left;
+}
+.wrapper .container img {
+  width: 13.85rem;
+  height: 11.75rem;
+}

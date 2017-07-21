@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>发送必达</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no"/>
+        <link href="css/frozen.css" rel="stylesheet" type="text/css">
+        <link href="css/duang.css" rel="stylesheet" type="text/css">
+    </head>
+
+    <body style="background-color:#f5f5f6">
+        <div class="ui-container">
+            <div id="receiver-picker" class="ui-dialog">
+                <div class="ui-dialog-cnt">
+                    <div class="ui-row-flex ui-row-flex-ver">
+                        <div class="ui-legend ui-whitespace">
+                            已经选择的接收人
+                        </div>
+                        <div class="ui-whitespace">
+                            <p id="choosen-all-line" class="choosen-all-line">
+                                <label class="ui-checkbox-s"><input type="checkbox"></label><span>全选</span>
+                            </p>
+                        </div>
+                        <div class="ui-flex">
+                            <script type="x-template" id="receiver-choosen-item-tpl">
+                                <li class="sel ui-border-t" data-uid="__id__">
+                                    <label class="ui-checkbox-s">
+                                        <input type="checkbox" checked="checked">
+                                    </label>
+                                    <div class="ui-list-info">
+                                        <span>__realname__</span>
+                                    </div>
+                                </li>
+                            </script>
+                            <ul id="receiver-choosen-list" class="ui-list ui-list-text ui-border-tb"></ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div id="duang-body">
+                <div class="setting ui-panel">
+                    <ul class="setting-list ui-list ui-border-tb">
+                        <li class="ui-border-t">
+                            <div class="setting-label">接收人：</div>
+                            <div class="ui-list-info ui-arrowlink MT-24">
+                                <div class="setting-receiver ui-row-flex">
+                                    <div class="ui-col ui-flex">
+                                        <ul id="receiver-list" class="ui-avatar-list R30">
+                                        </ul>
+                                    </div>
+                                    <div id="receiver-total" class="receiver-total"></div>
+                                </div>
+                            </div>
+                        </li>
+                        <li class="ui-border-t">
+                            <div class="setting-label">提醒方式：</div>
+                            <div class="ui-list-info">
+                                <div class="setting-remind ui-flex">
+                                    <!--<div class="remind-type">应用内</div>-->
+                                    <div class="remind-type sel">短信</div>
+                                    <!--<div class="remind-type">电话</div>-->
+                                </div>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+
+                <div class="ui-legend ui-whitespace">文字</div>
+
+                <div class="ui-border-t clearfix">
+                    <textarea id="post-text" class="post-text" placeholder="点击输入文字..." maxlength="2000"></textarea>
+                    <img id="voiceinput-btn" style="float:right;position:relative;top:-40px;right:5px;height:25px;" src="img/voiceinput.png"/>
+                </div>
+            </div>
+
+        </div>
+
+        <script src="js/lib/dingtalk.min.js"></script>
+        <script src="js/lib/zepto.min.js"></script>
+        <script src="js/lib/fastclick.min.js"></script>
+        <script src="js/lib/ddbanner.js"></script>
+        <script src="js/lib/apiList.js"></script>
+        <script src="js/config.js"></script>
+        <script src="js/common.js"></script>
+        <script src="js/duang.js"></script>
+    </body>
+</html>

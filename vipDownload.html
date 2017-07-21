@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<title>推荐给朋友</title>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, height=device-height, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no">
+	<meta name="format-detection" content="telephone=no">
+	<link href="css/frozen.css" rel="stylesheet" type="text/css">
+	<link href="css/index.css" rel="stylesheet" type="text/css">
+	<link href="css/vipService.css" rel="stylesheet" type="text/css">
+	<script type="text/javascript">
+		function resize() {
+			var remFontSize = +document.documentElement.clientWidth / 16;
+			document.documentElement.style.fontSize = remFontSize + "px";
+		}
+		var b = null;
+		window.addEventListener("resize", function() {
+			clearTimeout(b),
+				b = setTimeout(resize, 300)
+		}, !1);
+		resize();
+	</script>
+</head>
+
+<body>
+	<div class="container">
+			<div class="ui-form vip-qr-main">
+					<div class="vip-main-img" id="qrCode" style="text-align:center">
+							<img class="vip-qr-img" src="img/vipService/discount_content_share_QRcode-2.png"></img><div class="qr-describe">
+									扫一扫，下载红圈通APP
+									<!-- <br> -->
+									<div style="padding-top: 5px;">
+											立享中国领先的企业管理移动端云服务
+									</div>
+							</div>
+							<div class="dotted-line"></div>
+					</div>
+					<div class="save_toolbar" id="save_toolbar">
+							<div class="vip-share-copy-link">
+									<button type="button" name="download_btn" id="copy_qr" class="download-btn">复制链接</button>
+							</div>
+					</div>
+
+			</div>
+			<!-- <div style="padding: 0 15px;">
+					<div class="wave">
+					</div>
+			</div> -->
+	</div>
+
+	<script src="js/lib/zepto.min.js"></script>
+	<script src="js/lib/frozen.min.js"></script>
+	<script src="js/lib/dingtalk.min.js"></script>
+	<script src="js/lib/fastclick.min.js"></script>
+	<script src="js/lib/ddbanner.js"></script>
+	<script src="js/lib/iscroll.min.js"></script>
+
+	<script src="js/lib/apiList.js"></script>
+	<script src="js/login.js"></script>
+	<script src="js/config.js"></script>
+	<script src="js/scroll-index.js"></script>
+	<script src="js/vipDownload.js"></script>
+
+	<!-- <script src="js/index.js"></script> -->
+</body>
+
+</html>

@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>定位</title>
+    <meta name="description" content="">
+    <meta name="viewport" content="width=device-width, height=device-height, initial-scale=1, maximum-scale=1, user-scalable=no">
+    <meta name="format-detection" content="telephone=no">
+    <link href="css/frozen.css" rel="stylesheet" type="text/css">
+    <link href="css/main.css" rel="stylesheet" type="text/css">
+    <!--<link href="css/doVisitLocate.css" rel="stylesheet" type="text/css">-->
+    <style>
+        .amap-logo, .amap-copyright {
+            display: none;
+        }
+        .amap-zoom-plus, .amap-zoom-plus:hover{width: 35px;height: 35px;background: url(./img/plus.png);background-size: 100% 100%;}
+        .amap-zoom-minus, .amap-zoom-minus:hover{width: 35px;height: 35px; background: url(./img/minus.png);background-size: 100% 100%;}
+        .amap-to-pointer {width: 35px;height: 35px; background: url(./img/position.png);background-size: 100% 100%;}
+        .map-container-wrap, .map-poi-container-wrap {display: none;}
+        .map-poi-container-wrap {overflow: hidden; overflow-y: auto;}
+        #map-poi-container .ui-icon-localicon {font-size: 14px;line-height: 14px;}
+        #map-poi-container .ui-icon-ok {color: #38ADFF;}
+        #map-poi-container .ui-poi-dist {color: #BBB;font-size: 12px;}
+    </style>
+</head>
+<body>
+
+    <div class="ui-container">
+        <div class="ui-center map-loading-cover">加载中...</div>
+
+        <div class="map-container-wrap" >
+            <div id="map-container" style="position: relative;"></div>
+        </div>
+
+        <div class="map-poi-container-wrap">
+            <div id="map-poi-loading">
+                <div class="ui-center">
+                    <div class="ui-loading-wrap">
+                        <i class="ui-loading"></i><p>...</p>
+                    </div>
+                </div>
+            </div>
+            <div id="map-poi-container"></div>
+            <div id="map-poi-loading-more" class="ui-loading-wrap">
+                <i class="ui-loading"></i><p>加载中...</p>
+            </div>
+        </div>
+    </div>
+
+    <script type="text/template" id="tpl-map-pois">
+        <ul class="ui-list ui-list-text ui-list-active ui-border-tb">
+            <% for(var i=0; i<list.length; i++) { %>
+            <li class="ui-border-t"
+                data-poi-idx="<%=list[i]['idx']%>"
+                data-poi-dist="<%=list[i]['distance']%>">
+                <div class="ui-list-info">
+                    <h4 class="ui-nowrap"><%=list[i]['name']%></h4>
+                    <div class="ui-flex ui-flex-align-center">
+                        <i class="ui-icon-localicon"></i>
+                        <p class="ui-nowrap">
+                            <% if (list[i]['address']) { %>
+                            <%=list[i]['address']%>
+                            <% } else { %>
+                            <%=list[i]['cityname']+list[i]['adname']%>
+                            <% } %>
+                        </p>
+                    </div>
+                </div>
+                <div class="ui-poi-dist"><%=list[i]['distance']%></div>
+            </li>
+            <% } %>
+        </ul>
+    </script>
+
+<script src="//webapi.amap.com/maps?v=1.3&key=c5b79a9a87ab2ca92eecd69ab3c00c17"></script>
+<script src="js/lib/zepto.min.js"></script>
+<script src="js/lib/frozen.min.js"></script>
+<script src="js/lib/dingtalk.min.js"></script>
+<script src="js/lib/fastclick.min.js"></script>
+<script src="js/lib/ddbanner.js"></script>
+<script src="js/lib/apiList.js"></script>
+<script src="js/lib/moment.min.js"></script>
+<script src="js/lib/dtapi.js"></script>
+<script src="js/lib/map.js"></script>
+<script src="js/lib/coordTransform.js"></script>
+<script src="js/lib/multipart.js"></script>
+<script src="js/config.js"></script>
+<script src="js/doVisitLocate.js"></script>
+
+</body>
+</html>

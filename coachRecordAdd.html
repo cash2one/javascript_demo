@@ -1,0 +1,268 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>添加私教跟踪记录</title>
+    <meta name="viewport" content="width=device-width, height=device-height, initial-scale=1, maximum-scale=1, user-scalable=no">
+    <meta name="format-detection" content="telephone=no">
+    <link rel="stylesheet" href="css/frozen.css">
+    <link rel="stylesheet" href="css/contract.css">
+    <style>
+        [v-cloak] {
+          display: none;
+        }
+    </style>
+</head>
+<body class="contract-form--body" v-cloak>
+    <article id="main-body" class="ui-container">
+        <form id="form" name="form" class="contract-form" novalidate>
+            <fieldset>
+                <legend class="ui-whitespace">客户信息</legend>
+                <div class="ui-form ui-form-gap">
+                    <!--<div class="ui-form-item ui-form-item-icon ui-border-b">-->
+                        <!--<label for="">私教</label>-->
+                        <!--<input type="hidden" v-model="contract.coachId" value="">-->
+                        <!--<input type="text" readonly placeholder="请选择" v-model="contract.realname" value=""-->
+                               <!--v-on:click="chosenCustomer">-->
+                        <!--<i class="ui-icon-arrow" v-on:click="chosenCustomer" v-if="!customer"></i>-->
+                    <!--</div>-->
+                    <div class="ui-form-item ui-form-item-icon ui-border-b">
+                        <label for="">跟进阶段</label>
+                        <input type="hidden" v-model="contract.privateTeachFollowStatusId" value="">
+                        <input type="text" readonly placeholder="请选择"
+                               v-model="contract.privateTeachFollowStatusId$$str" value=""
+                               v-on:tap="ddchosen('privateTeachFollowStatus','contract.privateTeachFollowStatusId','contract.privateTeachFollowStatusId$$str')">
+                        <i class="ui-icon-arrow" v-on:tap="ddchosen('privateTeachFollowStatus','contract.privateTeachFollowStatusId','contract.privateTeachFollowStatusId$$str')"></i>
+                    </div>
+                    <!--<div class="ui-form-item ui-form-item-icon ui-border-b">-->
+                        <!--<label for="">客户名称</label>-->
+                        <!--<input type="hidden" v-model="contract.cusid" value="">-->
+                        <!--<input type="text" readonly placeholder="请选择" v-model="contract.cusname" value=""-->
+                            <!--v-on:click="chosenCustomer">-->
+                        <!--<i class="ui-icon-arrow" v-on:click="chosenCustomer" v-if="!customer"></i>-->
+                    <!--</div>-->
+                    <!--<div class="ui-form-item ui-border-b">-->
+                        <!--<label for="">客户编码</label>-->
+                        <!--<input type="email" placeholder="请输入" v-model="contract.new_cuscode" value="">-->
+                    <!--</div>-->
+                    <!--<div class="ui-form-item ui-form-item-icon ui-border-b">-->
+                        <!--<label for="">行业</label>-->
+                        <!--<input type="hidden" v-model="contract.trade" value="">-->
+                        <!--<input type="text" readonly placeholder="请选择"-->
+                            <!--v-model="contract.trade$$str" value=""-->
+                            <!--v-on:tap="ddchosen('trades','contract.trade','contract.trade$$str')">-->
+                        <!--<i class="ui-icon-arrow" v-on:tap="ddchosen('trades','contract.trade','contract.trade$$str')"></i>-->
+                    <!--</div>-->
+                    <!--<div class="ui-form-item ui-form-item-icon ui-border-b">-->
+                        <!--<label for="">客户联系人</label>-->
+                        <!--<input type="text" placeholder="请选择" v-model="contract.linkman" value="">-->
+                        <!--<i class="ui-icon-arrow" v-on:click="chosenLinkman"></i>-->
+                    <!--</div>-->
+                    <!--<div class="ui-form-item ui-border-b">-->
+                        <!--<label for="">联系电话</label>-->
+                        <!--<input type="tel" placeholder="请输入" v-model="contract.telephone" value="">-->
+                    <!--</div>-->
+                </div>
+            </fieldset>
+            <fieldset>
+                <legend class="ui-whitespace">拍照</legend>
+                <div class="ui-form ui-form-gap">
+                    <!--<div class="ui-form-item ui-border-b">-->
+                        <!--<label for="">合同名称</label>-->
+                        <!--<input type="text" readonly placeholder="请输入" v-model="contract.new_contract_cusname" value="">-->
+                    <!--</div>-->
+                    <!--<div class="ui-form-item ui-form-item-icon ui-border-b">-->
+                        <!--<label for="">合同编号</label>-->
+                        <!--<input type="text" readonly placeholder="请选择" v-model="contract.contractno" value=""-->
+                            <!--v-on:tap="applyContractNO">-->
+                        <!--<i class="ui-icon-arrow" v-on:tap="applyContractNO"></i>-->
+                    <!--</div>-->
+                    <!--<div class="ui-form-item ui-form-item-switch ui-border-b">-->
+                        <!--<p>标准化合同</p>-->
+                        <!--<label class="ui-switch" v-on:touchend="tipNonstandard">-->
+                            <!--<input type="checkbox" v-model="contract.standard" value="1" checked disabled>-->
+                        <!--</label>-->
+                    <!--</div>-->
+                    <!--<div class="ui-form-item ui-form-item-icon ui-border-b">-->
+                        <!--<label for="">合同性质</label>-->
+                        <!--<input type="text" readonly placeholder="请选择" value=""-->
+                            <!--v-model="contract.new_contract_property"-->
+                            <!--v-on:tap="ddchosen('contract_propertys','contract.new_contract_property')">-->
+                        <!--<i class="ui-icon-arrow"-->
+                            <!--v-on:tap="ddchosen('contract_propertys','contract.new_contract_property')"></i>-->
+                    <!--</div>-->
+                    <!--<div class="ui-form-item ui-form-item-icon ui-border-b">-->
+                        <!--<label for="">合同类型</label>-->
+                        <!--<input type="hidden" v-model="contract.type" value="">-->
+                        <!--<input type="text" readonly placeholder="请选择" value=""-->
+                            <!--v-model="contract.type$$str"-->
+                            <!--v-on:tap="ddchosen('contract_types','contract.type','contract.type$$str')">-->
+                        <!--<i class="ui-icon-arrow" v-on:tap="ddchosen('contract_types','contract.type','contract.type$$str')"></i>-->
+                    <!--</div>-->
+                    <!--<div class="ui-form-item ui-form-item-icon ui-border-b">-->
+                        <!--<label for="">签订日期</label>-->
+                        <!--<input type="text" readonly placeholder="请选择" value=""-->
+                            <!--v-model="contract.sign_date"-->
+                            <!--v-on:tap="dddatepicker('contract.sign_date')">-->
+                        <!--<i class="ui-icon-calendar_2" v-on:tap="dddatepicker('contract.sign_date')"></i>-->
+                    <!--</div>-->
+                    <div tabindex="-1" class="ui-form-camera">
+                        <div class="ui-form-item ui-form-item-icon ui-border-b">
+                            <label>拍照</label>
+                            <input type="text" readonly placeholder="请上传照片（最多9张）">
+                            <i id="_file_btn" class="ui-icon-list_upload" style="overflow:hidden">
+                                <input id="_file_input" type="file" name="files" accept="image/*"
+                                    style="position:absolute;left:0;top:0;opacity:0;">
+                            </i>
+                        </div>
+                        <ul class="ui-form-camera-list ui-whitespace clearfix" v-if="contract.images&&contract.images.length">
+                            <li class="ui-form-camera-item" v-for="image in contract.images">
+                                <template v-if="image.imgurl !=undefined">
+                                    <i class="ui-tag-toremove" v-on:tap="removeImage(image)"></i>
+                                    <img v-bind:src="image.imgurl | thumb" v-on:tap="previewImages(image)">
+                                </template>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </fieldset>
+            <fieldset>
+                <legend class="ui-whitespace">备注</legend>
+                <div class="ui-form ui-form-gap form-group ui-form-auto">
+                    <div class="ui-form-item ui-form-item-textarea">
+                        <!-- <label></label> -->
+                        <textarea novalidate="" v-model="contract.remark" rows="3" placeholder="备注"></textarea>
+                    </div>
+                </div>
+                <!--<div class="ui-form ui-form-gap">-->
+                    <!--<div class="ui-form-item ui-form-item-icon ui-border-b">-->
+                        <!--<label for="">产品版本</label>-->
+                        <!--<input type="text" readonly placeholder="请选择" value=""-->
+                            <!--v-model="contract.new_product_version"-->
+                            <!--v-on:tap="ddchosen('new_product_versions','contract.new_product_version')">-->
+                        <!--<i class="ui-icon-arrow" v-on:tap="ddchosen('new_product_versions','contract.new_product_version')"></i>-->
+                    <!--</div>-->
+                    <!--<div class="ui-form-item ui-form-item-icon ui-border-b">-->
+                        <!--<label for="">购买期限</label>-->
+                        <!--<input type="number" placeholder="请输入" v-model="contract.period" value=""-->
+                            <!--v-on:keyup="besureNumber0"-->
+                            <!--v-on:blur="periodValid" lazy>-->
+                        <!--<i class="ui-icon-empty">个月</i>-->
+                    <!--</div>-->
+                    <!--<div class="ui-form-item ui-form-item-icon ui-border-b">-->
+                        <!--<label for="">赠送期限</label>-->
+                        <!--<input type="number" placeholder="请输入" v-model="contract.giftperiod" value=""-->
+                            <!--v-on:keyup="besureNumber0"-->
+                            <!--v-on:blur="giftPeriodValid" lazy>-->
+                        <!--<i class="ui-icon-empty">个月</i>-->
+                    <!--</div>-->
+                    <!--<div class="ui-form-item ui-form-item-icon ui-border-b">-->
+                        <!--<label for="">服务开始</label>-->
+                        <!--<input type="text" readonly placeholder="请选择" value=""-->
+                            <!--v-model="contract.begindate"-->
+                            <!--v-on:tap="dddatepicker('contract.begindate')">-->
+                        <!--<i class="ui-icon-calendar_2" v-on:tap="dddatepicker('contract.begindate')"></i>-->
+                    <!--</div>-->
+                    <!--<div class="ui-form-item ui-form-item-icon ui-border-b">-->
+                        <!--<label for="">服务结束</label>-->
+                        <!--<input type="text" readonly placeholder="请选择" value=""-->
+                            <!--v-model="contract.enddate"-->
+                            <!--v-on:tap="dddatepicker('contract.enddate')">-->
+                        <!--<i class="ui-icon-calendar_2" v-on:tap="dddatepicker('contract.enddate')"></i>-->
+                    <!--</div>-->
+                <!--</div>-->
+            </fieldset>
+            <!--<fieldset>-->
+                <!--<legend class="ui-whitespace">服务详情</legend>-->
+                <!--<div class="contract-service-group">-->
+                    <!--<div class="group-list">-->
+                        <!--<div tabindex="-1" class="group-item" v-for="service in contract.services">-->
+                            <!--&lt;!&ndash; <div class="ui-form-item-blank ui-border-tb"></div> &ndash;&gt;-->
+                            <!--<div class="ui-form ui-form-gap ui-form-product-input ui-border-b">-->
+                                <!--<div class="ui-form-item ui-form-item-icon ui-border-b">-->
+                                    <!--<label for="">服务类型</label>-->
+                                    <!--<input type="hidden" v-model="service.id" value="">-->
+                                    <!--<input type="text" readonly placeholder="请选择" v-model="service.name" value=""-->
+                                        <!--v-on:tap="chosenServiceType(service,$index)">-->
+                                    <!--<i class="ui-icon-next" v-on:tap="chosenServiceType(service,$index)" v-if="$index==0"></i>-->
+                                    <!--<i class="ui-icon-delete" v-on:tap="deleteService(service,$index)" v-if="$index>0"></i>-->
+                                <!--</div>-->
+                                <!--<div class="ui-form-item ui-form-item-icon ui-border-b">-->
+                                    <!--<label for="">数量</label>-->
+                                    <!--<input type="number" placeholder="请输入"-->
+                                        <!--v-bind:readonly="service.number$$fixed"-->
+                                        <!--v-model="service.number" value=""-->
+                                        <!--v-on:keyup="besureNumber0" v-on:change="applyServiceRule(service,$index)" lazy>-->
+                                <!--</div>-->
+                                <!--<div class="ui-form-item ui-form-item-icon ui-border-b">-->
+                                    <!--<label for="">单价</label>-->
+                                    <!--<input type="number" placeholder="请输入"-->
+                                        <!--v-bind:readonly="service.number$$fixed"-->
+                                        <!--v-model="service.price" value=""-->
+                                        <!--v-on:keyup="besureNumber0" v-on:change="applyServiceRule(service,$index)" lazy>-->
+                                    <!--<i class="ui-icon-empty">元</i>-->
+                                <!--</div>-->
+                                <!--<div class="ui-form-item ui-form-item-icon ui-border-b">-->
+                                    <!--<label for="">总价</label>-->
+                                    <!--<input type="number" placeholder="请输入"-->
+                                        <!--v-bind:readonly="service.amount$$fixed"-->
+                                        <!--v-model="service.amount" value=""-->
+                                        <!--v-on:keyup="besureNumber0" v-on:change="applyServiceRule(service,$index)" lazy>-->
+                                    <!--<i class="ui-icon-empty">元</i>-->
+                                <!--</div>-->
+                            <!--</div>-->
+                        <!--</div>-->
+                    <!--</div>-->
+                    <!--<div class="group-toolbar">-->
+                        <!--<div class="ui-row-flex">-->
+                            <!--<div class="ui-col txt-total"></div>-->
+                            <!--<div class="btn-add" style="color:#008cee;" v-on:tap="addNewService">-->
+                                <!--<i class="ui-icon-list_creat"></i> <span>添加服务</span>-->
+                            <!--</div>-->
+                        <!--</div>-->
+                    <!--</div>-->
+                <!--</div>-->
+            <!--</fieldset>-->
+            <!--<fieldset>-->
+                <!--<legend class="ui-whitespace">合同价格</legend>-->
+                <!--<div class="ui-form ui-form-gap">-->
+                    <!--<div class="ui-form-item ui-form-item-icon ui-border-b">-->
+                        <!--<label for="">合同金额</label>-->
+                        <!--<input type="text" readonly v-model="contract.htmoney" value="">-->
+                        <!--<i class="ui-icon-empty">元</i>-->
+                    <!--</div>-->
+                    <!--<div class="ui-form-item ui-form-item-icon ui-border-b">-->
+                        <!--<label for="">服务总额</label>-->
+                        <!--<input type="text" readonly v-model="contract.sermoney" value="">-->
+                        <!--<i class="ui-icon-empty">元</i>-->
+                    <!--</div>-->
+                    <!--<div class="ui-form-item ui-form-item-icon ui-border-b">-->
+                        <!--<label for="">设备总额</label>-->
+                        <!--<input type="text" readonly v-model="contract.devmoney" value="">-->
+                        <!--<i class="ui-icon-empty">元</i>-->
+                    <!--</div>-->
+                <!--</div>-->
+            <!--</fieldset>-->
+        </form>
+    </article>
+
+<script src="js/lib/dingtalk.min.js"></script>
+<script src="js/lib/zepto.min.js"></script>
+<script src="js/lib/fastclick.min.js"></script>
+<script src="js/lib/vue.min.js"></script>
+<script src="js/lib/moment.min.js"></script>
+<script src="js/lib/zeptoAjaxFileUpload.js"></script>
+<script src="js/lib/ddbanner.js"></script>
+<script src="js/lib/apiList.js"></script>
+<script src="js/lib/md5.min.js"></script>
+<script src="js/config.js"></script>
+<script src="js/common.js"></script>
+<script src="js/login.js"></script>
+<script src="js/goldAgeCommon.js"></script>
+<script src="js/coachSel.js"></script>
+<script src="js/customerContact.js"></script>
+<script src="js/draftwork.js"></script>
+<script src="js/customerFollow.js"></script>
+</body>
+</html>

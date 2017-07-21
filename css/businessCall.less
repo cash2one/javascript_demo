@@ -1,0 +1,447 @@
+.gradient{
+    // background: -moz-linear-gradient(top, #3c2c24 0%, #0d0e17 100%);
+    // background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#3c2c24), color-stop(100%,#0d0e17));
+    // background: -webkit-linear-gradient(top, #3c2c24 0%,#0d0e17 100%);
+    // background: -o-linear-gradient(top, #3c2c24 0%,#0d0e17 100%);
+    // background: -ms-linear-gradient(top, #3c2c24 0%,#0d0e17 100%);
+    // background: linear-gradient(to bottom, #3c2c24 0%,#0d0e17 100%);
+    background:#fff;
+}
+
+
+body{
+    color:#fff;
+    height: 100%;
+}
+
+.ui-container{
+    text-align: center;
+}
+.info-title{
+    width: 100%;
+    color: #333;
+    padding-top: 2.2rem;
+    .info-title-name{
+        padding-bottom: 0.5rem;
+    }
+    h3{
+        color:#333;
+        font-size: 1.5rem;
+        line-height: 1;
+    }
+    h4{
+        line-height: 1;
+        color: #999;
+        // opacity: .4;
+        font-size: 0.7rem;
+    }
+}
+
+.info-body{
+    width: 100%;
+    padding-top: 5.1rem;
+    .ui-icon-meeting_phone{
+        width: 100%;
+        height: 1.9rem;
+        line-height: 1.9rem;
+        font-size: 1.9rem;
+        color: #999;
+    }
+    .call-status{
+        height: 100%;
+        line-height: 1;
+        font-size: 0.8rem;
+        padding-top: 0.5rem;
+        color: #333;
+        // line-height: 330px;
+    }
+}
+
+.info-footer{
+    width: 100%;
+    bottom: 0;
+    margin-bottom: 2.8rem;
+    position:fixed;
+    .ui-btn-wrap{
+        padding: 0;
+        padding-bottom: 0.5rem;
+    }
+    .ui-btn{
+        width: 8.25rem;
+        height: 2rem;
+        line-height: 2rem;
+        border-radius: 2.5rem;
+        border: none;
+        font-size: 0.85rem;
+        background-image: none;
+        background-color: #ec564d;
+        border-color: #ec564d;
+    }
+
+    .ui-btn-danger:before, .ui-btn:before{
+        border: none;
+    }
+    .ui-btn:after{
+        border:none;
+    }
+
+    .footer-content{
+        width: 100%;
+        div{
+            width: 10rem;
+            font-size: 0.6rem;
+            color: #999;
+            // opacity: .2;
+            display: inline-block;
+        }
+
+    }
+}
+
+.meeting-title{
+    width: 100%;
+    color: #333;
+    .title-content{
+        height: 100%;
+        padding-top: 2.75rem;
+    }
+
+    .info-title-duration{
+        padding-top: 1.45rem;
+        padding-bottom: 1.55rem;
+    }
+    #info_name{
+        color: #333;
+        font-size: 1.15rem;
+    }
+    #info_topic{
+        color: #666;
+        font-size: 0.6rem;
+    }
+    #info_duration{
+        color: #333;
+        font-size: 1.6rem;
+        line-height: 1;
+    }
+}
+
+.meeting-body{
+    position: relative;
+    color: #333;
+    padding: 0 0.425rem;
+    .call-status{
+        text-align: left;
+        .ui-icon-list_creat{
+            font-size: 0.6rem;
+            color: #333;
+            line-height: 2.55rem;
+        }
+        .list-content{
+            width: 2.55rem;
+            margin: 0 0.57rem;
+            margin-bottom: 0.75rem;
+            display: inline-block;
+            text-align: center;
+
+            .follow-avatar{
+                height: 2.55rem;
+                width: 2.55rem;
+                display: inline-block;
+                .avatar-content {
+                    height: 100%;
+                    width: 100%;
+                    line-height: 2.55rem;
+                    display: block;
+                    overflow: hidden;
+                    text-align: center;
+                    // background-color: #fff;
+                    background-repeat: no-repeat;
+                    background-size: cover;
+                    -webkit-background-size: cover;
+                    border-radius: 200px;
+                    -webkit-border-radius: 200px;
+                    color: #333;
+                    font-size: 0.6rem;
+                    position: relative;
+                    border: 1px solid #e0e0e0;
+                }
+            }
+        }
+
+    }
+}
+.meeting-footer{
+    position:fixed;
+    width: 100%;
+    bottom: 0;
+    margin-bottom: 1.6rem;
+    .ui-btn-wrap{
+        padding: 0;
+        padding-bottom: 0.5rem;
+    }
+    .ui-btn{
+        width: 8.25rem;
+        height: 2rem;
+        line-height: 2rem;
+        border-radius: 2.5rem;
+        border: none;
+        font-size: 0.85rem;
+        background-image: none;
+        background-color: #ec564d;
+        border-color: #ec564d;
+    }
+
+    .ui-btn-danger:before, .ui-btn:before{
+        border: none;
+    }
+    .ui-btn:after{
+        border:none;
+    }
+
+    .footer-content{
+        width: 100%;
+        div{
+            width: 10rem;
+            font-size: 0.6rem;
+            color: #999;
+            // opacity: .2;
+            display: inline-block;
+        }
+
+    }
+}
+
+.detail-header{
+    position: relative;
+    height: 3.15rem;
+    padding: 0 0.75rem;
+    text-align: left;
+    background-color: #fff;
+    .dh-first{
+        padding-top: 0.65rem;
+        font-size:0.75rem;
+        line-height: 1;
+        padding-bottom: 0.5rem;
+        color: #333;
+    }
+
+    .dh-second{
+        padding-bottom: 0.65rem;
+        font-size: 0.6rem;
+        color: #999;
+        line-height: 1;
+    }
+
+    .detail-arrow{
+        position: absolute;
+        height: 3.15rem;
+        line-height: 3.15rem;
+        font-size: 0.5rem;
+        width: 0.5rem;
+        right: 0.75rem;
+        top: 0;
+        color: #666;
+    }
+}
+
+.detail-footer{
+    background-color: #fff;
+    position: fixed;
+    bottom: 0;
+    height: 2.4rem;
+    text-align: center;
+    width: 100%;
+    .footer-icon-lg{
+        height: 2.4rem;
+        font-size: 0.9rem;
+        width: 0.9rem;
+        color: #333;
+        display: inline-block;
+        padding-right: 0.25rem;
+    }
+    .footer-icon-sm{
+        height: 0.75rem;
+        font-size: 0.75rem;
+        width: 0.75rem;
+        color: #333;
+        display: inline-block;
+        padding-right: 0.25rem;
+        line-height: 1;
+    }
+    .footer-main{
+        font-size: 0.7rem;
+        color: #333;
+        line-height: 1;
+    }
+
+
+}
+
+.df-lg{
+    line-height: 2.4rem;
+}
+
+.df-sm{
+    .df-div-sm{
+        padding-top: 0.45rem;
+        line-height: 1;
+    }
+    .footer-note{
+        font-size: 0.55rem;
+        color: #999;
+        padding-top: 0.35rem;
+        line-height: 1;
+    }
+}
+
+.df-meeting{
+    line-height: 2.4rem;
+    .footer-btn{
+        padding-top: 0.25rem;
+        padding-left: 0.75rem;
+        padding-right: 0.75rem;
+        .footer-main-btn{
+            height: 1.9rem;
+            line-height: 1.9rem;
+            background-color: #ec564d;
+            font-size: 0.8rem;
+            color: #fff;
+            width: 100%;
+            background-image: none;
+            border-radius: 0.3rem;
+            border: none;
+        }
+        .ui-btn:before{
+            border: none;
+        }
+        .ui-btn:after{
+            border:none;
+        }
+    }
+}
+.detail-body{
+    padding: 0 0.75rem;
+    background-color: #fff;
+    .db-basic{
+        height: 2.4rem;
+        line-height: 2.4rem;
+
+        .db-basic-info{
+            color: #333;
+            font-size: 0.65rem;
+            position: relative;
+            .dbi-1{
+                position: absolute;
+                left: 0;
+            }
+            .dbi-3{
+                position: absolute;
+                right: 0;
+            }
+        }
+    }
+    .db-meeting-basic{
+        .db-basic-info{
+          padding-top: 0.75rem;
+          padding-bottom: 0.8rem;
+          color: #333;
+          font-size: 0.65rem;
+          position: relative;
+          .dbi-meeting{
+              text-align: right;
+              position: relative;
+              .dbim-title{
+                  position: absolute;
+                  left: 0;
+                  color: #999;
+              }
+              .dbim-body{
+                  color: #333;
+              }
+          }
+
+        }
+    }
+}
+
+.detail-list{
+    text-align: left;
+
+    .dl-title{
+        padding: 0 0.75rem;
+        color: #666;
+        font-size: 0.6rem;
+        height: 2rem;
+        line-height: 2rem;
+    }
+    .dl-main-list{
+        background-color: #fff;
+        padding: 0 0.75rem;
+        .dl-main-list-li{
+            height: 2.4rem;
+            line-height: 2.4rem;
+            position: relative;
+            .list-li-1{
+                font-size: 0.7rem;
+                color: #333;
+            }
+            .list-li-2{
+                position: absolute;
+                right: 0;
+                color: #999;
+                font-size: 0.6rem;
+            }
+        }
+
+
+    }
+}
+
+.jp-ball {
+    position: absolute;
+    z-index: 999;
+    border-radius: 30px;
+    top: 3px;
+    left: 0;
+    width: 1em;
+    height: 1em;
+    margin: -0.2em 0px 0px -0.5em;
+    width: 14px;
+    height: 14px;
+
+    width: 0.9333em;
+    height: 0.9333em;
+    margin: -0.175em 0px 0px -0.466em;
+    background-color: #fff;
+    padding: 0px;
+    /* z-index: 1; */
+    -webkit-transition: -webkit-transform 0.15s ease-in-out;
+    transition: transform 0.15s ease-in-out;
+}
+//
+// #progressOut
+// {
+//      width:300px;
+//      height:20px;
+//      border:1px solid #ccc;
+//      position:relative;
+//      margin-top:30px;
+//     overflow:hidden;
+// }
+// #progressIn
+// {
+//      position:relative;
+//      height:100%;
+//      bottom:0px;
+//      width:0px;
+//      background:#FC6428;
+// }
+// #time
+// {
+//      position:absolute;
+//      padding:5px 8px;
+//      font-size:10px;
+//      background:#12BFD3;
+//      left:0px;
+//      bottom:0px;
+// }

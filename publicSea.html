@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>公海</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, height=device-height, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no">
+    <meta name="format-detection" content="telephone=no">
+    <link href="css/frozen.css" rel="stylesheet" type="text/css">
+    <link href="css/searchWidget.css" rel="stylesheet" type="text/css">
+    <link href="css/customerlist.css" rel="stylesheet" type="text/css">
+</head>
+<body>
+<nav id="listNav">
+    <div class="ui-row ui-form-item ui-border-b">
+        <li id="sort-tap" class="ui-col ui-col-33 text-center ui-border-r"><span>自动排序</span><i class="ui-icon-list_arrow_down"></i></li>
+        <li id="filt-tap" class="ui-col ui-col-33 text-center ui-border-r"><span>筛选</span><i class="ui-icon-list_arrow_down"></i></li>
+        <li id="seac-tap" class="ui-col ui-col-33 text-center ui-border-r"><i class="ui-icon-public_search"></i><span>搜索</span></li>
+    </div>
+    <div style="overflow-x:auto;"><ul class="ui-row ui-border-b" id="FilterUl"></ul></div>
+</nav>
+<div id="select-sort" class="select-date" style="display:none">
+    <div class="bg-color">
+        <div class="ui-form">
+            <ul class="ui-list ui-list-text ui-border-b"></ul>
+        </div>
+    </div>
+    <div class="closed"></div>
+</div>
+<div id="select-filt" class="select-date" style="display:none;">
+    <ul class="ui-row">
+        <li class="ui-col ui-col-33">
+            <ul class="ui-list ui-list-text ultwo"></ul>
+        </li>
+        <li class="ui-col ui-col-67"></li>
+    </ul>
+    <ul class="ui-row foot-span ui-border-t">
+        <li class="ui-col ui-col-50 ui-border-r" id="resetBtn"><span>重置</span></li>
+        <li class="ui-col ui-col-50" id="cfmBtn"><span>确定</span></li>
+    </ul>
+</div>
+<section id="top" class="ui-container">
+    <div class="ui-loading-wrap" id="msg">正在加载中...</div>
+    <div id="wrapper">
+    <section class="scroller">
+        <ul class="ui-list ui-list-text ui-border-b" id="cuslist"></ul>
+    </section>
+    </div>
+</section>
+<div style="display:none;" class="backtotop">返回顶部</div>
+
+<script src="js/lib/zepto.min.js"></script>
+<script src="js/lib/frozen.min.js"></script>
+<script src="js/lib/dingtalk.min.js"></script>
+<script src="js/lib/fastclick.min.js"></script>
+<script src="js/lib/ddbanner.js"></script>
+<script src="js/lib/apiList.js"></script>
+<script src="js/lib/iscroll.min.js"></script>
+
+<script src="js/login.js"></script>
+<script src="js/config.js"></script>
+<script src="js/scroll-index.js"></script>
+
+<script src="js/publicSea.js"></script>
+</body>
+</html>

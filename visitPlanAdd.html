@@ -1,0 +1,280 @@
+<!DOCTYPE html>
+<html style="background: #f5f5f6;">
+<head>
+    <title>记录拜访</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no" />
+    <link href="css/frozen.css" rel="stylesheet" type="text/css">
+    <link href="css/main.css" rel="stylesheet" type="text/css">
+    <style>
+        .amap-logo, .amap-copyright {
+            display: none;
+        }
+        .ui-form-item-l label, .ui-form-item-r button {
+            color: inherit;
+            text-align: center;
+        }
+        .ui-list>li.ui-border-t:first-child, .ui-list>li:first-child>.ui-border-t {
+            border: 0;
+            background-image: none;
+            line-height:21px;
+        }
+        table td{border:1px solid #eeeeee;border-collapse:collapse;}
+        .ui-list-text>li {
+            padding-top: 0px;
+            padding-bottom: 0px;height:45px;
+        }
+        .ui-form-item-l label, .ui-form-item-r button {
+            color: #858e99;
+            text-align: center;
+        }
+        input{width:100%;border:0;color: #222222}
+        ul,li{ margin:0; padding:0; list-style:none; }
+        p{color: #333;}
+        input, textarea, keygen, select, button {
+            margin: 0em;
+            font: normal normal normal normal 11px/normal '.HelveticaNeueDeskInterface-Regular';
+            text-rendering: auto;
+            color: #222222;
+            font-size: 15px;
+            letter-spacing: normal;
+            word-spacing: normal;
+            text-transform: none;
+            text-indent: 0px;
+            text-shadow: none;
+            display: inline-block;
+            text-align: start;
+        }
+        .ui-icon-arrow:before {
+            content: "\f600";
+            font-size: 20px;
+        }
+    </style>
+    <style type="text/css">
+        .problemDeleteItem .ui-icon-list_delete{
+            right:0;
+            left:0;
+            font-size: 15px;
+            color: #ec564d;
+            display: inline-block;
+            position: relative;
+        }
+        .problemDeleteItem span{
+            color: #aaaec3;
+            font-size: 15px;
+            margin-left: 4px;
+            position: relative;
+        }
+        .problemAddItem .ui-icon-list_creat{
+            font-size: 12px;
+            color: #ec564d;
+            display:inline-block;
+            position:absolute;
+            right:79px;
+        }
+        .problemAddItem span{
+            color: #aaaec3;
+            font-size: 15px;
+            padding-left: 4px;
+            position:absolute;
+            right:15px;
+        }
+    </style>
+</head>
+<body style="background: #f5f5f6;">
+
+<form id="myform" name="form" novalidate onsubmit="return false;">
+<div class="ui-container" id="main-body">
+    <div id="role1_4" style="display:none;">
+        <div class="ui-form ui-form-gap ui-form-auto" style="margin-top: 10px;background: #fff;">
+            <div class="ui-form-item ui-form-item-icon ui-form-item-input-l">
+                <label>客户</label>
+                <p class="cusname" style="margin-left:25%;"></p>
+            </div>
+        </div>
+        <div class="ui-form ui-form-gap ui-form-auto" style="margin-top: 10px;background: #fff;">
+            <div class="ui-form-item ui-form-item-icon ui-form-item-input-l">
+                <label>跟进业务员</label>
+                <p class="follow-up" id="follow-up" style="margin-left:25%;"></p>
+            </div>
+        </div>
+        <div class="ui-form ui-form-gap ui-form-auto" style="margin-top: 10px;background: #fff;">
+            <div class="ui-form-item ui-form-item-icon ui-form-item-input-l">
+                <label>结束定位</label>
+                <p class="visitCloseAddress" style="margin-left:25%;"></p>
+            </div>
+        </div>
+        <div class="ui-form ui-form-gap ui-form-auto" style="margin-top: 10px;background: #fff;">
+            <div class="ui-form-item ui-form-item-icon ui-form-item-input-l">
+              <label>拜访对象</label>
+              <span id="subvisit_cusids">
+                  <input type="text" id="subvisit_cusid" placeholder="请选择" name="subvisit_cusidName" readonly="">
+                  <input type="hidden" id="subvisit_cuscode" name="subvisit_cuscodeName" value="">
+                  <i class="ui-icon-arrow"></i>
+              </span>
+            </div>
+        </div>
+        <div class="ui-form ui-form-gap ui-form-auto" style="margin-top: 10px;background: #fff;">
+            <div class="ui-form-item ui-form-item-textarea ui-border-b">
+                <textarea novalidate="" id="record1_4" name="record1_4Name" rows="6" placeholder="陪访纪要" style="width: 100%;"></textarea>
+            </div>
+        </div>
+    </div>
+    <div id="role3" style="display:none;">
+        <div class="ui-form ui-form-gap ui-form-auto" style="margin-top: 10px;background: #fff;">
+            <div class="ui-form-item ui-form-item-icon ui-form-item-input-l">
+                <label>客户</label>
+                <p class="cusname" style="margin-left:25%;"></p>
+            </div>
+        </div>
+        <div class="ui-form ui-form-gap ui-form-auto" style="margin-top: 10px;background: #fff;">
+            <div class="ui-form-item ui-form-item-icon ui-form-item-input-l">
+                <label>结束定位</label>
+                <p class="visitCloseAddress" style="margin-left:25%;"></p>
+            </div>
+        </div>
+        <div class="ui-form ui-form-gap ui-form-auto" style="margin-top: 10px;background: #fff;">
+            <div class="ui-form-item ui-form-item-icon ui-form-item-input-l ui-border-b">
+                <label>拜访对象</label>
+                <span id="cusids">
+                    <input type="text" id="cusid" placeholder="请选择" name="cusidName" readonly="">
+                    <input type="hidden" id="cuscode" name="cuscodeName" value="">
+                    <i class="ui-icon-arrow"></i>
+                </span>
+            </div>
+            <div class="ui-form-item ui-form-item-input-l ui-border-b">
+                <label>外勤人数</label>
+                <input type="tel" id="fieldPeopleNumber" name="fieldPeopleNumberName" novalidate="" placeholder="请输入" style="float:left;width: 70%;">
+                <span style="float:left">人</span>
+            </div>
+            <div class="ui-form-item ui-form-item-input-l ui-border-b">
+                <label>车辆数</label>
+                <input type="tel" id="carNumber" name="carNumberName" novalidate="" placeholder="0" style="float:left;width: 70%;">
+                <span style="float:left">辆</span>
+            </div>
+            <div class="ui-form-item ui-form-item-icon ui-form-item-input-l">
+                <label>个人评级</label>
+                <div class="ui-select">
+                    <select id="mylevel" name="mylevelName">
+                        <option >请选择</option>
+                        <option>a级</option>
+                        <option>b级</option>
+                        <option>c级</option>
+                        <option>d级</option>
+                    </select>
+                </div>
+            </div>
+        </div>
+
+        <div class="ui-form ui-form-gap ui-form-auto" style="margin-top: 10px;background: #fff;">
+            <div class="ui-form-item ui-form-item-icon ui-form-item-input-l ui-border-b">
+                <label style="width:30%;">下次约访时间</label>
+                <span id="nextVisitTime">
+                    <input type="text" style="width: 60%;padding-right: 0;" placeholder="请选择(选填)" class="nextVisitTime" name="nextVisitTimeName">
+                    <span>
+                        <i class="ui-icon-list_calendar"></i>
+                    </span>
+                </span>
+            </div>
+            <div class="ui-form-item ui-form-item-icon ui-form-item-input-l">
+                <label style="width:30%;">下次约访地点</label>
+                <input type="text" style="width:70%;padding-right:0;" placeholder="请输入(选填)" id="nextVisitPlace" name="nextVisitPlaceName">
+            </div>
+        </div>
+
+        <div class="ui-form ui-form-gap ui-form-auto" style="margin-top: 10px;background: #fff;">
+            <div class="ui-form-item ui-form-item-textarea ui-border-b">
+                <textarea novalidate="" id="record" name="recordName" rows="6" placeholder="拜访纪要" style="width: 100%;"></textarea>
+            </div>
+        </div>
+    </div>
+    <div id="role2" style="display:none;">
+        <div class="ui-form ui-form-gap ui-form-auto" style="margin-top: 10px;background: #fff;">
+            <div class="ui-form-item ui-form-item-icon ui-form-item-input-l">
+                <label>客户</label>
+                <p class="cusname" style="margin-left:25%;"></p>
+            </div>
+        </div>
+        <div class="ui-form ui-form-gap ui-form-auto" style="margin-top: 10px;background: #fff;">
+            <div class="ui-form-item ui-form-item-icon ui-form-item-input-l">
+                <label>结束定位</label>
+                <p class="visitCloseAddress" style="margin-left:25%;"></p>
+            </div>
+        </div>
+        <div class="ui-form ui-form-gap ui-form-auto " style="margin-top: 10px;background: #fff;">
+            <div class="ui-form-item ui-form-item-icon ui-form-item-input-l ui-border-b">
+                <label>拜访对象</label>
+                <span id="cusids2">
+                    <input type="text" id="cusid2" name="cusid2Name" placeholder="请选择" readonly="">
+                    <input type="hidden" id="cuscode2" name="cuscode2Name" value="">
+                    <i class="ui-icon-arrow"></i>
+                </span>
+            </div>
+            <div class="ui-form-item ui-form-item-input-l ui-border-b">
+                <label>外勤人数</label>
+                <input type="tel" id="fieldPeopleNumber2" name="fieldPeopleNumber2Name" novalidate="" placeholder="请输入" style="float:left;width: 70%;">
+                <span style="float:left">人</span>
+            </div>
+            <div class="ui-form-item ui-form-item-input-l ui-border-b">
+                <label>车辆数</label>
+                <input type="tel" id="carNumber2" name="carNumber2Name" novalidate="" placeholder="0" style="float:left;width: 70%;">
+                <span style="float:left">辆</span>
+            </div>
+        </div>
+
+        <div class="ui-form ui-form-gap ui-form-auto" style="margin-top: 10px;background: #fff;">
+            <div class="ui-form-item ui-form-item-icon ui-form-item-input-l list-item" style="padding-bottom: 0;">
+                <label>实施报告</label>
+                <!-- <input type="hidden" name="question_images[]" id="doReportHiddenInput">
+                <input type="hidden" name="question_urls[]"> -->
+                <input type="hidden" name="report_images" id="doReportHiddenInput">
+                <input type="hidden" name="report_urls">
+                <input type="text" id="report2" placeholder="请上传（非必选,最多5张）" readonly style="width: 60%;">
+                <!--MODIFY by lipengfei at 2016/6/25-->
+                <i id="doReport_ci" class="ui-icon ui-icon-thumb btn-camera-add" onclick="visitPlanAdd.uploadQuestionImage(event,this,1);">
+                    <input id="doReport" type="file" name="files" accept="image/*" style="position:absolute;right:0;top:0;opacity:0;width: 100px;height: 100%;padding: 0;" onchange="visitPlanAdd.uploadQuestionImage(event,this,1);">
+                </i>
+                <!--MODIFY-END-->
+                <ul class="ui-form-camera-list ui-whitespace ui-border-b clearfix" id="reportUl" style="padding: 0;">
+                </ul>
+            </div>
+        </div>
+
+        <div class="ui-form ui-form-gap ui-form-auto " style="margin-top: 10px;background: #fff;">
+            <div class="ui-form-item ui-form-item-icon ui-form-item-input-l" id="addProblemDescribeFrame">
+                <label style="width: 50%;">添加问题(未解决)</label>
+                <i class="ui-icon-arrow" id="addProblemDescribe"></i>
+            </div>
+        </div>
+
+        <div id="problemList" style="display: none;"></div>
+
+        <div class="ui-form ui-form-gap ui-form-auto " style="margin-top: 10px;background: #fff;">
+            <div class="ui-form-item ui-form-item-textarea ui-border-b">
+                <textarea novalidate="" id="record2" name="record2Name" rows="6" placeholder="拜访纪要" style="width: 100%;"></textarea>
+            </div>
+        </div>
+
+    </div>
+
+
+</div>
+</form>
+<script src="js/lib/zepto.min.js"></script>
+<script src="js/lib/frozen.min.js"></script>
+<script src="js/lib/dingtalk.min.js"></script>
+<script src="js/lib/fastclick.min.js"></script>
+<script src="js/lib/zeptoAjaxFileUpload.js"></script>
+<script src="js/lib/ddbanner.js"></script>
+<script src="js/lib/moment.min.js"></script>
+<script src="js/lib/apiList.js"></script>
+<script src="js/config.js"></script>
+<script src="js/common.js"></script>
+<script src="js/login.js"></script>
+
+<script src="js/visitPlanAdd.js"></script>
+<script src="js/customerContact.js"></script>
+<script src="js/draftwork.js"></script>
+
+</body>
+</html>

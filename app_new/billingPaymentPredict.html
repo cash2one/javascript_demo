@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>申报明日回款预测</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, height=device-height, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no">
+    <meta name="format-detection" content="telephone=no">
+    <link href="css/frozen.css" rel="stylesheet" type="text/css">
+    <link href="css/billingPredict.css" rel="stylesheet" type="text/css">
+<script type="text/javascript">
+    function resize() {
+        var remFontSize = +document.documentElement.clientWidth / 16;
+        document.documentElement.style.fontSize = remFontSize + "px";
+    }
+    var b = null;
+    window.addEventListener("resize", function() {
+        clearTimeout(b),
+        b = setTimeout(resize, 300)
+    }, !1);
+    resize();
+</script>
+</head>
+
+<body>
+    <div id="loadingPanel" class="ui-loading-block">
+        <div class="ui-loading-cnt">
+            <i class="ui-loading-bright"></i>
+            <p>努力加载中...</p>
+        </div>
+    </div>
+    
+    <section id="list">
+        <p class="predict-zero" style="display: none;"></p>
+        <ul class="predict-list ui-list ui-list-text ui-border-b ui-list-active">
+            <!--<li>
+                <div class="predict-detail">
+                    <ul>
+                        <li class="company">
+                            <span>公司名称</span>
+                            <span>北京天利海化工有限公司</span>
+                        </li>
+                        <li>
+                            <span>跟进人</span>
+                            <span>金雷</span>
+                        </li>
+                        <li>
+                            <span>预测金额</span>
+                            <span>19800.00元</span>
+                        </li>
+                    </ul>
+                </div>
+            </li>-->
+            
+        </ul>
+        <div id="barTotal">
+            合计<span id="totalCount"></span>
+            <input type="button" value="提交预测" id="submitPredict" class="submit-predict"/>
+        </div>
+        
+    </section>
+</body>
+<script src="js/lib/dingtalk.min.js"></script>
+<script src="js/lib/zepto.min.js"></script>
+<script src="js/lib/frozen.min.js"></script>
+<script src="js/lib/juicer.min.js"></script>
+<script src="js/lib/fastclick.min.js"></script>
+<script src="js/lib/apiList.js"></script>
+<script src="js/config.js"></script>
+<script src="js/billingCommon.js"></script>
+<script src="js/billingPredict.js"></script>
+</html>

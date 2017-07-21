@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta content="initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
+<meta content="telephone=no" name="format-detection">
+<title>理单结果分析</title>
+<link href="css/frozen.css" rel="stylesheet" type="text/css">
+<link href="css/main.css" rel="stylesheet" type="text/css">
+<link rel="stylesheet" href="css/team.css" />
+<link rel="stylesheet" href="css/data-decision.css" />
+<link rel="stylesheet" href="css/teamTodayPayment.css" />
+<script type="text/javascript">
+    function resize() {
+        var remFontSize = +document.documentElement.clientWidth / 16;
+        document.documentElement.style.fontSize = remFontSize + "px";
+    }
+    var b = null;
+    window.addEventListener("resize", function() {
+        clearTimeout(b),
+        b = setTimeout(resize, 300)
+    }, !1);
+    resize();
+</script>
+<style>
+.tdspan {width:100px!important;}
+#sales_killZero_toggle {padding-top:0;}
+.table-title-icon{
+	position: relative;
+}
+.table-title-icon i{
+	position: absolute;
+	font-size: 12px;
+	top: 0;
+	right: 0;
+	height: 45px;
+	line-height: 45px;
+	color: #333;
+}
+</style>
+</head>
+<body>
+<section>
+	<div class="ui-container" style="background: #F8F8F8;">
+		<div class="chart-panel  hide" style="height: 10px;">
+			<div class="show-btn toggle-btn">
+				<span class="ui-icon-arrow ligth-green"></span>
+			</div>
+		</div>
+
+		<div class="chart-panel"  id="chart-container">
+			<ul class="ui-list ui-list-pure">
+				<li>
+          <div id="lidanAnalyse_toggle" class="ui-btn-wrap">
+						<button class="ui-btn-s" data-chart-type="byClients">客户数</button>
+						<button class="ui-btn-s" data-chart-type="byLevel">人员数</button>
+					</div>
+
+					<div id="lidanAnalyse" class="chart-container">
+						<div class="ui-loading-wrap text-center" style="height: 80px; font-size: 13px;">
+							<p>图表加载中</p><i class="ui-loading"></i>
+						</div>
+					</div>
+				</li>
+			</ul>
+			<div class="hide-btn toggle-btn">
+				<span class="ui-icon-arrow ligth-green"></span>
+			</div>
+		</div>
+
+    <div style="margin-top: 20px;">
+
+		    <div id="biao" class="table-container fo_fix" >
+          <div class="ui-loading-wrap" id="biao_msg" style="position:relative;margin-top:10px;font-size:13px;">数据加载中...</div>
+	        <div class="ui-whitespace inner-container" id="biao_data" style="display:none">
+	            <div id="headertable-wrap" class="table-header">
+	                <div class="table-fixed">
+	                    <table>
+	                        <tr><th class="table-title">部门</th></tr>
+	                    </table>
+	                </div>
+	                <table id="headertable" class="table-head">
+	                	<thead>
+            					<tr>
+                        <th  style="max-width:100px;" id="first-title" class="table-title">部门</th>
+                        <th  style="max-width:100px;" id="leader-title"  style="display: none">Leader</th>
+                        <th class="table-title-icon sort-class" style="min-width:100px;" data-sort="none" data-id="1">[0~9960]</th>
+                        <th class="table-title-icon sort-class" style="min-width:100px;" data-sort="none" data-id="7">(9960~19920]</th>
+                        <th class="table-title-icon sort-class" style="min-width:100px;" data-sort="none" data-id="6">(19920~29980]</th>
+                        <th class="table-title-icon sort-class" style="min-width:100px;" data-sort="none" data-id="2">(29880~39840]</th>
+                        <th class="table-title-icon sort-class" style="min-width:100px;" data-sort="none" data-id="3">(39840~50000]</th>
+                        <th class="table-title-icon sort-class" style="min-width:100px;" data-sort="none" data-id="4">(5万~10万]</th>
+                        <th class="table-title-icon sort-class" style="min-width:100px;" data-sort="none" data-id="4">10万以上</th>
+                        <th class="table-title-icon sort-class" style="min-width:100px;" data-sort="none" data-id="5">总计</th>
+            					</tr>
+					          </thead>
+	                </table>
+	            </div>
+	            <table id="lefttable" class="table-col">
+	            <tbody></tbody>
+	            </table>
+	            <div id="bodytable-wrap" class="table-body">
+	                <h3 id="table-tip" class="tb-tip" style="display:none;"></h3>
+	                <table id="bodytable" class="table-content">
+	                	<tbody></tbody>
+	                </table>
+	            </div>
+	        </div>
+	    </div>
+		</div>
+
+		<div class="team-sub-nav" style="display: none;">
+				<ul class="ui-row" id="toolBar">
+				</ul>
+		</div>
+	</div>
+</section>
+<input style="position:fixed;top:0;right:0;height:2px;opacity:0;" type="month" id="smonth" value="" />
+<script type="text/javascript" src="js/lib/fastclick.min.js" ></script>
+<script type="text/javascript" src="js/lib/jquery.min.js" ></script>
+<script type="text/javascript" src="js/lib/highcharts.js" ></script>
+<script type="text/javascript" src="js/lib/highcharts-more.js" ></script>
+<script src="js/lib/dingtalk.min.js"></script>
+<script src="js/lib/ddbanner.js"></script>
+<script src="js/lib/apiList.js"></script>
+<script src="js/login.js"></script>
+<script src="js/config.js"></script>
+<script src="js/common.js"></script>
+<script type="text/javascript" src="js/team.js" ></script>
+<script type="text/javascript" src="js/lidanAnalyse.js" ></script>
+</body>
+</html>

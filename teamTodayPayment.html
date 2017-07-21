@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta content="initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
+<meta content="telephone=no" name="format-detection">
+<title>今日回款</title>
+<link href="css/frozen.css" rel="stylesheet" type="text/css">
+<link href="css/main.css" rel="stylesheet" type="text/css">
+<link rel="stylesheet" href="css/team.css" />
+<link rel="stylesheet" href="css/data-decision.css" />
+<link rel="stylesheet" href="css/teamTodayPayment.css" />
+<script type="text/javascript">
+    function resize() {
+        var remFontSize = +document.documentElement.clientWidth / 16;
+        document.documentElement.style.fontSize = remFontSize + "px";
+    }
+    var b = null;
+    window.addEventListener("resize", function() {
+        clearTimeout(b),
+        b = setTimeout(resize, 300)
+    }, !1);
+    resize();
+</script>
+
+</head>
+<body>
+<section>
+    <div class="ui-container" style="background: #F8F8F8;">
+        <div class="chart-panel hide" id="top-btn" style="height: 10px;">
+            <div class="show-btn  toggle-btn">
+                <span class="ui-icon-arrow ligth-green"></span>
+            </div>
+        </div>
+
+        <div class="chart-panel upper-part" id="chart-container">
+            <ul class="ui-list ui-list-text upper-part-swipe">
+                <li class="chart-unit"><span>单位：元</span></li>
+                <li class="chart-bar">
+                    <div id="ave_files_container" class="chart-container" style="width:14.5rem;padding:0 0.75rem;height: 3.25rem;">
+                        <div class="ui-loading-wrap text-center">
+                            <p>图表加载中</p>
+                            <i class="ui-loading"></i>
+                        </div>
+                    </div>
+                </li>
+            </ul>
+
+            <div class="hide-btn toggle-btn">
+                <span class="ui-icon-arrow ligth-green"></span>
+            </div>
+        </div>
+
+        <div style="margin-top: 20px;">
+            <div id="biao" class="table-container fo_fix" >
+                <div class="ui-whitespace inner-container">
+                    <div id="headertable-wrap" class="table-header">
+                        <div class="table-fixed">
+                        <table>
+                            <tr><th style="max-width:100px;"  class="table-title">城市</th></tr>
+                        </table>
+                        </div>
+                    <table id="headertable" class="table-head">
+                        <thead>
+                            <tr>
+                                <th style="width:100px;" class="table-title">区域</th>
+                                <th id="leader_title">Leader</th>
+                                <th id="col-title2">今日回款</th>
+                                <th id="col-title2">今日预测</th>
+                                <th id="col-title2">本月累计回款</th>
+                            </tr>
+                        </thead>
+                    </table>
+                    </div>
+                <table id="lefttable" class="table-col">
+                <tbody></tbody>
+                </table>
+                    <div id="bodytable-wrap" class="table-body">
+                    <h3 id="table-tip" class="tb-tip" style="display:none;"></h3>
+                    <table id="bodytable" class="table-content">
+                        <tbody></tbody>
+                    </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="team-sub-nav" style="display: none;">
+            <ul class="ui-row" id="toolBar">
+                <!-- <li class="ui-col active">
+                    <p><i class="ui-icon ui-icon-toolbar_area"></i></p>
+                    <span>大区</span>
+                </li>
+                <li class="ui-col">
+                    <p><i class="ui-icon ui-icon-toolbar_city"></i></p>
+                    <span>城市</span>
+                </li>
+                <li class="ui-col">
+                    <p><i class="ui-icon ui-icon-toolbar_warzone"></i></p>
+                    <span>战区</span>
+                </li>
+                <li class="ui-col">
+                    <p><i class="ui-icon ui-icon-toolbar_remind"></i></p>
+                    <span>提醒</span>
+                </li> -->
+            </ul>
+        </div>
+    </div>
+    <div class="pop-box">
+        <div class="pop-container">
+            <ul>
+                <li>提醒review</li>
+                <li>提醒明日预测</li>
+            </ul>
+        </div>
+        <div class="pop-bg"></div>
+    </div>
+</section>
+<script type="text/javascript" src="js/lib/fastclick.min.js" ></script>
+<script type="text/javascript" src="js/lib/jquery.min.js" ></script>
+<script type="text/javascript" src="js/lib/highcharts.js" ></script>
+<script type="text/javascript" src="js/lib/highcharts-more.js" ></script>
+<script src="js/lib/dingtalk.min.js"></script>
+<script src="js/lib/ddbanner.js"></script>
+<script src="js/lib/apiList.js"></script>
+<script src="js/lib/iscroll.min.js"></script>
+<script src="js/login.js"></script>
+<script src="js/config.js"></script>
+<script src="js/common.js"></script>
+<script src="js/scroll-index.js"></script>
+<script type="text/javascript" src="js/teamtoday.js" ></script>
+
+</body>
+</html>

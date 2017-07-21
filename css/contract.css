@@ -1,0 +1,207 @@
+body {
+    background-color: #f5f5f6;
+}
+
+.contract-list header {
+    height: 80px;
+}
+.contract-list header .ui-tab-nav {
+    background-color: #fff;
+}
+.contract-list header .ui-tab-nav li {
+    height: 40px;
+    line-height: 40px;
+    color: #333;
+    font-size: 13px;
+    border-bottom: 2px solid inherit;
+}
+/*.contract-list header .ui-tab-nav li~li {
+    border-left: 1px solid #d9dcea;
+}*/
+.contract-list header .ui-tab-nav li.current {
+    border-bottom-width: 2px;
+    border-bottom-color: #ec564d;
+}
+.contract-list header~.ui-container {
+    margin-top: 80px;
+}
+.contract-list .ui-container {
+    border-top-width: 0;
+}
+.contract-list .list-wrapper {
+    height: 100%;
+    overflow: hidden;
+    overflow-y: overlay;
+}
+.contract-list .list-wrapper .total-bar {
+    height: 35px;
+    line-height: 35px;
+    font-size: 12px;
+    color: #666;
+}
+.contract-list .list-wrapper .ui-list-info h4 {
+    font-size: 15px;
+}
+.contract-list .list-wrapper .ui-list-info p {
+    font-size: 12px;
+    color: #666;
+}
+.contract-list .list-wrapper .ui-loading-wrap {
+    font-size: 11px;
+    color: #666;
+}
+
+.contract-info header {
+    position: fixed;
+    top: 0px;
+    left: 0px;
+    z-index: 9999;
+    display: block;
+    width: 100%;
+    height: 95px;
+    color: #666;
+    background-color: #f9f9f9;
+}
+.contract-info header h2 {
+    /*padding: 5px;*/
+    padding-top: 26.5px !important;
+    padding-bottom: 14px !important;
+    color: #333;
+    font-size: 16px;
+    line-height: 16px;
+}
+.contract-info header p {
+    padding-top: 0 !important;
+    padding-bottom: 26.5px !important;
+    font-size: 12px;
+    line-height: 12px;
+}
+.contract-info .ui-tab {
+    margin-top: 95px;
+}
+.contract-info .ui-tab-nav {
+    height: 40px;
+    background-color: #fff;
+}
+.contract-info .ui-tab-nav li {
+    height: 40px;
+    line-height: 40px;
+    color: #666;
+    font-size: 12px;
+    border-bottom: 2px solid inherit;
+}
+.contract-info .ui-tab-nav li.current {
+    color: #333;
+    border-bottom-color: #ec564d;
+}
+/*.contract-info .ui-tab-nav li~li {
+    border-left: 1px solid #d9dcea;
+}*/
+.contract-info .ui-tab-content {
+    margin-top: 0;
+}
+.contract-info .ui-form-item {
+    padding-left: 0;
+    /*background-color: #f7f9fe;*/
+}
+.contract-info .ui-form-item label {
+    color: #666;
+}
+.contract-info .ui-list-pure p {
+    font-size: 14px;
+    color: #666 !important;;
+}
+.contract-info .ui-panel-legend {
+    height: 35px;
+    line-height: 35px;
+    font-size: 12px;
+    color: #666;
+}
+.contract-info .ui-thumb-trisect {
+    padding-top: 15px;
+    background-color: #fff;
+}
+.contract-info .ui-thumb-trisect li {
+    display: inline-block;
+    width: 30%;
+    margin-right: 8px;
+    margin-bottom: 8px;
+    vertical-align: middle;
+}
+.contract-info .ui-thumb-trisect .thumbnail {
+    display: block;
+    line-height: 1.42857143;
+}
+.contract-info .ui-thumb-trisect .thumbnail img {
+    margin-right: auto;
+    margin-left: auto;
+    display: block;
+    max-width: 100%;
+    height: auto;
+    vertical-align: middle;
+}
+
+.contract-form {
+    margin-bottom: 15px;
+}
+.contract-form .ui-form-item:last-child {
+    background-image: none;
+}
+.contract-form .ui-form-item-icon .ui-icon-empty {
+    font-size: 15px;
+}
+.contract-form .ui-form-camera {
+    font-size: 22px;
+}
+.contract-form legend {
+    height: 35px;
+    line-height: 35px;
+    font-size: 14px;
+}
+.contract-service-group {
+    margin: -1px 0 -1px 0;
+    padding: 0;
+    background-color: #efeff4;
+}
+.contract-service-group .group-list .group-item:first-child .ui-form {
+    /*background-image: none;*/
+}
+.contract-service-group .group-toolbar {
+    padding-left: 15px;
+    padding-right: 15px;
+    font-size: 15px;
+    height: 45px;
+    line-height: 45px;
+    background-color: #fff;
+}.contract-service-group .group-toolbar span {
+    color: #999;
+}
+.contract-service-group .group-toolbar [class^=ui-icon-] {
+    display: inline-block;
+    font-size: 15px;
+    color: #ec564d;
+    margin-top: 1px;
+    margin-right: 3px;
+}
+.customerActVisit{
+    width: 50px;
+    display: inline-block;
+    background: #ec564d;
+    border-radius: 6px;
+    text-align: center;
+    height: 21px;
+    line-height: 22px;
+    color: #fff;
+    margin-right: 10px;
+    font-size: 12px;
+}
+.customerActSubordinate{
+    color: #333;
+    margin-right: 5px;
+    font-size: 13px;
+}
+.customerActVisitStartTime{
+    float: right;
+    color: #666;
+    font-size: 10px;
+}

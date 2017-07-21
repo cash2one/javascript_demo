@@ -1,0 +1,254 @@
+body{
+	background-color: #f5f5f6;
+}
+
+.diagnose-info{
+	color: #999;
+	font-size: 0.9em;
+	text-align: left;
+	i{
+		font-size: 1.2em;
+		line-height: 1.2em;
+	}
+	&.warning{
+		padding: 20px 15px;
+		i{
+			color: #3aa3f5;
+			margin-right: 7px;
+			&.ui-icon{
+				display: inline-block;
+			}
+		}
+	}
+}
+.diag-config-ctn{
+	a{
+		color: #2167B2;
+	}
+	.ui-tab{
+		margin-bottom: 55px;
+	}
+	.ui-icon{
+		font-size: 1.2em;
+		display: inline-block;
+		line-height: 1.2em;
+		margin-right: 5px;
+	}
+
+	.table-body{
+		td{
+			border-bottom: 0;
+		}
+	}
+
+	.table-content td{
+		&:first-child{
+			width: 115px;
+			min-width: 95px;
+			padding-left: 5px;
+			text-align: left;
+		}
+	}
+	.ui-tab-nav {
+	    background-color: #fff;
+	    li {
+		    height: 40px;
+		    line-height: 40px;
+		    color: #333;
+		    font-size: 13px;
+		    border-bottom: 2px solid inherit;
+		    &.current {
+			    border-bottom-width: 2px;
+			    border-bottom-color: #ec564d;
+			}
+		}
+	}
+	.ui-tab-content{
+		width: 100%;
+		margin-top: 0;
+		li{
+			display: none;
+			&.current{
+				display: list-item;
+			}
+		}
+		.content-range{
+			.table-body{
+				td{
+					line-height: 1.2em;
+					padding-top: 1.2em;
+					padding-bottom: 1.2em;
+				}
+			}
+		}
+		.content-rule{
+			.table-head{
+				th{
+					width: 33%;
+					padding: 0 1.2em;
+					&:first-child{
+						min-width: 80px;
+					}
+				}
+			}
+			.table-body{
+				td{
+					line-height: 1.2em;
+					padding: 1.2em;
+					text-align: left;
+					vertical-align: top;
+					width: 33%;
+					&:first-child{
+						min-width: 80px;
+					}
+				}
+			}
+		}
+		.rule-title{
+			width: e("calc(100% - 20px)");
+		}
+	}
+	.diagnose-add{
+		background-color: #FFF;
+		color: #333;
+		span{
+			font-size: 14px;
+		}
+	}
+
+} 
+.body-diagnose{
+	.ui-form-item{
+		padding: 0;
+		margin-left: 15px;
+	}
+	.btn-del{
+		width: 25%;
+		background-color: #FFF;
+		color: #f75549;
+	}
+	.btn-save{
+		width: 75%;
+		background-color: #f75549;
+		color: #FFF;
+	}
+	.table-body td{
+		line-height: 1;
+		padding: 15px 0;
+	}
+	.diag-input{
+		margin-left: 95px;
+		display: inline-block;
+		padding-left: 14px;
+		input{
+			width: auto;
+			padding-left: 0;
+		}
+	}
+}
+
+.main-range{
+	margin: 20px 0 55px;
+	.diagnose-info{
+		margin-bottom: 55px;
+	}
+	input, textarea, keygen, select, button {
+	    margin: 0em;
+	    font: normal normal normal normal 11px/normal '.HelveticaNeueDeskInterface-Regular';
+	    text-rendering: auto;
+	    color: #222222;
+	    font-size: 15px;
+	    letter-spacing: normal;
+	    word-spacing: normal;
+	    text-transform: none;
+	    text-indent: 0px;
+	    text-shadow: none;
+	    display: inline-block;
+	    text-align: start;
+	}
+	.ui-form-item{
+		.cat-title{
+			top: 50%;
+		}
+		.cat-title-s{
+			text-indent: -9999px;
+		}
+
+		.ui-select{
+	        padding-left: 10px;
+	        margin-right: 0;
+	        select{
+	            padding-right: 0 !important;
+	            color: #333;;
+	        }
+	        select option[default] {
+	            color: #aaaec3;
+	        }
+
+	        &:after{
+	            position: absolute;
+	            top: 20.5px;
+	            background-image: url(../img/list_arrow_right.png);
+	            background-repeat: no-repeat;
+	            background-size: 6px auto;
+	            background-position: center;
+	            width: 6px;
+	            height: 11px;
+	            border: none !important;
+	            visibility: hidden;
+	        }
+	        i{
+		        font-size: 15px !important;
+		        position: absolute;
+		        top: 0;
+		        right: 15px;
+		    }
+	    }
+	    .diag-input{
+	    	input{
+	    		width: e("calc(100% - 60px)");
+	    	}
+	    }
+	}
+}
+.main-rule{
+	margin: 20px 0 55px;
+	.diagnose-info{
+		margin-right: 10px;
+	}
+	.ui-icon{
+		color: #f75549;
+		display: inline-block;
+		font-size: 1.2em;
+	}
+	.ui-select-group{
+		margin-left: 30px;
+		i{
+		    font-size: 15px !important;
+		    position: absolute;
+		    top: 0;
+		    right: 15px;
+		}
+		span{
+			width: 30%;
+			display: inline-block;
+		}
+	}
+
+	.ui-form-spec{
+		margin-top: 10px;
+		.ui-form-item{
+			height: auto;
+		}
+		textarea{
+			color: #333;
+			padding-top: 15px;
+		}
+	}
+	.diag-input{
+		input{
+			width: e("calc((100% - 3em)/2)");
+			text-align: center;
+		}
+	}
+}

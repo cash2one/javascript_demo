@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta content="initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
+<meta content="telephone=no" name="format-detection">
+<title>直销神话榜</title>
+<link href="css/frozen.css" rel="stylesheet" type="text/css">
+<link href="css/main.css" rel="stylesheet" type="text/css">
+<link rel="stylesheet" href="css/team.css" />
+<link rel="stylesheet" href="css/data-decision.css" />
+</head>
+<body>
+<section>
+	<div class="ui-container" style="background: #F8F8F8;">
+		<div class="chart-panel hide" id="top-btn" style="height: 10px;">
+			<div class="show-btn  toggle-btn">
+				<span class="ui-icon-arrow ligth-green"></span>
+			</div>
+		</div>
+
+		<div class="chart-panel" id="chart-container">
+            <ul class="ui-list ui-list-text">
+                <li class="">
+					<div style="width: 100%;overflow: auto;">
+                    <div id="list_files_container" class="chart-container">
+                        <div class="ui-loading-wrap text-center">
+                            <p>图表加载中</p>
+                            <i class="ui-loading"></i>
+                        </div>
+                    </div>
+					</div>
+                </li>
+            </ul>
+            <div class="hide-btn toggle-btn">
+                <span class="ui-icon-arrow ligth-green"></span>
+            </div>
+        </div>
+
+		<div style="margin-top: 20px;">
+			<div id="biao" class="table-container fo_fix" >
+	        	<div class="ui-whitespace inner-container">
+	            	<div id="headertable-wrap" class="table-header">
+	                	<div class="table-fixed">
+	                    <table>
+	                        <tr><th style="max-width:100px;"  class="table-title">城市</th></tr>
+	                    </table>
+	                	</div>
+	                <table id="headertable" class="table-head">
+	                	<thead>
+					<tr>
+						<th style="width:100px;" class="table-title">城市</th>
+						<th id="leader_title">Leader</th>
+						<th id="col-title2">人均业绩</th>
+                        <th id="col-title1">总业绩</th>
+					</tr>
+					</thead>
+	                </table>
+	            	</div>
+	            <table id="lefttable" class="table-col">
+	            <tbody></tbody>
+	            </table>
+	            	<div id="bodytable-wrap" class="table-body">
+	                <h3 id="table-tip" class="tb-tip" style="display:none;"></h3>
+	                <table id="bodytable" class="table-content">
+	                	<tbody></tbody>
+	                </table>
+	            	</div>
+	        	</div>
+	    	</div>
+		</div>
+	</div>
+</section>
+<script type="text/javascript" src="js/lib/fastclick.min.js" ></script>
+<script type="text/javascript" src="js/lib/jquery.min.js" ></script>
+<script type="text/javascript" src="js/lib/highcharts.js" ></script>
+<script type="text/javascript" src="js/lib/highcharts-more.js" ></script>
+<script src="js/lib/dingtalk.min.js"></script>
+<script src="js/lib/ddbanner.js"></script>
+<script src="js/lib/apiList.js"></script>
+<script src="js/login.js"></script>
+<script src="js/config.js"></script>
+<script src="js/common.js"></script>
+<script type="text/javascript" src="js/team.js" ></script>
+<script>
+var swidth;
+
+$(document).ready(function() {
+	setTableTitle(team.user.position);
+	document.title='直销神话榜';
+	var level=getUrlParam('level');
+	var orgid=getUrlParam('orgid');
+	var issub=getUrlParam('issub');
+	team.leaderInfo_promise.always(function(){
+		if(!level){
+			getColumnData(0,0,0);
+		}else{
+			getColumnData(level,orgid,issub);
+		}
+	});
+
+});
+
+function getColumnData(level,orgid,issub){
+	team.postData.level=level;
+	team.postData.orgid=orgid;
+	team.postData.issub=issub;
+	$.ajax({
+		type:"post",
+		url:oms_config.apiUrl+"apiLegend/getLegend",
+		async:true,
+		data:team.postData,
+		dataType:'json',
+		success:function(rs){
+			if(rs.res==1){
+				var colarr = [],namearr = [];
+				var tableData=rs.data.list;
+
+					rs.data.list.sort(function(a,b){
+					return b.usersMean-a.usersMean;
+					});
+					tableData.sort(function(a,b){
+					return b.usersMean-a.usersMean;
+					});
+					for(var i in rs.data.list){
+						var obj = rs.data.list[i];
+						colarr.push(obj.usersMean);
+						namearr.push(obj.usersPlace);
+					}
+
+				$('#list_files_container').empty().width(1300);
+				setSalesListColumnChart({
+					categories: namearr,
+					moneytotal: rs.data.moneyPerPerson,
+					data: colarr,
+					yName: null,
+					containerId: 'list_files_container',
+				});
+
+			    setTableTitle2(rs.data.level);
+
+				var tableColumn="";
+				var lefttable="";
+
+				for(var i in tableData) {
+					var trClass = 'odd';
+					if (i % 2 == 0) {
+						trClass = 'even';
+					}
+					var dept = tableData[i].usersPlace;
+					/*if (tableData[i].isClick == 1) {
+						dept = '<a href="teamSalesList.html?level=' + tableData[i].level + '&orgid=' + tableData[i].id + '&issub=1" >' + dept + '</a>';
+					}*/
+
+					lefttable += '<tr><td style="max-width:100px;" ><span class="ui-nowrap ui-whitespace tdspan">' + dept + '</span></td></tr>';
+
+					var links = '&s=' + 3 + '&id=' + tableData[i].configId;
+
+					tableColumn += '  <tr class="' + trClass + '" >\
+									                <td style="max-width:100px;min-width:100px;"><span class="ui-nowrap ui-whitespace tdspan">' + dept + '</span></td>\
+																	<td class="text-center">'+ (team.leaderInfo[tableData[i].configId]?team.leaderInfo[tableData[i].configId]:'--') +'</td>\
+									                <td class="text-center">' + tableData[i].usersMean + "(" + tableData[i].usersCount + '人)</td>\
+									                <td class="text-center"><a href="teamCusList.html?t=1' + links + '">' + tableData[i].usersTotalMoney + '</a></td>\
+									            </tr>';
+
+				}
+					$("#lefttable tbody").html(lefttable);
+					$("#bodytable tbody").html(tableColumn);
+					scrollTable();
+			}
+		},
+		error:function(e){
+			console.log(JSON.stringify(e));
+		}
+	});
+}
+
+function comparesort(a,b){
+    if (a[1] < b[1]) return 1;
+    if (a[1] > b[1]) return -1;
+    return 0;
+}
+
+</script>
+
+</body>
+</html>

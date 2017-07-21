@@ -1,0 +1,234 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta content="initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
+    <meta content="telephone=no" name="format-detection">
+    <title>续费率</title>
+    <link href="css/frozen.css" rel="stylesheet" type="text/css">
+    <link href="css/main.css" rel="stylesheet" type="text/css">
+    <link rel="stylesheet" href="css/team.css" />
+    <link rel="stylesheet" href="css/data-decision.css" />
+</head>
+<body>
+<section>
+    <div class="ui-container" style="background: #F8F8F8;">
+    	<div class="renew-top">
+	<div class="ui-row-flex ">
+	    <div class="ui-col ui-col ui-center">
+	    	 
+	    	 <p id="renew-rate-total" class="text-center red">0.00%</p>
+	    	 <p class="text-center">续费率</p>
+	    </div>
+	    <div class="ui-col ui-col ui-center">
+	    	
+	    	 <p id="renew-money-total" class="text-center red">0.00</p>
+	    	  <p class="text-center">已回款金额(万)</p>
+	    </div>
+	</div>
+	<div style="padding-bottom: 20px;">
+		  <p id="area-name" class="text-center"></p>
+	</div>
+          
+        
+ 	</div>
+        <div style="margin-top: 20px;background: #FFFFFF;">
+		<div id="biao" class="table-container fo_fix" >
+	        	<div class="ui-whitespace inner-container">
+	            	<div id="headertable-wrap" class="table-header">
+	                	<div class="table-fixed">
+	                    <table>
+	                        <tr><th class="table-title">漏斗状态</th></tr>
+	                    </table>
+	                	</div>
+	                <table id="headertable" class="table-head">
+	                	<thead>
+					<tr>
+						<th style="width:100px;" class="table-title">漏斗状态</th>
+						<th id="col-title1"></th>
+                        <th id="col-title2"></th>
+                        <th id="col-title3"></th>
+					</tr>
+					</thead>
+	                </table>
+	            	</div>
+	            <table id="lefttable" class="table-col"> 
+	            <tbody>
+	            	<tr><td style="max-width:100px;"><span class="ui-nowrap ui-whitespace tdspan"></span></td></tr>
+	            	<tr><td style="max-width:100px;"><span class="ui-nowrap ui-whitespace tdspan">已签已回</span></td></tr>
+            		<tr><td style="max-width:100px;"><span class="ui-nowrap ui-whitespace tdspan">已签未回</span></td></tr>
+            		<tr><td style="max-width:100px;"><span class="ui-nowrap ui-whitespace tdspan">重点跟进</span></td></tr>
+	            	<tr><td style="max-width:100px;"><span class="ui-nowrap ui-whitespace tdspan">能签能回</span></td></tr>
+	            	<tr><td style="max-width:100px;"><span class="ui-nowrap ui-whitespace tdspan">冲击客户</span></td></tr>
+	            <tr><td style="max-width:100px;"><span class="ui-nowrap ui-whitespace tdspan">已死客户</span></td></tr>
+	            <tr><td style="max-width:100px;"><span class="ui-nowrap ui-whitespace tdspan">待理单</span></td></tr>
+	            </tbody>
+	            </table>
+	            	<div id="bodytable-wrap" class="table-body">
+	                <h3 id="table-tip" class="tb-tip" style="display:none;"></h3>
+	                <table id="bodytable" class="table-content">
+	                	<tbody></tbody>
+	                </table>
+	            	</div>
+	        	</div>
+	    	</div>
+
+
+        </div>
+
+    </div>
+</section>
+<script type="text/javascript" src="js/lib/fastclick.min.js" ></script>
+<script type="text/javascript" src="js/lib/jquery.min.js" ></script>
+<script type="text/javascript" src="js/lib/highcharts.js" ></script>
+<script type="text/javascript" src="js/lib/highcharts-more.js" ></script>
+<script src="js/lib/dingtalk.min.js"></script>
+<script src="js/lib/ddbanner.js"></script>
+<script src="js/lib/apiList.js"></script>
+<script src="js/login.js"></script>
+<script src="js/config.js"></script>
+<script src="js/common.js"></script>
+<script type="text/javascript" src="js/team.js" ></script>
+<script>
+    $(document).ready(function() {
+    	var type = localStorage.type?localStorage.type:"count";
+	    init(type);
+		setRightNav(type=="money"?"count":"money");
+    });
+    function init(type){
+	    var level=getUrlParam('level');
+	    var orgid=getUrlParam('orgid');
+	    var issub=getUrlParam('issub');
+	    //var type = getUrlParam("type")?getUrlParam("type"):"count";
+	    if(!level){
+	     	getRenewDetailData(0,0,0,type);
+	    }else{
+	    	getRenewDetailData(level,orgid,issub,type);
+	    }
+	    localStorage.type=type;
+    }
+
+    function setRightNav(type){
+    	var typeStr = (type=='money'?"金额":"个数");
+    	dd.ready(function() {
+	    	// 添加 切换 按钮
+	        dd.biz.navigation.setRight({
+	            show: true,//控制按钮显示， true 显示， false 隐藏， 默认true
+	            control: true,//是否控制点击事件，true 控制，false 不控制， 默认false
+	            text: typeStr,//控制显示文本，空字符串表示显示默认文本
+	            onSuccess : function(result) {
+	                toggleRate(type);
+	            },
+	            onFail : function(err) {}
+	        });
+	    });
+    }
+    function toggleRate(type){
+    	var newType = (type=="money"?"count":"money");
+    	init(type);
+    	setRightNav(newType);
+    }
+    
+    function getRenewDetailData(level,orgid,issub,type){
+	team.postData.level=level;
+	team.postData.orgid=orgid;
+	team.postData.issub=issub;
+	team.postData.type=type;
+	console.log(JSON.stringify(team.postData));
+	$.ajax({
+		type:"post",
+		url:oms_config.apiUrl+"apiTeam/renewDetailData",
+		async:true,
+		data:team.postData,
+		dataType:'json',
+		success:function(rs){
+			console.log(JSON.stringify(rs));
+			if(rs.res==1){
+				var typeStr = (type=='money'?"金额":"数");
+
+				$("#col-title1").html(rs.data.lastTitle+typeStr);
+				$("#col-title2").html(rs.data.curTitle+typeStr);
+				$("#col-title3").html(rs.data.nextTitle+typeStr);
+				$("#lefttable tbody tr").eq(0).find("td span").text("到期总"+typeStr);
+				var renewRateTotal='0.00%';
+				if(rs.data.totalData.total_count!=0&&rs.data.totalData.total_count!=null){
+					 renewRateTotal=((rs.data.totalData.renew_count/rs.data.totalData.total_count)*100).toFixed(2)+'%';
+				}
+				$('#renew-rate-total').html(renewRateTotal);
+				$("#renew-money-total").html(rs.data.totalData.renew_money==null?"0.00":((rs.data.totalData.renew_money/10000).toFixed(2)));
+				$("#area-name").html(rs.data.areaName);
+				var tableColumn="";
+				var lefttable="";
+				var lidanData=rs.data.tableData.lidanData;
+				//到期总数
+				tableColumn +='  <tr class="odd" >\
+				                <td style="max-width:100px;"><span class="ui-nowrap ui-whitespace tdspan">到期总'+typeStr+'</span></td>\
+				                <td class="text-center">'+rs.data.tableData.renewData.last+'</td>\
+				                <td class="text-center">'+rs.data.tableData.renewData.cur+'</td>\
+				                 <td class="text-center">'+rs.data.tableData.renewData.next+'</td>\
+				            </tr>';	
+				//已签已回
+				tableColumn +='  <tr class="even" >\
+				                <td style="max-width:100px;"><span class="ui-nowrap ui-whitespace tdspan">已签已回</span></td>\
+				                <td class="text-center">'+lidanData[1].last+'</td>\
+				                <td class="text-center">'+lidanData[1].cur+'</td>\
+				                 <td class="text-center">'+lidanData[1].next+'</td>\
+				            </tr>';	
+				//已签未回
+				tableColumn +='  <tr class="odd" >\
+				                <td style="max-width:100px;"><span class="ui-nowrap ui-whitespace tdspan">已签未回</span></td>\
+				                <td class="text-center">'+lidanData[6].last+'</td>\
+				                <td class="text-center">'+lidanData[6].cur+'</td>\
+				                 <td class="text-center">'+lidanData[6].next+'</td>\
+				            </tr>';	
+				  //重点跟进
+				tableColumn +='  <tr class="even" >\
+				                <td style="max-width:100px;"><span class="ui-nowrap ui-whitespace tdspan">重点跟进</span></td>\
+				                <td class="text-center">'+lidanData[2].last+'</td>\
+				                <td class="text-center">'+lidanData[2].cur+'</td>\
+				                 <td class="text-center">'+lidanData[2].next+'</td>\
+				            </tr>';	          
+				    //能签能回
+				tableColumn +='  <tr class="odd" >\
+				                <td style="max-width:100px;"><span class="ui-nowrap ui-whitespace tdspan">能签能回</span></td>\
+				                <td class="text-center">'+lidanData[3].last+'</td>\
+				                <td class="text-center">'+lidanData[3].cur+'</td>\
+				                 <td class="text-center">'+lidanData[3].next+'</td>\
+				            </tr>';
+			     //冲击客户
+				tableColumn +='  <tr class="even" >\
+				                <td style="max-width:100px;"><span class="ui-nowrap ui-whitespace tdspan">冲击客户</span></td>\
+				                <td class="text-center">'+lidanData[4].last+'</td>\
+				                <td class="text-center">'+lidanData[4].cur+'</td>\
+				                 <td class="text-center">'+lidanData[4].next+'</td>\
+				            </tr>';	
+				  //已死客户
+				tableColumn +='  <tr class="odd" >\
+				                <td style="max-width:100px;"><span class="ui-nowrap ui-whitespace tdspan">已死客户</span></td>\
+				                <td class="text-center">'+lidanData[5].last+'</td>\
+				                <td class="text-center">'+lidanData[5].cur+'</td>\
+				                 <td class="text-center">'+lidanData[5].next+'</td>\
+				            </tr>';	 
+				   //待理单
+				tableColumn +='  <tr class="even" >\
+				                <td style="max-width:100px;"><span class="ui-nowrap ui-whitespace tdspan">待理单</span></td>\
+				                <td class="text-center">'+lidanData[0].last+'</td>\
+				                <td class="text-center">'+lidanData[0].cur+'</td>\
+				                 <td class="text-center">'+lidanData[0].next+'</td>\
+				            </tr>';	 
+				     
+				$("#bodytable tbody").html(tableColumn);
+				scrollTable();				
+			}
+		},
+		error:function(e){
+			console.log(JSON.stringify(e));
+		}
+	});		
+}
+
+
+</script>
+
+</body>
+</html>

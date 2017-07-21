@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta content="initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
+    <meta content="telephone=no" name="format-detection">
+    <title>续费率</title>
+    <link href="css/frozen.css" rel="stylesheet" type="text/css">
+    <link href="css/main.css" rel="stylesheet" type="text/css">
+    <link rel="stylesheet" href="css/team.css" />
+    <link rel="stylesheet" href="css/data-decision.css" />
+</head>
+<body>
+<section>
+    <div class="ui-container" style="background: #F8F8F8;">
+    	<div class="renew-top">
+            <div id="sales_loudou_toggle" class="ui-btn-wrap">
+                <button class="ui-btn-s" disabled data-chart-type="money">金额</button>
+                <button class="ui-btn-s" data-chart-type="count">客户数</button>
+            </div>
+            <div class="ui-row-flex ">
+                <div class="ui-col ui-col ui-center">
+
+                     <p id="renew-rate-total" class="text-center red">0.00%</p>
+                         <p class="text-center">续费率</p>
+                </div>
+                <div class="ui-col ui-col ui-center">
+
+                     <p id="renew-money-total" class="text-center red">0.00</p>
+                      <p class="text-center">已回款金额(万)</p>
+                </div>
+            </div>
+            <div style="padding-bottom: 20px;">
+                  <p id="area-name" class="text-center"></p>
+            </div>
+
+
+ 	</div>
+    <div style="margin-top: 10px;background: #FFFFFF;">
+		<div id="biao" class="table-container fo_fix" >
+	        	<div class="ui-whitespace inner-container">
+	            	<div id="headertable-wrap" class="table-header">
+	                	<div class="table-fixed">
+	                    <table>
+	                        <tr><th class="table-title">城市</th></tr>
+	                    </table>
+	                	</div>
+	                <table id="headertable" class="table-head">
+	                	<thead>
+					<tr>
+						<th style="width:100px;" class="table-title">城市</th>
+						<th id="col-title2">续费率</th>
+						<!-- <th id="col-title2">续费客户数</th>
+						<th id="col-title2"> 本月到期客户数</th>-->
+                        <th id="col-title3">已回款</th>
+					</tr>
+					</thead>
+	                </table>
+	            	</div>
+	            <table id="lefttable" class="table-col">
+	            <tbody></tbody>
+	            </table>
+	            	<div id="bodytable-wrap" class="table-body">
+	                <h3 id="table-tip" class="tb-tip" style="display:none;"></h3>
+	                <table id="bodytable" class="table-content">
+	                	<tbody></tbody>
+	                </table>
+	            	</div>
+	        	</div>
+	    	</div>
+
+
+        </div>
+
+    </div>
+</section>
+<script type="text/javascript" src="js/lib/fastclick.min.js" ></script>
+<script type="text/javascript" src="js/lib/jquery.min.js" ></script>
+<script type="text/javascript" src="js/lib/highcharts.js" ></script>
+<script type="text/javascript" src="js/lib/highcharts-more.js" ></script>
+<script src="js/lib/dingtalk.min.js"></script>
+<script src="js/lib/ddbanner.js"></script>
+<script src="js/lib/apiList.js"></script>
+<script src="js/login.js"></script>
+<script src="js/config.js"></script>
+<script src="js/common.js"></script>
+<script type="text/javascript" src="js/team.js" ></script>
+<script>
+    $(document).ready(function() {
+    	setTableTitle(team.user.position);
+    	var type = localStorage.type?localStorage.type:"count";
+    	init(type);
+		setRightNav(type=="money"?"count":"money");
+
+    });
+    function init(type,date){
+	    var level = getUrlParam('level');
+	    var orgid = getUrlParam('orgid');
+	    var issub = getUrlParam('issub');
+	    if(!level){
+	     	getRenewData(0,0,0,type,date);
+	    }else{
+	    	getRenewData(level,orgid,issub,type,date);
+	    }
+	    localStorage.type = type;
+		localStorage.date = date;
+    }
+    function setRightNav(type){
+		var defaultValue = new Date().getFullYear() + '-' + (new Date().getMonth()+1);
+    	dd.ready(function() {
+	    	// 添加 切换 按钮
+	        dd.biz.navigation.setRight({
+	            show: true,//控制按钮显示， true 显示， false 隐藏， 默认true
+	            control: true,//是否控制点击事件，true 控制，false 不控制， 默认false
+	            text: '月份',//控制显示文本，空字符串表示显示默认文本
+	            onSuccess : function(result) {
+	                dd.biz.util.datepicker({
+					  format: 'yyyy-MM',
+					  value: defaultValue,
+					  onSuccess: function(result) {
+						var type = localStorage.type?localStorage.type:"count";
+						init(type,result.value)
+					  }
+					});
+	            },
+	            onFail : function(err) {}
+	        });
+	    });
+    }
+    function toggleRate(type){
+    	init(type);
+    	var newType = (type=="money"?"count":"money");
+    	setRightNav(newType);
+    }
+
+	$('#sales_loudou_toggle').on('click', 'button', function(){
+		var $this = $(this), type = $this.data('chart-type');
+		$this.siblings().attr('disabled', null);
+		$this.attr('disabled', 'disabled');
+		var date = localStorage.date;
+		init(type,date);
+	});
+
+    function getRenewData(level,orgid,issub,type,date){
+	team.postData.level = level;
+	team.postData.orgid = orgid;
+	team.postData.issub = issub;
+	team.postData.type  = type;
+	team.postData.date  = date;
+	console.log(JSON.stringify(team.postData));
+	$.ajax({
+		type:"post",
+		url:oms_config.apiUrl+"apiTeam/renewData",
+		async:true,
+		data:team.postData,
+		dataType:'json',
+		success:function(rs){
+			console.log(JSON.stringify(rs));
+			if(rs.res==1){
+				 setTableTitle2(rs.data.level);
+				var tableData=rs.data.tableData;
+				var renewRateTotal='0.00%';
+				if(rs.data.totalData.total_count!=0&&rs.data.totalData.total_count!=null){
+					 renewRateTotal=((rs.data.totalData.renew_count/rs.data.totalData.total_count)*100).toFixed(2)+'%';
+				}
+
+				$('#renew-rate-total').html(renewRateTotal);
+				$("#renew-money-total").html(rs.data.totalData.renew_money==null?"0.00":((rs.data.totalData.renew_money/10000).toFixed(2)));
+				$("#area-name").html(rs.data.areaName);
+				var tableColumn="";
+				var lefttable="";
+				for(var i in tableData){
+					var trClass='odd';
+					if(i%2==0){
+						trClass='even';
+					}
+					var dept=tableData[i].name;
+					var renewRate='0.00%';
+					if(tableData[i].total_count!=0&&tableData[i].total_count!=null){
+						 renewRate=((tableData[i].renew_count/tableData[i].total_count)*100).toFixed(2)+'%';
+					}
+
+					if(tableData[i].isClick==1 || tableData[i].level==5 ){
+						dept='<a href="teamReNew.html?level='+tableData[i].level+'&orgid='+tableData[i].id+'&issub=1" >'+dept+'</a>';
+					  renewRate='<a href="teamReNewDetail.html?level='+parseInt(tableData[i].level)+'&orgid='+tableData[i].id+'&issub=1" >'+renewRate+'</a>';
+					}
+
+
+					lefttable += '<tr><td style="max-width:100px;"><span class="ui-nowrap ui-whitespace tdspan">'+dept+'</span></td></tr>';
+
+					tableColumn +='  <tr class="'+trClass+'" >\
+					                <td style="max-width:100px;min-width:100px;" ><span class="ui-nowrap ui-whitespace tdspan">'+dept+'</span></td>\
+					                <td class="text-center">'+renewRate+'</td>\
+					                <td class="text-center">'+(tableData[i].renew_money==null?"0.00":tableData[i].renew_money)+'</td>\
+					            </tr>';
+					}
+					$("#lefttable tbody").html(lefttable);
+					$("#bodytable tbody").html(tableColumn);
+					scrollTable();
+			}
+		},
+		error:function(e){
+			console.log(JSON.stringify(e));
+		}
+	});
+}
+
+
+</script>
+
+</body>
+</html>

@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>客户详情</title>
+	<meta name="viewport" content="width=device-width, height=device-height, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no">
+	<meta name="format-detection" content="telephone=no">
+	<meta http-equiv="x-rim-auto-match" content="none">
+	<link href="css/frozen.css" rel="stylesheet" type="text/css">
+	<link href="css/vipCustomerDetail.css" rel="stylesheet" type="text/css">
+</head>
+<body>
+	<div class="vip-detail">
+		<div class="vip-head">
+			<div class="vip-title">
+				<h3 id="coName"></h3>
+				<p>流入时间: <span id="intoTime"></span></p>
+			</div>
+			
+			<div class="vip-contactor">
+				<div class="vip-contact-title ui-border-tb">联系人</div>
+				<div class="vip-contact-item">
+					<h4 class="name-position" id="namePos"></h4>
+					<p id="tel"></p>
+					<span class="mail-icon" id="mail-icon"></span>
+					<span class="tel-icon" id="tel-icon"></span>
+				</div>
+			</div>
+		</div>
+		
+		<div class="vip-info-wraper">
+			<ul class="vip-infos">
+				<li class="ui-border-b">
+					<label for="">名称</label>
+					<span id="name"></span>
+				</li>
+				<li class="ui-border-b">
+					<label for="">企业代码</label>
+					<span id="entCode"></span>
+				</li>
+				<li class="ui-border-b">
+					<label for="">开通服务</label>
+					<span id="days"></span>
+				</li>
+			</ul>
+		</div>
+
+		<div class="vip-footer ui-border-t">
+			<ul class="ui-tiled">
+				<!-- <li>
+					<i class="ui-icon-vip_customer_data"></i>
+					<span>数据详情</span>
+				</li>
+				<li class="ui-border-l">
+					<i class="ui-icon-vip_customer_communicate"></i>
+					<span>发起沟通</span>
+				</li> -->
+				<li id="to-message">
+					<i class="ui-icon-vip_customer_communicate"></i>
+					<div>发起沟通</div>
+				</li>
+			</ul>
+		</div>
+	</div>
+	<script src="js/lib/zepto.min.js"></script>
+	<script src="js/lib/frozen.min.js"></script>
+	<script src="js/lib/dingtalk.min.js"></script>
+	<script src="js/lib/fastclick.min.js"></script>
+	<script src="js/lib/ddbanner.js"></script>
+	<script src="js/lib/apiList.js"></script>
+	<script src="js/lib/iscroll.min.js"></script>
+	<script src="js/login.js"></script>
+	<script src="js/config.js"></script>
+
+	<script src="js/vipCustomerDetail.js"></script>
+</body>
+</html>

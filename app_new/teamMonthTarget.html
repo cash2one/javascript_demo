@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta content="initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
+<meta content="telephone=no" name="format-detection">
+<title>销售目标达成</title>
+<link href="css/frozen.css" rel="stylesheet" type="text/css">
+<link href="css/main.css" rel="stylesheet" type="text/css">
+<link rel="stylesheet" href="css/team.css" />
+<link rel="stylesheet" href="css/data-decision.css" />
+</head>
+<body>
+<section>
+	<div class="ui-container" style="background: #F8F8F8;">
+		<div class="chart-panel  hide" style="height: 10px;">
+			<div class="show-btn toggle-btn">
+			<span class="ui-icon-arrow ligth-green"></span>
+		</div>
+		</div>
+
+	<div class="chart-panel" id="chart-container">
+		<ul class="ui-list ui-list-text">
+			<li class="">
+				<div id="month_target"  class="chart-container">
+					<div class="ui-loading-wrap text-center">
+							    <p>图表加载中</p>
+							    <i class="ui-loading"></i>
+							</div>
+						</div>
+					</li>
+		</ul>
+		<div class="hide-btn toggle-btn">
+			<span class="ui-icon-arrow ligth-green"></span>
+		</div>
+		</div>
+
+		<div style="margin-top: 20px;">
+
+		    <div id="biao" class="table-container fo_fix" >
+	        <div class="ui-whitespace inner-container">
+	            <div id="headertable-wrap" class="table-header">
+	                <div class="table-fixed">
+	                    <table>
+	                        <tr><th class="table-title">城市</th></tr>
+	                    </table>
+	                </div>
+	                <table id="headertable" class="table-head">
+	                	<thead>
+					<tr>
+						<th style="max-width:100px;" class="table-title">城市</th>
+						<th id="leader_title" style="max-width:100px;min-width:100px;">Leader</th>
+						<th >达成率</th>
+						<th >回款额</th>
+						<th >目标额</th>
+					</tr>
+					</thead>
+	                </table>
+	            </div>
+	            <table id="lefttable" class="table-col">
+	            <tbody></tbody>
+	            </table>
+	            <div id="bodytable-wrap" class="table-body">
+	                <h3 id="table-tip" class="tb-tip" style="display:none;"></h3>
+	                <table id="bodytable" class="table-content">
+	                	<tbody></tbody>
+	                </table>
+	            </div>
+	        </div>
+	    </div>
+
+
+
+		</div>
+
+	</div>
+</section>
+<script type="text/javascript" src="js/lib/fastclick.min.js" ></script>
+<script type="text/javascript" src="js/lib/jquery.min.js" ></script>
+<script type="text/javascript" src="js/lib/highcharts.js" ></script>
+<script type="text/javascript" src="js/lib/highcharts-more.js" ></script>
+<script src="js/lib/dingtalk.min.js"></script>
+<script src="js/lib/ddbanner.js"></script>
+<script src="js/lib/apiList.js"></script>
+<script src="js/login.js"></script>
+<script src="js/config.js"></script>
+<script src="js/common.js"></script>
+<script type="text/javascript" src="js/team.js" ></script>
+<script>
+</script>
+<script>
+	$(document).ready(function() {
+		    setTableTitle(team.user.position);
+		    var level=getUrlParam('level');
+		    var orgid=getUrlParam('orgid');
+		    var issub=getUrlParam('issub');
+		    if(!level){
+		     	getMonthTargetData(0,0,0);
+		    }else{
+		     	getMonthTargetData(level,orgid,issub);
+		    }
+
+		});
+
+	function getMonthTargetData(level,orgid,issub){
+		team.postData.level = level;
+		team.postData.orgid = orgid;
+		team.postData.issub = issub;
+		if(level == 4){
+				$("#leader_title").hide();
+		}else{
+				$("#leader_title").show();
+		}
+		$.ajax({
+					type:"post",
+					url:oms_config.apiUrl+oms_apiList.getMonthTargetData,
+					async:true,
+					data:team.postData,
+					dataType:'json',
+					success:function(rs){
+						console.log(JSON.stringify(rs));
+						if(rs.res==1){
+							setTargetChart(rs.data.target, rs.data.done);
+						    setTableTitle2(rs.data.level);
+
+							var tableData=rs.data.tableData;
+							var tableColumn="";
+							var lefttable="";
+							for(var i in tableData){
+								var trClass='odd';
+								if(i%2==0){
+									trClass='even';
+								}
+								var dept=tableData[i].name;
+								var issub = 1;
+
+								if(tableData[i].isClick==1){
+									dept='<a href="teamMonthTarget.html?level='+tableData[i].level+'&orgid='+tableData[i].id+'&issub=1" >'+dept+'</a>';
+								}
+								if (tableData[i].level == 5){
+									dept='<a href="profile.html?id='+tableData[i].id+'&do=0" >'+dept+'</a>';
+								}
+								if(tableData[i].target==0||tableData[i].target==null){
+									var doneRate='0.00%';
+								}else{
+									 doneRate=((tableData[i].done/tableData[i].target)*100).toFixed(2)+'%';
+								}
+								var done=tableData[i].done==null?0:tableData[i].done;
+								var target=tableData[i].target==null?0:tableData[i].target;
+
+								lefttable += '<tr><td style="max-width:100px;" class="fix-column"><span class="ui-nowrap tdspan">'+dept+'</span></td></tr>';
+								if(tableData[i].isClick==1 || tableData[i].level==5 ) {
+									var links = '&s=' + tableData[i].level + '&id=' + tableData[i].id;
+
+									tableColumn += '  <tr class="' + trClass + '" >\
+									                <td style="max-width:100px;min-width:100px;" class="fix-column" ><span class="ui-nowrap tdspan">' + dept + '</span></td>';
+									if(level != 4){
+											tableColumn+= 	'<td class="text-center" style="max-width:100px;min-width:100px;">'+(team.leaderInfo[tableData[i].id]?team.leaderInfo[tableData[i].id]:'--')+'</td>';
+									}
+
+									tableColumn+= ' <td class="text-center">' + doneRate + '</td>\
+									                <td class="text-center"><a href="teamCusList.html?t=1'+links+'">' + done + '</a></td>\
+									                <td class="text-center">' + target + '</td>\
+									            </tr>';
+								}else {
+									tableColumn += '  <tr class="' + trClass + '" >\
+									                <td style="max-width:100px;min-width:100px;" class="fix-column" ><span class="ui-nowrap tdspan">' + dept + '</span></td>';
+									if(level !=4){
+											tableColumn+= 	'<td class="text-center" style="max-width:100px;min-width:100px;">'+(team.leaderInfo[tableData[i].id]?team.leaderInfo[tableData[i].id]:'--')+'</td>';
+									}
+									tableColumn+= ' <td class="text-center">' + doneRate + '</td>\
+									                <td class="text-center">' + done + '</td>\
+									                <td class="text-center">' + target + '</td>\
+									            </tr>';
+								}
+							}
+							$("#lefttable tbody").html(lefttable);
+							$("#bodytable tbody").html(tableColumn);
+							scrollTable();
+						}
+
+					},
+					error:function(e){
+						console.log(JSON.stringify(e));
+					}
+				});
+
+	}
+
+</script>
+
+</body>
+</html>

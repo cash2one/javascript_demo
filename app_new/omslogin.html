@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>登录</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, height=device-height, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no">
+    <meta name="format-detection" content="telephone=no">
+    <link href="css/frozen.css" rel="stylesheet" type="text/css">
+    <link href="css/omslogin.css" rel="stylesheet" type="text/css">
+</head>
+<body>
+
+<div class="ui-container" style="display:none;">
+
+        <form id="myform_user" data-type="user" novalidate autocomplete="off">
+
+            <div class="ui-panel">
+                <div class="ui-form ui-form-gap">
+                    <div class="ui-form-item">
+                        <label for="username">用户名</label>
+                        <input id="username" name="username" data-model="username" placeholder="请填写用户名" type="email">
+                    </div>
+                    <div class="ui-form-item ui-border-t">
+                        <label for="password">　密码</label>
+                        <input id="password" name="password" data-model="password" placeholder="请填写密码" type="password">
+                    </div>
+                </div>
+                <div class="form-switch">
+                    <h6 class="ui-txt-muted">
+                    <span data-formsel="#myform_mobile">切换到手机验证码登录</span>
+                </h6>
+                </div>
+                <div class="dologin-wrap">
+                    <div class="ui-btn-wrap">
+                        <button id="userlogin-btn" class="ui-btn-lg ui-btn-danger">登录</button>
+                    </div>
+                </div>
+            </div>
+        </form>
+
+        <form id="myform_mobile" data-type="mobile" style="display:none;" novalidate autocomplete="off">
+
+            <div class="ui-panel">
+                <div class="ui-form ui-form-gap">
+                    <div class="ui-form-item">
+                        <label for="mobile">手机号</label>
+                        <input id="mobile" name="mobile" data-model="mobile" placeholder="请填写手机号" type="tel">
+                    </div>
+                    <div class="ui-form-item ui-border-t">
+                        <label for="vercode">验证码</label>
+                        <input id="vercode" name="vercode" data-model="vercode" placeholder="请填写验证码" type="tel">
+                        <div class="codesend-wrap">
+                            <button type="button" id="codesend-btn" class="ui-btn">获取验证码</button>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-switch">
+                    <h6 class="ui-txt-muted">
+                    <span data-formsel="#myform_user">切换到用户名密码登录</span>
+                </h6>
+                </div>
+                <div class="dologin-wrap">
+                    <div class="ui-btn-wrap">
+                        <button id="mobilelogin-btn" class="ui-btn-lg ui-btn-danger">登录</button>
+                    </div>
+                </div>
+            </div>
+        </form>
+
+    </div>
+
+    <script src="js/lib/zepto.min.js"></script>
+    <script src="js/lib/dingtalk.min.js"></script>
+    <script src="js/lib/fastclick.min.js"></script>
+    <script src="js/lib/ddbanner.js"></script>
+    <script src="js/lib/apiList.js"></script>
+    <script src="js/config.js"></script>
+    <script src="js/common.js"></script>
+    <script src="js/omslogin.js"></script>
+</body>
+
+</html>

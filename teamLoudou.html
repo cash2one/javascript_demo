@@ -1,0 +1,338 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta content="initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
+<meta content="telephone=no" name="format-detection">
+<title>销售漏斗</title>
+<link href="css/frozen.css" rel="stylesheet" type="text/css">
+<link href="css/main.css" rel="stylesheet" type="text/css">
+<link rel="stylesheet" href="css/team.css" />
+<link rel="stylesheet" href="css/data-decision.css" />
+<style>
+.tdspan {width:100px!important;}
+#sales_loudou_toggle {padding-top:0;}
+</style>
+</head>
+<body>
+<section>
+	<div class="ui-container" style="background: #F8F8F8;">
+		<div class="chart-panel  hide" style="height: 10px;">
+			<div class="show-btn toggle-btn">
+				<span class="ui-icon-arrow ligth-green"></span>
+			</div>
+		</div>
+
+		<div class="chart-panel"  id="chart-container">
+			<ul class="ui-list ui-list-pure">
+				<li>
+					<!--<div id="sales_loudou_toggle" class="ui-btn-wrap">-->
+						<!--<button class="ui-btn-s" data-chart-type="money">金额</button>-->
+						<!--<button class="ui-btn-s" data-chart-type="customers">客户数</button>-->
+					<!--</div>-->
+					<div id="sales_loudou" class="chart-container">
+						<div class="ui-loading-wrap text-center">
+							<p>图表加载中</p><i class="ui-loading"></i>
+						</div>
+					</div>
+				</li>
+			</ul>
+			<div class="hide-btn toggle-btn">
+				<span class="ui-icon-arrow ligth-green"></span>
+			</div>
+		</div>
+
+		<div style="margin-top: 20px;">
+			<div id="biao" class="table-container fo_fix" >
+				<div class="ui-whitespace inner-container">
+					<div id="headertable-wrap" class="table-header">
+						<div class="table-fixed">
+							<table>
+								<tr><th style="max-width:100px;" class="table-title">城市</th></tr>
+						   </table>
+						</div>
+						<table id="headertable" class="table-head">
+							<thead>
+						<tr>
+							<th  class="table-title">城市</th>
+							<th id="leader_title" style="max-width:100px;min-width:100px;">Leader</th>
+							<th >已签客户</th>
+							<th >订金客户</th>
+							<th >重点客户</th>
+							<th >意向客户</th>
+							<th >客户资源</th>
+							<!--<th >冲击客户</th>-->
+							<!--<th >推进中</th>-->
+							<!--<th >已死客户</th>-->
+						</tr>
+
+							</thead>
+						</table>
+					</div>
+					<table id="lefttable" class="table-col">
+					<tbody></tbody>
+					</table>
+					<div id="bodytable-wrap" class="table-body">
+						<h3 id="table-tip" class="tb-tip" style="display:none;"></h3>
+						<table id="bodytable" class="table-content">
+							<tbody></tbody>
+						</table>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</section>
+<input style="position:fixed;top:0;right:0;height:2px;opacity:0;" type="month" id="smonth" value="" />
+<script type="text/javascript" src="js/lib/fastclick.min.js" ></script>
+<script type="text/javascript" src="js/lib/jquery.min.js" ></script>
+<script type="text/javascript" src="js/lib/highcharts.js" ></script>
+<script type="text/javascript" src="js/lib/highcharts-more.js" ></script>
+<script src="js/lib/dingtalk.min.js"></script>
+<script src="js/lib/ddbanner.js"></script>
+<script src="js/lib/apiList.js"></script>
+<script src="js/lib/md5.min.js"></script>
+<script src="js/login.js"></script>
+<script src="js/config.js"></script>
+<script src="js/common.js"></script>
+<script src="js/goldAgeCommon.js"></script>
+<script type="text/javascript" src="js/team.js" ></script>
+<script>
+$(document).ready(function() {
+	FastClick.attach(document.body);
+//	setTableTitle(team.user.position);
+	var defaultValue = new Date().getFullYear() + '-' + (new Date().getMonth()+1);
+	ddbanner.changeBannerTitle(defaultValue + '销售漏斗');
+	scrollTable();
+	var level=getUrlParam('level');
+	var orgid=getUrlParam('orgid');
+	var issub=getUrlParam('issub');
+	var month=localStorage.getItem('team.loudou.month') || '';
+
+	if(!level){
+		getLoudouData(0,0,0,month);
+	}else{
+		getLoudouData(level,orgid,issub,month);
+	}
+
+	dd.ready(function(){
+		var monthvalue = month, now = new Date();
+		if(!monthvalue){
+			monthvalue = now.getFullYear() + '-' + (now.getMonth()+1);
+		}
+
+		dd.biz.navigation.setTitle({
+			title: '分析'
+		});
+		resetRight(monthvalue);
+
+		function resetRight(monthvalue){
+			dd.biz.navigation.setRight({
+				control: true,
+				text: monthvalue,
+				onSuccess : function(result) {
+					dd.biz.util.datepicker({
+						format: 'yyyy-MM',
+						mode: 'month',
+						value: monthvalue,
+						onSuccess: function(result) {
+							var selmonth = new Date(result.value);
+							if(selmonth.getYear()>now.getYear()
+								|| (selmonth.getYear()==now.getYear() && selmonth.getMonth()>now.getMonth())){
+								return dd.device.notification.toast({text: '请选择当前或过去的月份'});
+							}
+							monthvalue = result.value;
+							localStorage.setItem('team.loudou.month', monthvalue);
+							//重置 rightMenu
+							resetRight(monthvalue);
+							//加载数据
+							getLoudouData(level,orgid,issub,monthvalue);
+						}
+					});
+				}
+			});
+		}
+	});
+
+	$('#sales_loudou_toggle').on('click', 'button', function(){
+		var $this = $(this), type = $this.data('chart-type');
+		$this.siblings().attr('disabled', null);
+		$this.attr('disabled', 'disabled');
+		if(loudouStatData){
+			if(type=='customers'){
+				setLoudouChart(loudouStatData.countData, '月', "", 0, 'customers');
+			}else{
+				setLoudouChart(loudouStatData.chartData, '月', "", 0, 'money');
+			}
+		}
+	});
+
+	$("#smonth").off('input').on('input',function(res){
+		var month = $("#smonth").val();
+		getLoudouData(level,orgid,issub,month);
+	});
+});
+
+var loudouStatData = null; //漏斗统计数据
+
+function getLoudouData(level,orgid,issub,month){
+	team.postData.level = level;
+	team.postData.orgid = orgid;
+	team.postData.issub = issub;
+	team.postData.month = month == undefined ? "" : month;
+	team.postData.userId = JSON.parse(getCookie("omsUser")).id;
+	console.log(JSON.stringify(team.postData));
+
+	OMS_COM.ajaxPost({
+		api: 'getLoudouData',
+		data: team.postData,
+		success: function (data) {
+			var res = JSON.parse(data);
+			if(parseInt(res.code) === 0) {
+				renderLoudouData(res.data,month);
+			}
+		},
+		error: function () {
+
+		},
+		always: function () {
+
+		}
+	});
+
+
+//	$.ajax({
+//		type:"post",
+//		url:oms_config.apiUrl+oms_apiList.getLoudouData,
+//		async:true,
+//		data:team.postData,
+//		dataType:'json',
+//		success:function(rs){
+//			// console.log(JSON.stringify(rs));
+//			if(rs.res == 1){
+//				loudouStatData = rs.data;
+//				renderLoudouData(loudouStatData,month);
+//			}else{
+//				console.log(JSON.stringify(rs));
+//			}
+//		},
+//		error:function(e){
+//			console.log(JSON.stringify(e));
+//		}
+//	});
+}
+
+function renderLoudouData(data,month){
+	$('#sales_loudou_toggle>button:first-child').attr('disabled','disabled');
+	console.log('in renderLoudouData');
+	console.log(data);
+	if(data.chart == undefined){
+		data.chart = {
+			"yqkh":0,
+			"djkh":0,
+			"zdkh":0,
+			"yxkh":0,
+			"khzy":0
+		}
+	}
+	setLoudouChart(data.chart, '月', "", 0, 'money');
+//	setTableTitle2(data.level);
+	if(data.level < 4 ){
+			$("#leader_title").show();
+	}else{
+			$("#leader_title").hide();
+	}
+
+	//理单详情数据只能查看 本月或上月的
+	var cuslistenable = false;
+	var nowmonth = new Date(), thismonth = new Date(month);
+	if(!month){
+		cuslistenable = true;
+	}
+	if(thismonth.toString()!=='Invalid Date'){
+		var nyear = nowmonth.getYear(), nmonth = nowmonth.getMonth(), tyear = thismonth.getYear(), tmonth = thismonth.getMonth();
+		if(nyear == tyear && nmonth == tmonth
+			|| nyear == tyear && tmonth+1 == nmonth
+			|| (tyear+1 == nyear) && nmonth == 0 && tmonth == 11){
+				cuslistenable = true;
+		}
+	}
+	var tableData=data.table;
+	var lefttable="";
+	var tablecolumn="";
+	lefttable += '<tr><td style="max-width:100px;">总计</td></tr>';
+	tablecolumn +='<tr class="'+trClass+'" >\
+					<td style="max-width:100px;min-width:100px;" >总计</td>';
+//	if(data.level < 4){
+//			tablecolumn += '<td class="text-center" style="max-width:100px;min-width:100px;">--</td>';
+//	}
+//	tablecolumn += '<td class="text-center">'+data.chartData[0]+'/'+data.countData[0]+'</td>\
+//									<td class="text-center">'+data.chartData[1]+'/'+data.countData[1]+'</td>\
+//									<td class="text-center">'+data.chartData[2]+'/'+data.countData[2]+'</td>\
+//									<td class="text-center">'+data.chartData[3]+'/'+data.countData[3]+'</td>\
+//									<td class="text-center">'+data.chartData[4]+'/'+data.countData[4]+'</td>\
+//									<td class="text-center">'+data.chartData[5]+'/'+data.countData[5]+'</td>\
+//									<td class="text-center">'+data.chartData[6]+'/'+data.countData[6]+'</td>\
+//									<td class="text-center">'+data.chartData[7]+'/'+data.countData[7]+'</td>\
+//								</tr>';
+	tablecolumn += '<td class="text-center">'+data.chart.yqkh+'</td>\
+					<td class="text-center">'+data.chart.djkh+'</td>\
+					<td class="text-center">'+data.chart.zdkh+'</td>\
+					<td class="text-center">'+data.chart.yxkh+'</td>\
+					<td class="text-center">'+data.chart.khzy+'</td>\
+					</tr>';
+	var tablecolumnDataIndex = [0,1,6,2,3,4,7,5];
+	for(var i in tableData){
+		var trClass='odd';
+		if(i%2==0){
+			trClass='even';
+		}
+		var dept=tableData[i].name;
+		var issub = 1;
+		if(tableData[i].isClick==1){
+			dept='<a href="teamLoudou.html?level='+tableData[i].level+'&orgid='+tableData[i].id+'&issub=1">'+dept+'</a>';
+		}
+//		if (tableData[i].level == 5){
+//			dept='<a href="profile.html?id='+tableData[i].id+'&do=0" >'+dept+'</a>';
+//		}
+//		var ldd = tableData[i].loudouData;
+		lefttable += '<tr><td style="max-width:100px;" >'+dept+'</td></tr>';
+		if(data.level < 4 ){
+				tablecolumn += '<tr class="'+trClass+'" ><td style="max-width:100px;min-width:100px;">'+dept+'</td>\
+												<td class="text-center" style="max-width:100px;min-width:100px;">'+(team.leaderInfo[tableData[i].id]?team.leaderInfo[tableData[i].id]:'--')+'</td>';
+		}else{
+			tablecolumn += '<tr class="'+trClass+'" ><td style="max-width:100px;min-width:100px;">'+dept+'</td>';
+		}
+		tablecolumn += '<td class="text-center">'+tableData[i].yqkh+'</td>' +
+				'<td class="text-center">'+tableData[i].djkh+'</td>'+
+				'<td class="text-center">'+tableData[i].zdkh+'</td>'+
+				'<td class="text-center">'+tableData[i].yxkh+'</td>'+
+				'<td class="text-center">'+tableData[i].khzy+'</td>'+
+				'</tr>';
+//		var lddcolumns = [];
+//		for(var kj in tablecolumnDataIndex){
+//			var j = tablecolumnDataIndex[kj];
+//			var lddtext = ldd.lists[j]+'/'+ldd.count[j];
+//			if(ldd.lists[j]==0 && ldd.count[j]==0){
+//				lddtext = '--';
+//			}else{
+//				if(j == 7){
+//					j = 17;
+//				}
+//
+//				if(cuslistenable && (tableData[i].isClick==1 || tableData[i].level==5)){
+//					lddtext = '<a href="teamCusList.html?t='+j+'&s=+'+tableData[i].level+'&id='+tableData[i].id+(month?'&month='+month:'')+'">'+lddtext+'</a>';
+//				}
+//			}
+//			lddcolumns.push('<td class="text-center">'+lddtext+'</td>');
+//		}
+//		tablecolumn += lddcolumns.join('')+'</tr>';
+	}
+	$("#lefttable tbody").html(lefttable);
+	$("#bodytable tbody").html(tablecolumn);
+	scrollTable();
+}
+
+</script>
+</body>
+</html>

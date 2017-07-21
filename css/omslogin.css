@@ -1,0 +1,30 @@
+
+body {
+    background-color: #f5f5f6;
+}
+.ui-container {
+    margin-top: 20px;
+}
+.codesend-wrap {
+    position: absolute;
+    top: 10px;
+    right: 15px;
+    line-height: 0;
+}
+.codesend-wrap button {
+    padding: 0 5px;
+    width: 95px;
+    font-size: 12px;
+}
+.dologin-wrap {
+    margin-top: 10px;
+}
+.dologin-wrap button {
+    width: 80%;
+    margin: 0 auto;
+    font-size: 16px;
+}
+.form-switch h6 {
+    text-align: center;
+    padding-top: 30px;
+}

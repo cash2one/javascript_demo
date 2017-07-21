@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>拜访详情</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, height=device-height, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no">
+    <meta name="format-detection" content="telephone=no">
+    <link href="css/frozen.css" rel="stylesheet" type="text/css">
+    <link href="css/main.css" rel="stylesheet" type="text/css">
+    <link href="css/visitDescribe.css" rel="stylesheet" type="text/css">
+</head>
+<body>
+<div class="visitDescribeContainer" style="display:none;">
+    <div class="visitDescribeHead ui-panel">
+        <div class="ui-row-flex ui-whitespace">
+            <div class="ui-col">
+                <h4 id="realName"></h4>
+                <p id="createTime"></p>
+            </div>
+        </div>
+    </div>
+
+    <div class="ui-panel">
+        <div class="ui-form ui-form-gap ui-form-auto ui-border-tb">
+            <div class="ui-form-item ui-border-b">
+                <label>客户名称</label>
+                <p id="cusName" style="margin-left: 25%;"></p>
+            </div>
+            <div class="ui-form-item ui-border-b">
+                <label>拜访时间</label>
+                <p id="visitTime" style="margin-left: 25%;"></p>
+            </div>
+            <div class="ui-form-item ui-border-b">
+                <label>拜访时长</label>
+                <p id="visitTimeLong" style="margin-left: 25%;"></p>
+            </div>
+            <div class="ui-form-item ui-border-b">
+                <label>开始定位</label>
+                <p id="locateBegin" style="margin-left: 25%;"></p>
+            </div>
+            <div class="ui-form-item ui-border-b">
+                <label>结束定位</label>
+                <p id="locateEnd" style="margin-left: 25%;"></p>
+            </div>
+            <div class="ui-form-item ui-border-b">
+                <label>外勤人数</label>
+                <input type="text" value="" id="visitPersonNum" readonly>
+            </div>
+            <div class="ui-form-item ui-border-b">
+                <label>车辆数</label>
+                <input type="text" value="" id="visitCarNum" readonly>
+            </div>
+            <div class="ui-form-item ui-border-b">
+                <label>个人评级</label>
+                <input type="text" value="" id="visitCusLevel" readonly>
+            </div>
+            <div class="ui-form-item ui-border-b">
+                <label>拜访纪要</label>
+                <p id="visitSummary" style="margin-left: 25%;"></p>
+            </div>
+            <div class="ui-form-item ui-border-b nextVisitTime" style="display:none;">
+                <label style="width:30%;">下次约访时间</label>
+                <input type="text" style="width:70%;" value="" id="nextVisitTime" readonly>
+            </div>
+            <div class="ui-form-item ui-border-b nextVisitPlace" style="display:none;">
+                <label style="width:30%;">下次约访地点</label>
+                <p id="nextVisitPlace" style="margin-left: 30%;"></p>
+            </div>
+            <div class="ui-form-item ui-border-b" id="reportFilePic" style="display: none;"></div>
+        </div>
+    </div>
+
+    <div class="ui-panel" style="display:none;" id="cusProblem">
+        <!--<div class="ui-panel-legend ui-whitespace">客户问题</div>-->
+        <!--<div class="ui-form ui-form-gap ui-form-auto ui-border-t">-->
+            <!--<div class="ui-form-item ui-border-b">-->
+                <!--<label>问题类型</label>-->
+                <!--<input type="text" value="" readonly>-->
+            <!--</div>-->
+            <!--<div class="ui-form-item ui-border-b">-->
+                <!--<label>问题内容</label>-->
+                <!--<p style="margin-left: 25%;"></p>-->
+            <!--</div>-->
+            <!--<div class="ui-form-item">-->
+                <!--<img src="" />-->
+            <!--</div>-->
+        <!--</div>-->
+    </div>
+
+</div>
+
+<div class="subVisitDescribeContainer" style="display:none;">
+    <div class="visitDescribeHead ui-panel">
+        <div class="ui-row-flex ui-whitespace">
+            <div class="ui-col">
+                <h4 class="realName"></h4>
+                <p class="createTime"></p>
+            </div>
+        </div>
+    </div>
+
+    <div class="ui-panel">
+        <div class="ui-form ui-form-gap ui-form-auto ui-border-tb">
+            <div class="ui-form-item ui-border-b">
+                <label>客户名称</label>
+                <p id="subVisitCusName" style="margin-left: 25%;"></p>
+            </div>
+            <div class="ui-form-item ui-border-b">
+                <label>跟进业务员</label>
+                <p id="subVisitFollower" style="margin-left: 25%;"></p>
+            </div>
+            <div class="ui-form-item ui-border-b">
+                <label>陪访时间</label>
+                <p id="peifangTime" style="margin-left: 25%;"></p>
+            </div>
+            <div class="ui-form-item ui-border-b">
+                <label>陪访时长</label>
+                <p id="peifangTimeLong" style="margin-left: 25%;"></p>
+            </div>
+            <div class="ui-form-item ui-border-b">
+                <label>开始定位</label>
+                <p id="peifangLocateBegin" style="margin-left: 25%;"></p>
+            </div>
+            <div class="ui-form-item ui-border-b">
+                <label>结束定位</label>
+                <p id="peifangLocateEnd" style="margin-left: 25%;"></p>
+            </div>
+            <div class="ui-form-item ui-border-b">
+                <label>拜访对象</label>
+                <p id="peifangLinkman" style="margin-left: 25%;"></p>
+            </div>
+            <div class="ui-form-item ui-border-b">
+                <label>陪访纪要</label>
+                <p id="peifangSummary" style="margin-left: 25%;"></p>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="js/lib/zepto.min.js"></script>
+<script src="js/lib/dingtalk.min.js"></script>
+<script src="js/lib/ddbanner.js"></script>
+<script src="js/lib/apiList.js"></script>
+<script src="js/config.js"></script>
+<script src="js/common.js"></script>
+<script src="js/visitDescribe.js"></script>
+
+</body>
+</html>

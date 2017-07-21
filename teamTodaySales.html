@@ -1,0 +1,335 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta content="initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
+<meta content="telephone=no" name="format-detection">
+<title>今日战区销售执行</title>
+<link href="css/frozen.css" rel="stylesheet" type="text/css">
+<link href="css/main.css" rel="stylesheet" type="text/css">
+<link rel="stylesheet" href="css/team.css" />
+<link rel="stylesheet" href="css/data-decision.css" />
+</head>
+<body>
+<section>
+	<div class="ui-container" style="background: #F8F8F8;">
+		<div class="renew-top">
+			<div class="ui-row-flex ">
+				<div class="ui-col ui-col ui-center">
+					<p id="renew-files-total" class="text-center red"></p>
+					<p class="text-center">零资料战区</p>
+				</div>
+				<div class="ui-col ui-col ui-center">
+					<p id="renew-phone-total" class="text-center red"></p>
+					<p class="text-center">零电话战区</p>
+				</div>
+				<div class="ui-col ui-col ui-center">
+					<p id="renew-visit-total" class="text-center red"></p>
+					<p class="text-center">零拜访战区</p>
+				</div>
+			</div>
+			<div style="padding-bottom: 20px;">
+				<p id="area-name" class="text-center"></p>
+			</div>
+		</div>
+
+		<div style="margin-top: 10px;">
+			<div id="biao" class="table-container fo_fix" >
+	        	<div class="ui-whitespace inner-container">
+	            	<div id="headertable-wrap" class="table-header">
+	                	<div class="table-fixed">
+	                    <table>
+	                        <tr><th style="max-width:100px;" class="table-title2">战区</th></tr>
+	                    </table>
+	                	</div>
+	                <table id="headertable" class="table-head">
+	                	<thead>
+					<tr>
+						<th style="width:100px;" class="table-title2">战区</th>
+						<th>Leader</th>
+						<th class="sort_th" data-sort-field="cus_num">资料量
+							<img src="./img/lALOIeTaRBQM_12_20.png" class="sort_icon">
+						</th>
+                        <th class="sort_th" data-sort-field="call_num">电话量
+							<img src="./img/lALOIeTaRBQM_12_20.png" class="sort_icon" style="display:none;">
+						</th>
+                        <th class="sort_th" data-sort-field="visit_num">拜访量
+							<img src="./img/lALOIeTaRBQM_12_20.png" class="sort_icon" style="display:none;">
+						</th>
+					</tr>
+					</thead>
+	                </table>
+	            	</div>
+	            <table id="lefttable" class="table-col">
+	            <tbody></tbody>
+	            </table>
+	            	<div id="bodytable-wrap" class="table-body">
+	                <h3 id="table-tip" class="tb-tip" style="display:none;"></h3>
+	                <table id="bodytable" class="table-content">
+	                	<tbody></tbody>
+	                </table>
+	            	</div>
+	        	</div>
+	    	</div>
+		</div>
+	</div>
+</section>
+<script type="text/javascript" src="js/lib/fastclick.min.js" ></script>
+<script type="text/javascript" src="js/lib/jquery.min.js" ></script>
+<script type="text/javascript" src="js/lib/highcharts.js" ></script>
+<script type="text/javascript" src="js/lib/highcharts-more.js" ></script>
+<script src="js/lib/dingtalk.min.js"></script>
+<script src="js/lib/ddbanner.js"></script>
+<script src="js/lib/apiList.js"></script>
+<script src="js/login.js"></script>
+<script src="js/config.js"></script>
+<script src="js/common.js"></script>
+<script type="text/javascript" src="js/team.js" ></script>
+<script>
+var swidth;
+var tableData
+//var cat = getUrlParam('cat');
+var cat = "files";
+var navTitle='人均资料量',
+	   chartTitle="本月人均资料量",
+	   chartYName="人均资料量";
+	if(cat=="files"){
+		navTitle='人均资料量',
+	   chartTitle="本月人均资料量",
+	   chartYName="人均资料量";
+	}else if(cat=='phone'){
+		navTitle='人均电话量',
+	   chartTitle="本月人均电话量",
+	   chartYName="人均电话量";
+	}else if(cat =='visit'){
+		navTitle='人均拜访量',
+	   chartTitle="本月人均拜访量",
+	   chartYName="人均拜访量";
+	}
+$(document).ready(function() {
+	setTableTitle(team.user.position);
+	document.title="今日战区销售执行";
+	var level=getUrlParam('level');
+    var orgid=getUrlParam('orgid');
+    var issub=getUrlParam('issub');
+    if(!level){
+     	getColumnData(0,0,0);
+    }else{
+     	getColumnData(level,orgid,issub);
+    }
+
+});
+
+function getColumnData(level,orgid,issub){
+	team.postData.cat=cat;
+	team.postData.level=level;
+	team.postData.orgid=orgid;
+	team.postData.issub=issub;
+	$.ajax({
+		type:"post",
+		url:oms_config.apiUrl+"apiTeam/getTotalVwar",
+		async:true,
+		data:team.postData,
+		dataType:'json',
+		success:function(rs){
+			//console.log(JSON.stringify(rs));
+			//console.log("testjson");
+			if(rs.res==1){
+				var colarr = [],namearr = [];
+				 tableData=rs.data.table;
+
+				  tableData.sort(function(a,b){
+					return a.cus_num-b.cus_num;
+				});
+				var total = rs.data.total;
+				$("#renew-files-total").html(total.cus_num+'个');
+				$("#renew-phone-total").html(total.call_num+'个');
+				$("#renew-visit-total").html(total.visit_num+'个');
+
+			    //setTableTitle2(rs.data.level);
+				//console.log(tableData);
+				tableData.sort(function(a,b){
+					return a.cus_num-b.cus_num;
+				});
+				renderTable(tableData);
+			}
+		},
+		error:function(e){
+			console.log(JSON.stringify(e));
+		}
+	});
+}
+
+
+
+var tableObject = $('#headertable');
+var tbHead = tableObject.children('thead');
+var tbHeadTh = tbHead.find('tr th');
+var tbBody = tableObject.children('tbody');
+var tbBodyTr = tbBody.find('tr');
+
+var sortIndex = -1;
+
+tbHeadTh.filter('.sort_th').each(function() {
+	var $this = $(this);
+	var field = $this.data('sort-field'), sortorgen;
+	if (!field)
+		return;
+	sortorgen = function(order) {
+		var desc = order=='desc' ? true : false;
+		return function(a,b) {
+			var adiffb = parseInt(a[field]) - parseInt(b[field]);
+			if (isNaN(adiffb)) {
+				return -1;
+			}
+			return desc ? -adiffb : adiffb;
+		}
+	}
+	$this.toggle(function() {
+		tbHeadTh.find('.sort_icon').hide();
+		$this.find('.sort_icon').attr('src','./img/lALOIeTbtBQM_12_20.png').show();
+		tableData.sort(sortorgen('desc'));
+		renderTable(tableData);
+	}, function() {
+		tbHeadTh.find('.sort_icon').hide();
+		$this.find('.sort_icon').attr('src','./img/lALOIeTaRBQM_12_20.png').show();
+		tableData.sort(sortorgen('asc'));
+		renderTable(tableData);
+	})
+});
+
+/**
+tbHeadTh.each(function () {
+	var thisIndex = tbHeadTh.index($(this));
+	if(thisIndex == 1){
+		console.log("test1");
+		$(this).toggle(
+				function () {
+					$("#headertable th:eq(2) img").css("display","none");
+					$("#headertable th:eq(3) img").css("display","none");
+					$("#headertable th:eq(1) img").css("display","inline-block");
+					$("#headertable th:eq(1) img").attr("src","./img/lALOIeTbtBQM_12_20.png");
+					tableData.sort(function(a,b){
+						return b.cus_num-a.cus_num;
+					});
+					renderTable(tableData);
+				},
+				function () {
+					$("#headertable th:eq(2) img").css("display","none");
+					$("#headertable th:eq(3) img").css("display","none");
+					$("#headertable th:eq(1) img").css("display","inline-block");
+					$("#headertable th:eq(1) img").attr("src","./img/lALOIeTaRBQM_12_20.png");
+					tableData.sort(function(a,b){
+						return a.cus_num-b.cus_num;
+					});
+					renderTable(tableData);
+				}
+		);
+	}
+	if (thisIndex ==2) {
+		$(this).toggle(
+				function () {
+					$("#headertable th:eq(1) img").css("display","none");
+					$("#headertable th:eq(3) img").css("display","none");
+					$("#headertable th:eq(2) img").css("display","inline-block");
+					$("#headertable th:eq(2) img").attr("src","./img/lALOIeTbtBQM_12_20.png");
+					tableData.sort(function(a,b){
+						return b.call_num-a.call_num;
+					});
+					renderTable(tableData);
+				},
+				function () {
+					$("#headertable th:eq(1) img").css("display","none");
+					$("#headertable th:eq(3) img").css("display","none");
+					$("#headertable th:eq(2) img").css("display","inline-block");
+					$("#headertable th:eq(2) img").attr("src","./img/lALOIeTaRBQM_12_20.png");
+					tableData.sort(function(a,b){
+						return a.call_num-b.call_num;
+					});
+					renderTable(tableData);
+				}
+		);
+	}
+	else if(thisIndex ==3){
+		$(this).toggle(
+				function () {
+					$("#headertable th:eq(1) img").css("display","none");
+					$("#headertable th:eq(2) img").css("display","none");
+					$("#headertable th:eq(3) img").css("display","inline-block");
+					$("#headertable th:eq(3) img").attr("src","./img/lALOIeTbtBQM_12_20.png");
+					tableData.sort(function(a,b){
+						return b.visit_num-a.visit_num;
+					});
+					renderTable(tableData);
+				},
+				function () {
+					$("#headertable th:eq(1) img").css("display","none");
+					$("#headertable th:eq(2) img").css("display","none");
+					$("#headertable th:eq(3) img").css("display","inline-block");
+					$("#headertable th:eq(3) img").attr("src","./img/lALOIeTaRBQM_12_20.png");
+					tableData.sort(function(a,b){
+						return a.visit_num-b.visit_num;
+					});
+					renderTable(tableData);
+				}
+		);
+	}
+
+}); */
+
+function renderTable(sortData){
+	var tableColumn="";
+	var lefttable="";
+
+	$('#lefttable tbody').empty();
+	$('#bodytable tbody').empty();
+
+	for(var i in sortData){
+		var trClass='odd';
+		if(i%2==0){
+			trClass='even';
+		}
+		var dept=sortData[i].vwar_name;
+		if(sortData[i].isClick==1){
+			dept='<a href="teamTodaySales.html?dd_nav_bgcolor=ff3caab4&cat='+cat+'&level='+sortData[i].level+'&orgid='+sortData[i].id+'&issub=1" >'+dept+'</a>';
+		}
+
+		lefttable += '<tr><td style="max-width:100px;" ><span class="ui-nowrap ui-whitespace tdspan">'+dept+'</span></td></tr>';
+			tableColumn +='  <tr class="'+trClass+'" >\
+									                <td style="max-width:100px;min-width:100px;"><span class="ui-nowrap ui-whitespace tdspan">'+dept+'</span></td>\
+																	<td class="text-center">'+(team.leaderInfo[sortData[i].vwar_id]?team.leaderInfo[sortData[i].vwar_id]:'--')+'</td>\
+									                <td class="text-center">'+sortData[i].cus_num+'</td>\
+									                <td class="text-center">'+sortData[i].call_num+'</td>\
+													<td class="text-center">'+sortData[i].visit_num+'</td>\
+									            </tr>';
+	}
+	$("#lefttable tbody").html($(lefttable));
+	$("#bodytable tbody").html($(tableColumn));
+	scrollTable2();
+}
+
+function scrollTable2(){
+	setTableBody();
+	$('#lefttable').show();
+	$(window).resize(setTableBody);
+	$(".table-body").scroll(function (){
+		$("#headertable").offset({ left: -1*this.scrollLeft });
+		if($("#chart-container").css('display')=='none'){
+				$("#lefttable").offset({ top: -1*this.scrollTop + 24 });
+			}else{
+				$("#lefttable").offset({ top: -1*this.scrollTop + 236 });
+		  }
+	});
+
+	$(window).scroll(function (){
+		if($("#chart-container").css('display')=='none'){
+				$("#lefttable").offset({ top: -1*this.scrollTop + 24 });
+			}else{
+				$("#lefttable").offset({ top: -1*this.scrollTop + 236 });
+		  }
+	});
+}
+</script>
+
+</body>
+</html>

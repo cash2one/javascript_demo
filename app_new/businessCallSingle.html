@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>商务电话</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no"/>
+        <link href="css/frozen.css" rel="stylesheet" type="text/css">
+        <link href="css/main.css" rel="stylesheet" type="text/css">
+        <link href="css/businessCall.css" rel="stylesheet" type="text/css">
+        <script type="text/javascript">
+            function resize() {
+                var remFontSize = +document.documentElement.clientWidth / 16;
+                document.documentElement.style.fontSize = remFontSize + "px";
+            }
+            var b = null;
+            window.addEventListener("resize", function() {
+                clearTimeout(b),
+                b = setTimeout(resize, 300)
+            }, !1);
+            resize();
+        </script>
+    </head>
+
+    <body class="gradient">
+        <section class="ui-container" id="main-body">
+            <div class="" id="hidden_page" style="background-image:url('img/down.png');background-size:1.4rem auto; width: 2.4rem; height:2.4rem; background-repeat:no-repeat;position:absolute;margin-top:0.75rem;margin-left:0.75rem;">
+            </div>
+            <div class="info-title">
+                <div class="info-title-name"><h3 id="info_name"></h3></div>
+                <div class="info-title-info"><h4 id="info_dept"></h4></div>
+            </div>
+            <div class="info-body">
+                <i class="ui-icon-meeting_phone"></i>
+                <div class="call-status" id="call_status"></div>
+            </div>
+            <div class="info-footer">
+                <div class="ui-btn-wrap">
+                    <button class="ui-btn ui-btn-danger" id="cancelCall">
+                        取消
+                    </button>
+                </div>
+                <div class="footer-content">
+                    <div>部分用户会因手机套餐原因，由运营商收取接听和漫游费用</div>
+                </div>
+            </div>
+        </section>
+
+        <script src="js/lib/zepto.min.js"></script>
+        <script src="js/lib/frozen.min.js"></script>
+        <script src="js/lib/dingtalk.min.js"></script>
+        <script src="js/lib/fastclick.min.js"></script>
+        <script src="js/lib/ddbanner.js"></script>
+        <script src="js/lib/apiList.js"></script>
+        <script src="js/lib/lodash.js"></script>
+        <script src="js/config.js"></script>
+        <script src="js/common.js"></script>
+        <script src="js/businessCallHandler.js"></script>
+    </body>
+</html>

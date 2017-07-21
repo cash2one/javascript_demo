@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>公告榜</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, height=device-height, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no">
+    <meta name="format-detection" content="telephone=no">
+    <link href="css/announcement.css" rel="stylesheet" type="text/css">
+    <script type="text/javascript">
+        function resize() {
+            var remFontSize = +document.documentElement.clientWidth / 16;
+            document.documentElement.style.fontSize = remFontSize + "px";
+        }
+        var b = null;
+        window.addEventListener("resize", function() {
+            clearTimeout(b), 
+            b = setTimeout(resize, 300)
+        }, !1);
+        resize();
+    </script>
+</head>
+<body>
+<div class="wrapper">
+    <div class="container">
+        <img id="starimg" src="https://air.hecom.cn/oms/haibao.png">
+    </div>
+</div>
+<script src="js/lib/zepto.min.js"></script>
+<script src="js/lib/dingtalk.min.js"></script>
+<script src="js/lib/ddbanner.js"></script>
+<script src="js/config.js"></script>
+<script src="js/announcement.js"></script>
+</body>
+</html>

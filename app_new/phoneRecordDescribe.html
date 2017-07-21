@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>电话记录详情</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, height=device-height, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no">
+    <meta name="format-detection" content="telephone=no">
+    <link href="css/frozen.css" rel="stylesheet" type="text/css">
+    <link href="css/main.css" rel="stylesheet" type="text/css">
+    <link href="css/visitDescribe.css" rel="stylesheet" type="text/css">
+    <link href="css/blue.monday/css/jplayer.blue.monday.css" rel="stylesheet" type="text/css">
+    <link href="css/mediaPlayer.css" rel="stylesheet" type="text/css">
+    <script type="text/javascript">
+          function resize() {
+              var remFontSize = +document.documentElement.clientWidth / 16;
+              document.documentElement.style.fontSize = remFontSize + "px";
+          }
+          var b = null;
+          window.addEventListener("resize", function() {
+              clearTimeout(b),
+              b = setTimeout(resize, 300)
+          }, !1);
+          resize();
+      </script>
+</head>
+<body>
+<div class="visitDescribeContainer">
+    <div class="visitDescribeHead ui-panel">
+        <div class="ui-row-flex ui-whitespace">
+            <div class="ui-col">
+                <h4 id="realName"></h4>
+                <p id="createTime"></p>
+            </div>
+        </div>
+    </div>
+
+    <div id="jquery_jplayer_1" class="jp-jplayer media_player" style="display:none"></div>
+    <div style="position:relative;background-color:#fff;padding:0.75rem; display:none" class="media_player">
+      <div id="jp_container_1" class="jp-audio" role="application" aria-label="media player">
+          <div class="jp-type-single">
+              <div class="jp-gui jp-interface">
+              <div class="jp-controls">
+              <button class="jp-play" role="button" tabindex="0">play</button>
+              </div>
+              <div class="jp-progress">
+              <div class="jp-seek-bar">
+              <div class="jp-play-bar"></div>
+              </div>
+              </div>
+              <div class="jp-time-holder">
+              <div class="jp-current-time" role="timer" aria-label="time">&nbsp;</div>
+              <div class="jp-duration" role="timer" aria-label="duration">&nbsp;</div></div></div>
+          </div>
+      </div>
+    </div>
+    
+    <div class="ui-panel" id="feiPK" style="display: none;">
+          <div class="ui-form ui-form-gap ui-form-auto ui-border-tb">
+            <div class="ui-form-item ui-border-b">
+                <label>客户名称</label>
+                <input type="text" value="" class="cusName" readonly>
+            </div>
+            <div class="ui-form-item ui-border-b">
+                <label>联系情况</label>
+                <input type="text" value="" class="contractSituation" readonly>
+            </div>
+            <div class="ui-form-item ui-border-b">
+                <label>联系人</label>
+                <input type="text" value="" class="contractPeople" readonly>
+            </div>
+            <div class="ui-form-item ui-border-b">
+                <label>外勤人数</label>
+                <input type="text" value="" class="visitPersonNum" readonly>
+            </div>
+            <div class="ui-form-item ui-border-b">
+                <label>车辆数</label>
+                <input type="text" value="" class="visitCarNum" readonly>
+            </div>
+            <div class="ui-form-item ui-border-b">
+                <label style="width: 30%;">下次联系时间</label>
+                <input type="text" style="width: 70%;" value="" class="nextContractTime" readonly>
+            </div>
+            <div class="ui-form-item ui-border-b">
+                <label>电话纪要</label>
+                <p class="phoneSummary" style="margin-left: 25%;"></p>
+            </div>
+        </div>
+    </div>
+
+    <div class="ui-panel" id="PK" style="display: none;">
+        <div class="ui-form ui-form-gap ui-form-auto ui-border-tb">
+            <div class="ui-form-item ui-border-b">
+                <label>客户名称</label>
+                <input type="text" value="" class="cusName" readonly>
+            </div>
+            <div class="ui-form-item ui-border-b">
+                <label>联系情况</label>
+                <input type="text" value="" class="contractSituation" readonly>
+            </div>
+            <div class="ui-form-item ui-border-b">
+                <label>联系人</label>
+                <input type="text" value="" class="contractPeople" readonly>
+            </div>
+            <div class="ui-form-item ui-border-b">
+                <label>外勤人数</label>
+                <input type="text" value="" class="visitPersonNum" readonly>
+            </div>
+            <div class="ui-form-item ui-border-b">
+                <label>车辆数</label>
+                <input type="text" value="" class="visitCarNum" readonly>
+            </div>
+            <div class="ui-form-item ui-border-b">
+                <label style="width: 30%;">下次约见时间</label>
+                <input type="text" style="width: 70%;" value="" class="nextContractTime" readonly>
+            </div>
+            <div class="ui-form-item ui-border-b">
+                <label style="width: 30%;">下次约见地点</label>
+                <!-- <input type="text" style="width: 70%;" value="" class="nextContractPosition" readonly> -->
+                <p style="margin-left:30%;width:70%;" class="nextContractPosition"></p>
+            </div>
+            <div class="ui-form-item ui-border-b">
+                <label>电话纪要</label>
+                <p class="phoneSummary" style="margin-left: 25%;"></p>
+            </div>
+        </div>
+    </div>
+
+    <div class="ui-panel" id="xuqian" style="display: none;">
+        <div class="ui-form ui-form-gap ui-form-auto ui-border-tb">
+            <div class="ui-form-item ui-border-b">
+                <label>客户名称</label>
+                <input type="text" value="" class="cusName" readonly>
+            </div>
+            <div class="ui-form-item ui-border-b">
+                <label>回访类型</label>
+                <input type="text" value="" class="contractStyle" readonly>
+            </div>
+            <div class="ui-form-item ui-border-b">
+                <label>回访对象</label>
+                <input type="text" value="" class="contractPeople" readonly>
+            </div>
+            <div class="ui-form-item ui-border-b">
+                <label>外勤人数</label>
+                <input type="text" value="" class="visitPersonNum" readonly>
+            </div>
+            <div class="ui-form-item ui-border-b">
+                <label>车辆数</label>
+                <input type="text" value="" class="visitCarNum" readonly>
+            </div>
+            <div class="ui-form-item ui-border-b">
+                <label style="width: 30%;">下次回访时间</label>
+                <input type="text" style="width: 70%;" value="" class="nextContractTime" readonly>
+            </div>
+            <div class="ui-form-item ui-border-b">
+                <label>致电详情</label>
+                <p class="phoneSummary" style="margin-left: 25%;"></p>
+            </div>
+        </div>
+    </div>
+    <div class="ui-panel" style="display:none;" id="cusProblem">
+        <!--<div class="ui-panel-legend ui-whitespace">客户问题</div>-->
+        <!--<div class="ui-form ui-form-gap ui-form-auto ui-border-t">-->
+            <!--<div class="ui-form-item ui-border-b">-->
+                <!--<label>问题类型</label>-->
+                <!--<input type="text" value="" readonly>-->
+            <!--</div>-->
+            <!--<div class="ui-form-item ui-border-b">-->
+                <!--<label>问题内容</label>-->
+
+                <!--<p style="margin-left: 25%;"></p>-->
+            <!--</div>-->
+            <!--<div class="ui-form-item">-->
+                <!--<img src=""/>-->
+            <!--</div>-->
+        <!--</div>-->
+    </div>
+
+</div>
+
+<script src="js/lib/zepto.min.js"></script>
+<script src="js/lib/dingtalk.min.js"></script>
+<script src="js/lib/ddbanner.js"></script>
+<script src="js/lib/apiList.js"></script>
+<script src="js/config.js"></script>
+<script src="js/common.js"></script>
+<script src="js/phoneRecordDescribe.js"></script>
+<!--播放器-->
+<script src="js/lib/jquery.jplayer.js"></script>
+
+</body>
+</html>

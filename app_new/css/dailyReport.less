@@ -1,0 +1,213 @@
+// @u: 40rem;
+@u: 2px;
+html, body {
+    font-family: 'STHeitiSC-Light', 'Heiti SC Light', 'Heiti SC';
+    background-color: #f5f5f6;
+    min-height: 100%;
+    color: #666;
+}
+header {
+    padding-top: 30/@u;
+}
+#reportHeader {
+    position: relative;
+    height: 100/@u;
+    line-height: 100/@u;
+    padding: 0 60/@u;
+    background-color: #FFF;
+    overflow: hidden;
+    font-size: 0;
+    span, i {
+        display: inline-block;
+        vertical-align: top;
+        font-size: 30/@u;
+    }
+    i {
+        float: right;
+        font-size: 24/@u;
+        line-height: 100/@u;
+    }
+    .report-header-title {
+        float: left;
+        color: #333;
+    }
+    .report-header-type {
+        margin-right: 20/@u;
+        float: right;
+        color: #aaaec3;
+    }
+}
+
+#wrapper {
+    position: absolute;
+    width: 100%;
+    top: 130/@u;
+    bottom: 0;
+    #report-msg {
+        position: absolute;
+        width: 100%;
+        height: 80/@u;
+        margin-top: -80/@u;
+        top: 50%;
+        font-size: 30/@u;
+    }
+    .report-list {
+        padding-bottom: 40/@u;
+        .report-list-cell {
+            padding: 0 30/@u;
+            .report-list-cell-time {
+                font-size: 20/@u;
+                height: 60/@u;
+                line-height: 60/@u;
+                text-align: center;
+            }
+            .report-list-cell-body {
+                background-color: #FFF;
+                border-radius: 12/@u;
+                // font-size: 24/@u;
+            }
+            .report-list-cell-title {
+                position: relative;
+                height: 80/@u;
+                line-height: 80/@u;
+                padding: 0 30/@u;
+                overflow: hidden;
+                font-size: 0;
+                span, i {
+                    font-size: 28/@u;
+                    display: inline-block;
+                    vertical-align: top;
+                }
+                span {
+                    color: #333;
+                }
+                span:nth-child(1) {
+                    margin-right: 30/@u;
+                }
+                i {
+                    float: right;
+                    line-height: 80/@u;
+                }
+            }
+            .report-list-cell-content {
+                position: relative;
+                padding: 0 30/@u;
+                font-size: 24/@u;
+                ul {
+                    overflow: hidden;
+                    padding: 20/@u 0;
+                    li {
+                        float: left;
+                        width: 50%;
+                        height: 50/@u;
+                        line-height: 50/@u;
+                        display: table;
+                        span {
+                            display: table-cell;
+                            width: 50%;
+                        }
+                    }
+                }
+            }
+            .report-list-cell-plan {
+                position: relative;
+                padding: 20/@u 30/@u;
+                font-size: 24/@u;
+                ul {
+                    li {
+                        height: 50/@u;
+                        line-height: 50/@u;
+                    }
+                }
+            }
+        }
+    }
+}
+
+#empty{
+    text-align: center;
+    font-size: 15px;
+    display: none;
+    .emptyIcon{
+        margin-top: 60px;
+        img{
+            width: 60px;
+        }
+    }
+    p{
+        margin-top: 10px;
+    }
+}
+.scroller {
+    width: 100%;
+    width:100%;
+    padding:0;
+    -webkit-tap-highlight-color:rgba(0,0,0,0);
+}
+/**
+ *
+ * Pull down styles
+ *
+ */
+#pullDown, #pullUp {
+    //background: #e9f0f7;
+    text-align: center;
+    height: 90/@u;
+    line-height: 90/@u;
+    font-weight: bold;
+    font-size: 28/@u;
+    color: #888;
+    vertical-align: middle;
+    // opacity: 0;
+}
+#pullDown .pullDownIcon, #pullUp .pullUpIcon  {
+    display: inline-block;
+    width: 80/@u;
+    height: 80/@u;
+    background:url(../img/pull-icon@2x.png) 0 0 no-repeat;
+    -webkit-background-size: 80/@u 160/@u;
+    background-size: 80/@u 160/@u;
+    -webkit-transition-property: -webkit-transform;
+    -webkit-transition-duration: 250ms;
+    vertical-align: middle;
+}
+#pullDown .pullDownLabel,
+#pullUp .pullUpLabel {
+  display: inline-block;
+  vertical-align: middle;
+}
+#pullDown .pullDownIcon {
+    margin-top: -8/@u;
+    -webkit-transform:rotate(180deg) translateZ(0);
+}
+#pullUp .pullUpIcon  {
+    margin-top:6/@u;
+    -webkit-transform:rotate(0deg) translateZ(0);
+}
+
+#pullDown.flip .pullDownIcon {
+    margin-top: 6/@u;
+    -webkit-transform:rotate(0deg) translateZ(0);
+}
+
+#pullUp.flip .pullUpIcon {
+    margin-top: -4px;
+    -webkit-transform:rotate(180deg) translateZ(0);
+}
+
+#pullDown.loading .pullDownIcon, #pullUp.loading .pullUpIcon {
+    margin-top: 0;
+    background-position:0 100%;
+    -webkit-transform:rotate(0deg) translateZ(0);
+    -webkit-transition-duration:0ms;
+
+    -webkit-animation-name:loading;
+    -webkit-animation-duration:2s;
+    -webkit-animation-iteration-count:infinite;
+    -webkit-animation-timing-function:linear;
+}
+
+@-webkit-keyframes loading {
+    from { -webkit-transform:rotate(0deg) translateZ(0); }
+    to { -webkit-transform:rotate(360deg) translateZ(0); }
+}

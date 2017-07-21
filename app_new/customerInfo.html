@@ -1,0 +1,278 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta content="initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
+<meta content="telephone=no" name="format-detection">
+<title>客户详情</title>
+<link href="css/frozen.css" rel="stylesheet" type="text/css">
+<link href="css/main.css" rel="stylesheet" type="text/css">
+<link href="css/customerInfo.css" rel="stylesheet" type="text/css">
+<link href="css/visit.css" rel="stylesheet" type="text/css">
+<link href="css/visitPlan.css" rel="stylesheet" type="text/css">
+<link href="css/customerAct.css" rel="stylesheet" type="text/css">
+<link href="css/contactAdd.css" rel="stylesheet" type="text/css">
+<link href="css/reallocate.css" rel="stylesheet" type="text/css">
+<link href="css/blue.monday/css/jplayer.blue.monday.css" rel="stylesheet" type="text/css">
+<link href="css/mediaPlayer.css" rel="stylesheet" type="text/css">
+<style>
+		.noComment{
+				color: #999 !important;
+		}
+</style>
+	<script type="text/javascript">
+        function resize() {
+            var remFontSize = +document.documentElement.clientWidth / 16;
+            document.documentElement.style.fontSize = remFontSize + "px";
+        }
+        var b = null;
+        window.addEventListener("resize", function() {
+            clearTimeout(b),
+            b = setTimeout(resize, 300)
+        }, !1);
+        resize();
+    </script>
+</head>
+<body>
+<section class="ui-container" id="main-body">
+	<section id="list">
+		<div class="ui-tab">
+			<div class="tab-header">
+				<div style="background-color: #fff; display:none;" class="newsTipBlock"><div class="cusInfo-newstips-wrap" id="cusInfo_newstips"></div></div>
+				<ul class="ui-list ui-list-pure" id="tab-header-content">
+				</ul>
+
+				<ul class="ui-tab-nav ui-border-b" id="hecom-tab">
+					<li id="tab1"  class="ui-border-t current">基本信息</li>
+					<li id="tab2" class="ui-border-t">工作状态</li>
+					<li id="tab3" class="ui-border-t">理单记录</li>
+				</ul>
+			</div>
+
+			<ul class="ui-tab-content" id="transformer" style="width:300%;height:auto;">
+				<li class="current" style="padding-bottom: 8px;">
+
+
+
+					<ul class="ui-list ui-list-function private-content lidan-content public-content role5-content loading-content" style="display: none">
+						<li style="margin:0"><div class="ui-form-item-blank" style="background-color: #f5f5f6; width: 100%"></div></li>
+						<li class="ui-border-b" style="height: 35px;line-height: 35px; margin-right: 15px;">
+							<div class="ui-list-info" style="padding:0">
+								<h4 class="ui-nowrap" style="font-size:11px;color:#666;">联系人</h4>
+							</div>
+							<div class="ui-list-action" style="font-size: 11px;padding-top: 10px;padding: 0; color:#ec564d;" id="showMoreContact">查看更多</div>
+						</li>
+					</ul>
+					<ul class="ui-list ui-list-function role5-content" id="contacts">
+					</ul>
+
+					<div class="ui-form-item-blank" style="background-color: #f5f5f6; width: 100%"></div>
+					<div id="cusBasicInfo"></div>
+
+					<ul class="ui-list ui-list-function private-content lidan-content-renew role5-content  cusNewSignLeader loading-content" style="display: none">
+						<li style="margin:0"><div class="ui-form-item-blank" style="background-color: #f5f5f6; width: 100%"></div></li>
+						<li class="ui-border-b" style="height: 35px;line-height: 35px; margin-right: 15px;">
+							<div class="ui-list-info" style="padding:0;">
+								<h4 class="ui-nowrap" style="font-size:11px;color:#666;">跟进人</h4>
+							</div>
+
+						</li>
+					</ul>
+					<ul class="ui-list ui-list-function ui-row-flex lidan-content-renew role5-content cusNewSignLeader" id="follows" >
+
+					</ul>
+
+					<ul class="ui-list ui-list-function cusRenewal private-content lidan-content-renew role5-content cusNewSignLeader loading-content" style="display: none">
+						<li style="margin:0"><div class="ui-form-item-blank" style="background-color: #f5f5f6; width: 100%"></div></li>
+						<li class="ui-border-b" style="height: 35px;line-height: 35px;margin-right: 15px;">
+							<div class="ui-list-info" style="padding:0;">
+								<h4 class="ui-nowrap" style="font-size:11px;color:#666;">合同</h4>
+							</div>
+							<div class="ui-list-action" style="font-size: 11px; padding: 0; padding-right: 15px;color:#ec564d;" id="showMoreContracts">查看更多</div>
+						</li>
+					</ul>
+					<ul class="ui-list ui-list-pure cusRenewal lidan-content-renew role5-content cusNewSignLeader" id="contracts">
+
+					</ul>
+
+				</li>
+
+				<li style="height:0;background-color: #f5f5f6;" id="customerAct">
+					<div class="ui-form-item-blank" style="background-color: #f5f5f6; width: 100%;height:15px;"></div>
+                    <section class="ui-container" id="customerActPic" style="display: none;margin: 0;">
+                        <div id="customerActPicId" style="color: #999;">每一次努力都会记录</div>
+                    </section>
+
+                    <div style="text-align: center;background-color: #f5f5f6;" id="customerActSelect">
+                    	<div style="width: 30%;margin-left:35%;height: 28px;border-radius: 30px;border:0;overflow: hidden;background: url(./img/listDown.png) no-repeat;background-position: 82%;background-size: 8%;">
+	                        <select style="width: 100%;height: 28px;border-radius: 30px;background: transparent;border: 1px solid #ddd;font-size: 12px;color: #666;padding-left: 22%;-webkit-appearance: none;" id="typeSelect" onchange="typeSelectFun();">
+	                            <option value="拜访">拜访</option>
+	                            <option value="陪访">陪访</option>
+	                            <option value="电话记录">电话记录</option>
+	                            <option value="培训" id="trainSelectId">培训</option>
+	                            <option value="全部工作" selected>全部工作</option>
+	                        </select>
+                        </div>
+                    </div>
+
+                    <div class="customerActContent" id="customerActContent" style="background-color: #f5f5f6;">
+                    </div>
+
+				</li>
+                <li style="height:0;background-color: #f5f5f6;" id="visitPlan">
+                	<div class="ui-form-item-blank" style="background-color: #f5f5f6; width: 100%;height:15px;"></div>
+                    <section class="ui-container" id="lidanPic" style="display: none;">
+                        <div id="lidanPicId" style="color: #999;"></div>
+                        <div id="lidanPicIdSec" style="color: #999;"></div>
+                    </section>
+                    <ul class="ui-list ui-list-function visitPlanUL" id="visitPlanUL" style="background-color: #f5f5f6;">
+
+                    </ul>
+				</li>
+			</ul>
+
+		</div>
+	</section>
+	<footer class="ui-footer ui-footer-btn" id="main-foot">
+
+	</footer>
+</section>
+
+
+<div class="ui-dialog" id="toPublic">
+	<div class="ui-dialog-cnt">
+		<div class="ui-dialog-bd">
+            <h4>本操作不可逆</h4>
+            <div>真的确定扔到公海吗？</div>
+        </div>
+		<div class="ui-dialog-ft">
+			<button type="button" style="color:#858e99;" id="throwCancel" data-role="button">再试试</button>
+			<button type="button" style="color:#e15151;" id="throwConfirm" data-role="button">确定</button>
+		</div>
+	</div>
+<input type="hidden" name="pageDate" id="pageDate" value="" />
+<input type="hidden" name="selecteddate" id="selecteddate" value="" />
+<input type="hidden" name="selectedTmp" id="selectedTmp" value="" />
+</div>
+
+<div class="ui-actionsheet" id="actlist">
+  <div class="ui-actionsheet-cnt">
+    <button style="text-align: center;background-color: #fff;border-top-left-radius: 10px;border-top-right-radius: 10px;" onClick="editCustomer()" id="editCus">编辑</button>
+		<button style="text-align: center;background-color: #fff;" onClick="cusInfo.JumpToCommentRecord('2')">拜访评价记录</button>
+		<button style="text-align: center;background-color: #fff;" onClick="cusInfo.JumpToCommentRecord('1')">理单评价记录</button>
+    <button style="text-align: center;background-color: #fff;" onClick="cusInfo.JumpToDing()">点评记录</button>
+    <button style="text-align: center;background-color: #fff;border-bottom-left-radius: 10px;border-bottom-right-radius: 10px;" onClick="toPublic()">扔到公海</button>
+    <button  style="text-align: center;background-color: #fff;border-radius: 10px;" onClick="$('#actlist').removeClass('show');">取消</button>
+  </div>
+</div>
+
+<div class="ui-actionsheet" id="otherMore">
+  <div class="ui-actionsheet-cnt" id="MoreFlag">
+		<button style="text-align: center;background-color: #fff;border-top-left-radius: 10px;border-top-right-radius: 10px;" onClick="cusInfo.JumpToCommentRecord('2')">拜访评价记录</button>
+		<button style="text-align: center;background-color: #fff;" onClick="cusInfo.JumpToCommentRecord('1')">理单评价记录</button>
+    <button id="more_first" style="text-align: center;background-color: #fff;border-bottom-left-radius: 10px;border-bottom-right-radius: 10px;" onClick="cusInfo.JumpToDing()">点评记录</button>
+    <button id="more_last" style="text-align: center;background-color: #fff;border-radius: 10px;" onClick="$('#otherMore').removeClass('show');">取消</button>
+  </div>
+</div>
+
+
+<div class="ui-actionsheet" id="moreOptions">
+  <div class="ui-actionsheet-cnt">
+    <button style="text-align: center;background-color: #fff;border-top-left-radius: 10px;border-top-right-radius: 10px;" class="addContact">补充联系人</button>
+    <button style="text-align: center;background-color: #fff" class="new_contract">新增合同</button>
+    <button style="text-align: center;background-color: #fff" class="add_plan">添加计划</button>
+    <button style="text-align: center;background-color: #fff;border-bottom-left-radius: 10px;border-bottom-right-radius: 10px;" onClick="editCustomer()">编辑</button>
+    <button style="text-align: center;background-color: #fff;border-radius: 10px;" onClick="$('#moreOptions').removeClass('show');">取消</button>
+  </div>
+</div>
+
+<div class="ui-actionsheet" id="lidanMoreOptions">
+  <div class="ui-actionsheet-cnt">
+    <button style="text-align: center;background-color: #fff;border-top-left-radius: 10px;border-top-right-radius: 10px;" class="cancelLidan" id="cancelLidan">取消理单</button>
+    <button style="text-align: center;background-color: #fff;border-bottom-left-radius: 10px;border-bottom-right-radius: 10px;" class="reAllocate" id="reAllocate">重新分配</button>
+    <button style="text-align: center;background-color: #fff;border-radius: 10px;" onClick="$('#lidanMoreOptions').removeClass('show');">取消</button>
+  </div>
+</div>
+
+<div class="ui-dialog" id="ding">
+    <div class="ui-dialog-cnt">
+      	<header class="ui-dialog-hd ui-border-b">
+          	<h3>请输入发Ding内容</h3>
+          	<i class="ui-dialog-close" data-role="button"></i>
+      	</header>
+        <div class="ui-dialog-bd">
+            <textarea novalidate="" id="dingContent" name="dingContent" rows="3" placeholder="点击输入文字..."></textarea>
+        </div>
+        <div class="ui-dialog-ft">
+            <button type="button" data-role="button">取消</button>
+            <button type="button" data-role="button" id="sendDing">发送</button>
+        </div>
+    </div>
+</div>
+
+<div class="ui-actionsheet" id="leaderPrivOption">
+  <div class="ui-actionsheet-cnt">
+  	<button style="text-align: center;background-color: #fff;border-top-left-radius: 10px;border-top-right-radius: 10px;" class="" onclick="startToTrain()" >开始培训</button>
+    <button style="text-align: center;background-color: #fff;" class="addContact">补充联系人</button>
+
+    <!-- <button style="text-align: center;background-color: #fff" class="add_plan">添加计划</button> -->
+    <button style="text-align: center;background-color: #fff;border-bottom-left-radius: 10px;border-bottom-right-radius: 10px;" onClick="editCustomer()">编辑</button>
+    <button style="text-align: center;background-color: #fff;border-radius: 10px;" onClick="$('#leaderPrivOption').removeClass('show');">取消</button>
+  </div>
+</div>
+
+<!-- <script type="text/template" id="tpl-module-list">
+		<% for (var i=0; i<list.length; i++) { %>
+		<li style="width:23%;height:85px;background:#fff;float:left;" class="module-list-item" data-module-id="<%=list[i]['id']%>">
+			<div class="li-item">
+				<div class="p-img">
+					<%=list[i]['icon']%>
+				</div>
+				<div class="p-price" style="text-align:center;font-size:11px; color:#222;">
+					<%=list[i]['title']%>
+				</div>
+			</div>
+		</li>
+		<% } %>
+</script> -->
+<!-- <script src="//webapi.amap.com/maps?v=1.3&key=c5b79a9a87ab2ca92eecd69ab3c00c17"></script> -->
+<!-- <script src="config.js"></script>
+<script src="common/js/libs.js"></script>
+<script src="common/js/map.js"></script>
+<script src="common/js/coordTransform.js"></script>
+<script src="common/js/locate.js"></script>
+<script src="static/js/common.js"></script> -->
+<script src="js/lib/zepto.min.js"></script>
+<script src="js/lib/frozen.min.js"></script>
+<script src="js/lib/dingtalk.min.js"></script>
+<script src="js/lib/fastclick.min.js"></script>
+<script src="js/lib/ddbanner.js"></script>
+<script src="js/lib/apiList.js"></script>
+<script src="js/config.js"></script>
+<script src="js/common.js"></script>
+<script src="js/lib/lodash.js"></script>
+<script src="js/customerInfo.js"></script>
+<script src="js/customerContact.js"></script>
+<script src="js/customerContactAdd.js"></script>
+<script src="js/customerActAndVisitPlan.js"></script>
+<script src="js/reallocate.js"></script>
+<script src="js/businessCall.js"></script>
+<!-- <script src="js/cusInfoContractsList.js"></script> -->
+<!-- <script src="js/cusInfoContactsList.js"></script> -->
+<!-- <script src="static/js/customerXmlMenu.js"></script> -->
+<!-- <script src="js/follow.js"></script> -->
+<!-- <script src="js/hccalendar-addplan.js"></script> -->
+
+<!--播放器-->
+<script src="js/lib/jquery.jplayer.js"></script>
+<script>
+
+$.fn.ready(function(){  cusInfo.init(); });
+
+
+$(document).ready(function() {
+
+});
+</script>
+</body>
+</html>

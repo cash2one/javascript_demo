@@ -1,0 +1,253 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<title>首页</title>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, height=device-height, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no">
+	<meta name="format-detection" content="telephone=no">
+	<link href="css/frozen.css" rel="stylesheet" type="text/css">
+	<link href="css/index.css" rel="stylesheet" type="text/css">
+	<link href="css/customerlist.css" rel="stylesheet" type="text/css">
+	<script type="text/javascript">
+		function resize() {
+			var remFontSize = +document.documentElement.clientWidth / 16;
+			document.documentElement.style.fontSize = remFontSize + "px";
+		}
+		var b = null;
+		window.addEventListener("resize", function() {
+			clearTimeout(b),
+				b = setTimeout(resize, 300)
+		}, !1);
+		resize();
+	</script>
+	<script id="slide-latest-perfomance" type="text/template">
+		<div class="title">最新业绩</div>
+		{@if isLeader}
+		<div class="content">
+			<div class="total">
+				<div class="amount"><span>${(complete/10000).toFixed(1)}</span>总业绩(万)</div>
+				<div class="target">目标${(target/10000).toFixed(1)}(万)</div>
+			</div>
+			<div class="bottom">
+				<div class="left">
+					<p class="amount"><span>${(salesComplete/10000).toFixed(1)}</span>客服业绩</p>
+					<p class="desc">目标${(salesTarget/10000).toFixed(1)}</p>
+				</div>
+				<div class="right">
+					<p class="amount"><span>${(privateTeachComplete/10000).toFixed(1)}</span>客服业绩</p>
+					<p class="desc">目标${(privateTeachTarget/10000).toFixed(1)}</p>
+				</div>
+			</div>
+		</div>
+		{@else}
+		<div class="content isSales">
+			<div class="total">
+				<div class="amount"><span>${(current/10000).toFixed(1)}</span></div>
+				<div class="target">目标${(target/10000).toFixed(1)}(万)</div>
+			</div>
+			<div class="bottom">
+				<div class="left">
+					<p class="amount">${countryRank}
+						{@if countryRank < countryRankOld}
+						<i class="ui-icon-index_data_down"></i>
+						{@else if countryRank > countryRankOld}
+						<i class="ui-icon-index_data_up"></i>
+						{@/if}
+					</p>
+					<p class="desc">全国排名</p>
+				</div>
+				<div class="right">
+					<p class="amount">${cityRank}
+						{@if cityRank < cityRankOld}
+						<i class="ui-icon-index_data_down"></i>
+						{@else if cityRank > cityRankOld}
+						<i class="ui-icon-index_data_up"></i>
+						{@/if}
+					</p>
+					<p class="desc">城市排名</p>
+				</div>
+			</div>
+		</div>
+		{@/if}
+
+	</script>
+	<script id="slide-compare-perfomance" type="text/template">
+		<div class="title">业绩对比</div>
+		<div class="content">
+			<div class="total">
+				<div class="amount"><span>${(this_month/10000).toFixed(1)}</span>本月(万)</div>
+			</div>
+			<div class="bottom">
+				<div class="left">
+					<p class="amount">${(last_month/10000).toFixed(1)}</p>
+					<p class="desc">上月(万)</p>
+				</div>
+				<div class="right">
+					<p class="amount">${(best_month/10000).toFixed(1)}</p>
+					<p class="desc">历史最佳(万)</p>
+				</div>
+			</div>
+		</div>
+	</script>
+	<script id="slide-sale-funnel" type="text/template">
+		<div class="title">销售漏斗</div>
+		<div class="content">
+			<div class="line">
+				<div class="center">
+					<p class="amount">${yqkh}</p>
+					<p class="desc">已签客户</p>
+				</div>
+			</div>
+			<div class="line">
+				<div class="left">
+					<p class="amount">${djkh}</p>
+					<p class="desc">订金客户</p>
+				</div>
+				<!--<div class="center">-->
+					<!--<p class="amount">${zdkh}</p>-->
+					<!--<p class="desc">重点客户</p>-->
+				<!--</div>-->
+				<div class="right">
+					<p class="amount">${zdkh}</p>
+					<p class="desc">重点客户</p>
+				</div>
+			</div>
+			<div class="line">
+				<div class="left">
+					<p class="amount">${yxkh}</p>
+					<p class="desc">意向客户</p>
+				</div>
+				<!--<div class="center">-->
+					<!--<p class="amount">${(a6/10000).toFixed(1)}</p>-->
+					<!--<p class="desc">推进中(万)</p>-->
+				<!--</div>-->
+				<div class="right">
+					<p class="amount">${khzy}</p>
+					<p class="desc">客户资源</p>
+				</div>
+			</div>
+		</div>
+	</script>
+	<script id="slide-work-quality" type="text/template">
+		<div class="title">销售日报</div>
+		<div class="content">
+			<div class="line">
+				<div class="center">
+					<p class="amount">${potential}</p>
+					<p class="desc">潜在客户跟进</p>
+				</div>
+			</div>
+			<div class="line">
+				<div class="left">
+					<p class="amount">${fromOuter}</p>
+					<p class="desc">外拓</p>
+				</div>
+				<div class="center">
+					<p class="amount">${introduce}</p>
+					<p class="desc">转介绍</p>
+				</div>
+				<div class="right">
+					<p class="amount">${fieldOpen}</p>
+					<p class="desc">场开</p>
+				</div>
+			</div>
+			<div class="line">
+				<div class="left">
+					<p class="amount">${visit}</p>
+					<p class="desc">自然到访</p>
+				</div>
+				<div class="center">
+					<p class="amount">${invite}</p>
+					<p class="desc">预约到访</p>
+				</div>
+				<div class="right">
+					<p class="amount">${member}</p>
+					<p class="desc">会员保有</p>
+				</div>
+			</div>
+		</div>
+	</script>
+	<script id="slide-private-daily" type="text/template">
+		<div class="title">私教日报</div>
+		<div class="content">
+			<div class="line">
+				<div class="left">
+					<p class="amount">${appoint}</p>
+					<p class="desc">收费课预约</p>
+				</div>
+				<!--<div class="center">-->
+					<!--<p class="amount">${(a3/10000).toFixed(1)}</p>-->
+					<!--<p class="desc">重点跟进(万)</p>-->
+				<!--</div>-->
+				<div class="right">
+					<p class="amount">${course}</p>
+					<p class="desc">收费课上课</p>
+				</div>
+			</div>
+			<div class="line">
+				<div class="left">
+					<p class="amount">${pos}</p>
+					<p class="desc">POS</p>
+				</div>
+				<div class="center">
+					<p class="amount">${w1}</p>
+					<p class="desc">W1</p>
+				</div>
+				<div class="center">
+					<p class="amount">${w2}</p>
+					<p class="desc">W2</p>
+				</div>
+				<div class="right">
+					<p class="amount">${rx}</p>
+					<p class="desc">RX</p>
+				</div>
+			</div>
+		</div>
+	</script>
+</head>
+
+<body>
+	<div class="container page-parttern">
+		<div class="upper-part">
+			<ul class="upper-part-swipe trans" style="-webkit-transform: translateX(-27.52rem);">
+				<li class="sale-funnel"><div class="slide"></div></li>
+				<li class="work-quality"><div class="slide"></div></li>
+				<li class="latest-perfomance active"><div class="slide"></div></li>
+				<li class="compare-perfomance right"><div class="slide"></div></li>
+				<li class="private-daily"><div class="slide"></div></li>
+				<li class="sale-funnel"><div class="slide"></div></li>
+				<li class="work-quality"><div class="slide"></div></li>
+				<li class="latest-perfomance"><div class="slide"></div></li>
+				<li class="compare-perfomance"><div class="slide"></div></li>
+				<li class="private-daily"><div class="slide"></div></li>
+			</ul>
+		</div>
+		<div class="middle-part">
+			<ul class="ui-row"></ul>
+		</div>
+		<div class="lower-part">
+			<ul class="ui-row"></ul>
+		</div>
+		<div class="logo-part"></div>
+	</div>
+	<script src="js/lib/zepto.min.js"></script>
+	<script src="js/lib/frozen.min.js"></script>
+	<script src="js/lib/dingtalk.min.js"></script>
+	<script src="js/lib/juicer.min.js"></script>
+	<script src="js/lib/fastclick.min.js"></script>
+	<script src="js/lib/ddbanner.js"></script>
+	<script src="js/lib/iscroll.min.js"></script>
+	<script src="js/lib/md5.min.js"></script>
+
+	<script src="js/lib/apiList.js"></script>
+	<script src="js/login.js"></script>
+	<script src="js/config.js"></script>
+	<script src="js/scroll-index.js"></script>
+	<script src="js/draftwork.js"></script>
+	<script src="js/goldAgeCommon.js"></script>
+
+	<script src="js/index.js"></script>
+</body>
+
+</html>

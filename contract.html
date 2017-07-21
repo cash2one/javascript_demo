@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>合同</title>
+    <meta name="viewport" content="width=device-width, height=device-height, initial-scale=1, maximum-scale=1, user-scalable=no">
+    <meta name="format-detection" content="telephone=no">
+    <link rel="stylesheet" href="css/frozen.css">
+    <link rel="stylesheet" href="css/contract.css">
+    <style>
+        [v-cloak] {
+          display: none;
+        }
+    </style>
+</head>
+<body class="contract-list--body" v-cloak>
+
+    <section class="contract-list">
+        <header class="ui-header" v-if="header">
+            <div class="ui-tab">
+                <ul class="ui-tab-nav ui-border-b">
+                    <li :class="{current:tab=='unreturned'}" v-on:tap.stop="tab='unreturned'"><span>未回款</span></li>
+                    <li :class="{current:tab=='returned'}" v-on:tap.stop="tab='returned'"><span>已回款</span></li>
+                </ul>
+            </div>
+            <form v-on:submit="search($event)">
+                <div class="ui-searchbar-wrap ui-border-b" v-bind:class="{focus: searchbar.opened}" v-on:tap="activeSearch">
+                    <div class="ui-searchbar ui-border-radius">
+                        <i class="ui-icon-search"></i>
+                        <div class="ui-searchbar-text">搜索</div>
+                        <div class="ui-searchbar-input">
+                            <input type="search" placeholder="搜索" v-model="searchbar.keyword">
+                        </div>
+                        <i class="ui-icon-close" v-on:tap.stop="searchbar.keyword=''"></i>
+                    </div>
+                    <button type="submit" class="ui-searchbar-cancel">搜索</button>
+                </div>
+            </form>
+        </header>
+
+        <div class="ui-container">
+            <div class="ui-loading-wrap" v-if="!contracts">
+                <div class="ui-center">
+                    <i class="ui-loading"></i>
+                </div>
+            </div>
+            <div class="list-wrapper" v-on:scroll="pullUp">
+                <div class="list-empty" v-if="contracts&&contracts.length==0">
+                    <div class="ui-center">
+                        <p>未找到合同</p>
+                    </div>
+                </div>
+                <div class="total-bar ui-whitespace" v-if="contracts&&contracts.length">
+                    <template v-if="tab=='returned'">
+                        总款额：{{ contracts.total_htmoney | currency '￥' 2 }}
+                        |
+                        已回款：{{ contracts.total_returnmoney | currency '￥' 2 }}
+                    </template>
+                    <template v-else>
+                        总款额：{{ contracts.total_htmoney | currency '￥' 2 }}
+                        |
+                        未回款：{{ contracts.total_htmoney-contracts.total_returnmoney | currency '￥' 2 }}
+                    </template>
+                </div>
+                <ul class="ui-list ui-list-text ui-list-active ui-list-cover ui-border-tb" v-if="contracts&&contracts.length">
+                    <li class="ui-border-t" v-for="item in contracts" track-by="id" v-on:click="toDetail(item)">
+                        <div class="ui-list-info">
+                            <h4>{{* item.company }}</h4>
+                            <p>{{* item.sign_date }} | {{* item.contractno }}</p>
+                        </div>
+                        <div class="ui-txt-info">
+                            <p>{{* item.returnmoney | currency '￥' 2 }}/{{* item.htmoney | currency '￥' 2 }}</p>
+                            <p style="color:#999;font-size:12px;text-align:right;">{{* item.audit_flg | auditStringify }}</p>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </section>
+
+<script src="js/lib/zepto.min.js"></script>
+<script src="js/lib/dingtalk.min.js"></script>
+<script src="js/lib/vue.min.js"></script>
+<script src="js/lib/ddbanner.js"></script>
+<script src="js/lib/apiList.js"></script>
+<script src="js/config.js"></script>
+<script src="js/common.js"></script>
+<script src="js/login.js"></script>
+<script src="js/contract.js"></script>
+</body>
+</html>
